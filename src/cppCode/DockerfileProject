@@ -1,0 +1,18 @@
+FROM gcc:latest
+
+RUN apt-get update && apt-get install -y cmake
+
+COPY ./src/cppCode /usr/src/myproject
+COPY ./data /usr/src/myproject/data
+
+
+WORKDIR /usr/src/myproject
+
+RUN mkdir build
+WORKDIR /usr/src/myproject/build
+
+RUN cmake .. && make
+
+# Run 
+CMD ["./runProject"]
+ENTRYPOINT ["/usr/src/myproject/build/runProject", "4000"]  
