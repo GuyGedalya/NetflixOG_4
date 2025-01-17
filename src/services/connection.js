@@ -3,9 +3,8 @@ const net = require('net');
 const sendAndReceive = async (message) => {
     return new Promise((resolve, reject) => {
         const client = new net.Socket();
-        
         // Connect to the server
-        client.connect(process.env.SERVER_PORT, 'cpp-server', () => {
+        client.connect(process.env.CPP_SERVER_PORT, 'cpp-server', () => {
             // Send the POST request (in the expected format)
             client.write(message + '\n'); // Include a newline to signal the end of the message
         });

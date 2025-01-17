@@ -61,7 +61,7 @@ curl -i -X GET http://localhost:3000/api/users/:id
 ![get categories](https://github.com/user-attachments/assets/e5de5e8f-4fe9-42fb-9c32-2bee32476e36)
 
 * You can add categories using a command like:  
-curl -i -X POST http://localhost:3000/api/categories -H "Content-Type: application/json" -H "user-id: ID" -d '{"name": "some category", "promoted": true}'  
+curl -i -X POST http://localhost:3001/api/categories -H "Content-Type: application/json" -H "user-id: ID" -d '{"name": "some category", "promoted": true}'  
 Instead of ID you write the token. Promotion should be boolean.    
 
 This command is allowed only for signed users. You should add the token(user-id) to the header of the request.  
