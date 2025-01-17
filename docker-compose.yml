@@ -7,13 +7,14 @@ services:
       dockerfile: DockerfileNode
     container_name: app
     ports:
-      - "3000:3000"
+      - "3001:3001"
     depends_on:
       - mongodb
     environment:
       - CONNECTION_STRING=mongodb://mongodb:27017/your-database
       - NODE_ENV=production
-      - PORT=3000
+      - PORT=3001
+      - SERVER_PORT=4000
     networks:
       - app-network
 

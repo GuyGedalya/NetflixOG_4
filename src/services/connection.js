@@ -5,7 +5,7 @@ const sendAndReceive = async (message) => {
         const client = new net.Socket();
         
         // Connect to the server
-        client.connect(4000, 'cpp-server', () => {
+        client.connect(process.env.SERVER_PORT, 'cpp-server', () => {
             // Send the POST request (in the expected format)
             client.write(message + '\n'); // Include a newline to signal the end of the message
         });
