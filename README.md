@@ -8,7 +8,7 @@ The server requires ports 3000, 4000 and 27017 to be available.
 You can interact with the server using port 3000.  
 
 Command to build and run the server: docker-compose up --build  
-You should run the project from the NetflixOG_3 folder, the Docker dasktop should be open.  
+You should run the project from the NetflixOG_3 folder, the Docker desktop should be open.  
 The command: "docker-compose down" will stop the program. To start it again use "docker-compose up".   
  
 
@@ -97,7 +97,7 @@ Instead of ID you write the user token. You must enter a Title, ReleaseDate (YYY
 
 ![adding movies](https://github.com/user-attachments/assets/724e9d87-fe56-4b6f-8d2c-43e04bca9f3b)  
 With an Image:  
-![ceate movie](https://github.com/user-attachments/assets/607adcef-8b1f-4fa2-a132-ae75318c5d73)
+![create movie](https://github.com/user-attachments/assets/607adcef-8b1f-4fa2-a132-ae75318c5d73)
 
 * You can get a list of random unseen movies form promoted categories. You will also get a list the 20 last movies the user watched:  
 curl -i http://localhost:3000/api/movies -H "user-id: ID"  
@@ -112,7 +112,7 @@ Instead of ID you write the user token.
 curl -i http://localhost:3000/api/movies/:id  
 Where id is the movie ID you want info about (omit the :).
 
-![geting movie by id](https://github.com/user-attachments/assets/dce4ef1e-9531-468c-a326-baed62d5e6c0)
+![getting movie by id](https://github.com/user-attachments/assets/dce4ef1e-9531-468c-a326-baed62d5e6c0)
 
 * You can replace movie's information given a movie ID using the command:  
 curl -i -X PUT http://localhost:3000/api/movies/:id -H "Content-Type: application/json" -H "user-id: ID" -d '{"Title": "new movie title", "ReleaseDate": "2025-05-01", "Categories": [a list of categories]}'  
