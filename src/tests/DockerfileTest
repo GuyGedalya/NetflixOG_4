@@ -1,0 +1,20 @@
+FROM gcc:latest
+
+RUN apt-get update && apt-get install -y cmake
+
+COPY src/cppCode /usr/src/mytest/src/cppCode
+COPY src/tests /usr/src/mytest/src/tests
+
+
+WORKDIR /usr/src/mytest
+
+RUN mkdir build
+WORKDIR /usr/src/mytest/build
+# This is a special test that can run only when the server is up.
+# Shouldn't be run with regular tests so I removed it
+RUN rm -f /usr/src/mytest/src/tests/ServerIntegrationTest.cpp
+
+RUN cmake ../src/tests && make
+
+# Run tests
+CMD ["./runTests"]

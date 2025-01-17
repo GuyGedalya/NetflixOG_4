@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ./src
+      dockerfile: DockerfileNode
+    container_name: app
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongodb
+      - cpp-server
+    environment:
+      - CONNECTION_STRING=mongodb://mongodb:27017/your-database
+      - NODE_ENV=production
+      - PORT=3001
+      - CPP_SERVER_PORT=4000
+    networks:
+      - app-network
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+    logging:
+        driver: "none"
+  
+  cpp-server:
+    build:
+      context: .
+      dockerfile: ./src/cppCode/DockerfileProject 
+    container_name: cpp-server
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./data:/data
+    command: ["4000"] 
+    networks:
+      - app-network
+
+
+networks:
+  app-network:
+    driver: bridge
