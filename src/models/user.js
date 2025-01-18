@@ -27,7 +27,7 @@ const User = new Schema({
         required: true, 
         unique: true,
         // Regex validation for phone number format:
-        match: [/^\+?[1-9]\d{1,14}$/, 'Please provide a valid phone number.'] 
+        match: [/^05\d{8}$/, 'Please provide a valid phone number.'] 
     },
     ProfileImage: { 
         type: String,
