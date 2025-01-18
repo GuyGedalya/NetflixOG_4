@@ -1,0 +1,132 @@
+/* Body styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('images/background.jpeg'); /* Background image */
+    background-size: cover; /* Cover the entire screen */
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative; /* Enables stacking with ::before */
+    color: white;
+    text-align: center;
+}
+
+/* Adding a dark overlay */
+body::before {
+    content: ''; /* Required for ::before to render */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.65); /* Black with 50% opacity */
+    z-index: 1; /* Ensure it's below the content */
+}
+/* Top bar styling */
+.top-bar {
+    position: absolute;
+    top: 10px;
+    left:100px;
+    right: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 10;
+}
+
+/* Logo styling */
+.logo {
+    width: 100px; /* Adjust logo size */
+    height: auto;
+}
+
+/* Sign In button styling */
+.sign-in-button {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px; /* Rounded corners */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sign-in-button:hover {
+    background-color: darkred; /* Hover effect */
+}
+/* Container styling */
+.container {
+    position: relative; /* Ensure it stays above the overlay */
+    z-index: 2; /* Place the container above the dark overlay */
+    background: none; 
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+}
+
+
+/* Header styling */
+h1 {
+    font-weight: 900;
+    font-size: 2.5rem;
+    margin: 0 0 10px;
+}
+
+/* Paragraph styling */
+p {
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #FFFFFF;
+    /* Light gray color */
+}
+
+/* Styling for the email container */
+.email-container {
+    display: flex;
+    gap: 8px; /* Small space between the buttons */
+    margin-top: 20px; /* Space from the top */
+
+}
+
+/* Styling for the email input */
+.email-input {
+    flex: 1;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Semi-transparent border */
+    border-radius: 2px; /* Fully rounded corners */
+    background: transparent; /* Transparent background */
+    color: white;
+    outline: none;
+}
+
+.email-input::placeholder {
+    color: rgba(255, 255, 255, 0.7); /* Semi-transparent placeholder */
+}
+
+/* Styling for the submit button */
+.submit-button {
+    background-color: red; /* Solid red background */
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 2px; /* Fully rounded corners */
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.submit-button:hover {
+    background-color: darkred; /* Darker red on hover */
+}
