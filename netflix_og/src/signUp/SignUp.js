@@ -81,7 +81,7 @@ function SignUp(){
 						value={formData.Password} onChange={handleChange}/>
 					<input type="tel" 
 						name="Phone" 
-						placeholder="+50" 
+						placeholder="Phone" 
 						required 
          				pattern="^05\d{8}$"
 						value={formData.Phone} onChange={handleChange}/>
