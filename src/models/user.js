@@ -32,8 +32,6 @@ const User = new Schema({
     ProfileImage: { 
         type: String,
         required: false, 
-        // Ensure it's a valid URL
-        match: [/^(http|https):\/\/[^\s]+$/, 'Please provide a valid image URL.'] 
     },
 	Movies: [{
         type: mongoose.Schema.Types.ObjectId,

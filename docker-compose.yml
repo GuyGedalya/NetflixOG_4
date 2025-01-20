@@ -8,6 +8,9 @@ services:
     container_name: app
     ports:
       - "3001:3001"
+    volumes:
+      - ./src/uploads/users:/usr/src/app/uploads/users
+      - ./src/uploads/movies:/usr/src/app/uploads/movies
     depends_on:
       - mongodb
       - cpp-server

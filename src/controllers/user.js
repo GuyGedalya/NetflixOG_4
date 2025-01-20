@@ -1,11 +1,11 @@
 const userService = require('../services/user');
 const createUser = async (req, res) => {
     try {
-		console.log(req.body);
         // Setting the variable:
-        const { Email, UserName, Password, Phone, ProfileImage } = req.body;
+        const { Email, UserName, Password, Phone } = req.body;
+		const profileImagePath = req.files && req.files.ProfileImage ? req.files.ProfileImage[0].path : null;
         // Creating user using services method:
-        const user = await userService.createUser(Email, UserName, Password, Phone, ProfileImage);
+        const user = await userService.createUser(Email, UserName, Password, Phone, profileImagePath);
 		res.setHeader('Location', `/api/users/${user._id}`);
         return res.status(201).json();
     } catch (error) {
