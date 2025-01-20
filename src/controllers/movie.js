@@ -20,7 +20,7 @@ const getMovie = async (req, res) => {
 
 const createMovie = async (req, res) => {
 	// Checking that all the fields arrived
-	if (!req.body.Title || !req.body.ReleaseDate || !req.body.Categories) {
+	if (!req.body.Title || !req.body.ReleaseDate || !req.body.Categories || !req.body.Image || !req.body.Film) {
 		return res.status(400).json({ error: 'Missing required fields.' });
 	}
 	try {
@@ -29,7 +29,7 @@ const createMovie = async (req, res) => {
 			res.status(400).json({error : "Please provide existing categories."});
 		}	
 		// Creating movie
-		const movie = await movieService.createMovie(req.body.Title, req.body.ReleaseDate,req.body.Image, categories.map(cat => cat._id));
+		const movie = await movieService.createMovie(req.body.Title, req.body.ReleaseDate,req.body.Image, categories.map(cat => cat._id), req.body.Film);
 		if (movie) {
 			// Set the Location header to point to the new resource
 			res.setHeader('Location', `/api/movies/${movie._id}`);

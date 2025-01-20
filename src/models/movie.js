@@ -18,7 +18,13 @@ const Movie = new Schema({
 	},
 	Image: { 
         type: String,
-        required: false, 
+        required: true, 
+        // Ensure it's a valid URL
+        match: [/^(http|https):\/\/[^\s]+$/, 'Please provide a valid image URL.'] 
+    }, 
+	Film: { 
+        type: String,
+        required: true, 
         // Ensure it's a valid URL
         match: [/^(http|https):\/\/[^\s]+$/, 'Please provide a valid image URL.'] 
     }, 

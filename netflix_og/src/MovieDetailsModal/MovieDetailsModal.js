@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Modal } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Modal, Button } from 'react-bootstrap'; 
 import './MovieDetailsModal.css';
 
 const MovieDetailsModal = ({ show, onHide, movieId }) => {
@@ -8,6 +8,9 @@ const MovieDetailsModal = ({ show, onHide, movieId }) => {
 
   useEffect(() => {
     if (movieId) {
+      setMovie(null); // אפס את הסרטון הקודם
+      setError(null); // אפס שגיאות
+
       fetch(`http://localhost:3001/api/movies/${movieId}`)
         .then((response) => {
           if (!response.ok) {
@@ -22,6 +25,10 @@ const MovieDetailsModal = ({ show, onHide, movieId }) => {
 
   return (
     <Modal show={show} onHide={onHide} className="movie-modal" fullscreen>
+      <Button variant="secondary" onClick={onHide} className="close-button">
+        X
+      </Button>
+
       <Modal.Body>
         {error ? (
           <p>{error}</p>
@@ -29,8 +36,8 @@ const MovieDetailsModal = ({ show, onHide, movieId }) => {
           <div className="modal-content-container">
             {/* Video section */}
             <div className="video-container">
-              <video className="movie-video" controls>
-                <source src="https://www.example.com/video.mp4" type="video/mp4" />
+              <video className="movie-video" controls autoPlay>
+                <source src={movie.Film} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </div>

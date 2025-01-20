@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useParams, useNavigate } from '
 import HomePageUnregistered from '../home/HomePageUnregistered';
 import SignIn from '../signIn/SignIn';
 import MovieDetailsModal from '../MovieDetailsModal/MovieDetailsModal';
+import HomePage from '../HomePage/HomePage'
 import './App.css';
 
 function App() {
@@ -12,6 +13,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePageUnregistered />} />
           <Route path="/signin" element={<SignIn />} />
+		      <Route path="/home" element={<HomePage />} />
+
           <Route path="api/movies/:id" element={<MovieDetailsHandler />} />
         </Routes>
       </div>
