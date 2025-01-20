@@ -22,18 +22,22 @@ function SignUp(){
 	// Handle form submission
 	const handleSubmit = async (e) => {
 		e.preventDefault(); // Prevent page reload
-	
+		
 		// Prepare form data to send to the server
 		const data = {
 			UserName: formData.UserName,
 			Email: formData.Email,
 			Password: formData.Password,
-			Phone: formData.Phone
-		}
-
-//		if (formData.ProfileImage) {
-//		  data.append("ProfileImage", formData.ProfileImage);
-//		}
+			Phone: formData.Phone,
+			ProfileImage: formData.ProfileImage
+		};
+		const formData1 = new FormData();
+		formData1.append('UserName', formData.UserName);
+		formData1.append('Email', formData.Email);
+		formData1.append('Password', formData.Password);
+		formData1.append('Phone', formData.Phone);
+		formData1.append('ProfileImage', formData.ProfileImage);
+		
 		try {
 			// Send a POST request to the server
 			const response = await fetch("http://localhost:3001/api/users", {
@@ -41,7 +45,7 @@ function SignUp(){
 			  headers: {
 				"Content-Type": "application/json",
 			  },
-			  body: JSON.stringify(data),
+			  body: formData1
 			});
 			
 			if (response.ok) {
@@ -78,17 +82,20 @@ function SignUp(){
 						name="Password" 
 						placeholder="Password" 
 						required
+						pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}"
+						title="Password must be at least 8 characters. Password must include at least one letter and one number."
 						value={formData.Password} onChange={handleChange}/>
 					<input type="tel" 
 						name="Phone" 
 						placeholder="Phone" 
 						required 
          				pattern="^05\d{8}$"
+						title="Phone number must start with 05 and be 10 digits."
 						value={formData.Phone} onChange={handleChange}/>
 					<input type="file" 
 						name="ProfileImage" 
 						accept="image/*"
-						value={formData.ProfileImage} onChange={handleChange}/>
+						onChange={handleChange}/>
 					<button type="submit" >Sign Up</button>
 				</form>
 			</div>

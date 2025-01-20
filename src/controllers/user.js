@@ -1,6 +1,7 @@
 const userService = require('../services/user');
 const createUser = async (req, res) => {
     try {
+		console.log(req.body);
         // Setting the variable:
         const { Email, UserName, Password, Phone, ProfileImage } = req.body;
         // Creating user using services method:
