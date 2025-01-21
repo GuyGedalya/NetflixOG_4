@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import './HomePage.css';
 import MovieDetailsModal from '../MovieDetailsModal/MovieDetailsModal';
 import SearchResultsModal from '../SearchResultsModal/SearchResultsModal';
-import { useNavigate } from 'react-router-dom';
 
+import Header from '../Header/header';
 
 
 function HomePage() {
@@ -11,52 +11,8 @@ function HomePage() {
     const [showModal, setShowModal] = useState(false);
     const [selectedMovieId, setSelectedMovieId] = useState(null);
     const [randomMovie, setRandomMovie] = useState(null);
-    const [isOpen, setIsOpen] = useState(false);
-    const [searchText, setSearchText] = useState('');
     const [results, setResults] = useState([]);
     const [showSearchModal, setShowSearchModal] = useState(false);
-    const navigate = useNavigate();
-	const searchBarRef = useRef(null);
-
-
-    const handleOutsideClick = (event) => {
-        if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
-            setIsOpen(false);
-            setSearchText('');
-        }
-    };
-	useEffect(() => {
-        if (isOpen) {
-            // Listen to outside click event when search box is open
-            document.addEventListener('mousedown', handleOutsideClick);
-        }
-        return () => {
-            // Closing listener when box is closed
-            document.removeEventListener('mousedown', handleOutsideClick);
-        };
-    }, [isOpen]);
-
-    const handleSearch = async () => {
-        if (searchText.trim() === '') {
-            alert('Titles, People, Genres');
-            return;
-        }
-
-        try {
-            const response = await fetch(`http://localhost:3001/api/movies/search/${encodeURIComponent(searchText)}`);
-            let data;
-            if (!response.ok) {
-                data = null;
-            } else {
-                data = await response.json();
-            }
-            setResults(data);
-            setShowSearchModal(true);
-        } catch (error) {
-            console.error('Failed to fetch search results:', error);
-            setResults([]);
-        }
-    };
 
     useEffect(() => {
         fetch('http://localhost:3001/api/movies', {
@@ -97,34 +53,7 @@ function HomePage() {
 
     return (
         <div>
-            <header>
-                <a href="/home" className="logo">
-                    <img src="/images/favicon.ico" alt="Project Logo" className="logo-image" />
-                </a>
-                <nav>
-                    <button onClick={() => (window.location.href = '/home')} className='header button'>Home</button>
-                    <button onClick={() => navigate('/categories')} className='header button'>Categories</button>
-					<button>Manage</button>
-                    {!isOpen ? (<button onClick={() => setIsOpen(true)} className='header button'>Search</button>) :
-                        (<div className="search-bar" ref={searchBarRef}>
-                            <input
-                                type="text"
-                                className="search-input"
-                                placeholder="Titles, People, Genres"
-                                value={searchText}
-                                onChange={(e) => setSearchText(e.target.value)}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter') {
-                                        handleSearch();
-                                    }
-                                }}
-                                autoFocus
-                            />
-                        </div>
-                        )}
-                </nav>
-            </header>
-
+            <Header setResults = {setResults} setShowSearchModal = {setShowSearchModal}/>
             <div className="hero-section">
                 <div className="video-container">
                     {randomMovie ? (

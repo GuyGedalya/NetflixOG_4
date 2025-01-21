@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 
-function Header(setResults, setShowSearchModal) {
+function Header({ setResults, setShowSearchModal }) {
 	const [searchText, setSearchText] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
 
