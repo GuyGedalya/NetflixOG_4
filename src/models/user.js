@@ -27,13 +27,11 @@ const User = new Schema({
         required: true, 
         unique: true,
         // Regex validation for phone number format:
-        match: [/^\+?[1-9]\d{1,14}$/, 'Please provide a valid phone number.'] 
+        match: [/^05\d{8}$/, 'Please provide a valid phone number. format: 05********'] 
     },
     ProfileImage: { 
         type: String,
         required: false, 
-        // Ensure it's a valid URL
-        match: [/^(http|https):\/\/[^\s]+$/, 'Please provide a valid image URL.'] 
     },
 	Movies: [{
         type: mongoose.Schema.Types.ObjectId,

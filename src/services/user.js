@@ -33,11 +33,12 @@ const createUser = async (Email, UserName, Password, Phone, ProfileImage) => {
     if (error.message && error.message.includes('E11000 duplicate key error')) {
       const originalMessage = error.message;
 
-      
+	  const duplicateFieldMessage = originalMessage.split('dup key: ')[1];
+
       const customMessage = 'The specified field already exists. Please choose another one.';
 
       // Combine both messages
-      const combinedMessage = `${customMessage} Original error: ${originalMessage}`;
+      const combinedMessage = `${customMessage} Original error: ${duplicateFieldMessage}`;
 
       // Send the response
       throw { status: 400, message: combinedMessage };
