@@ -98,7 +98,7 @@ async function getUnseenMoviesPerCategory(userId, categories) {
     }
 }
 
-const createMovie = async (Title, ReleaseDate,Image, Categories) => {
+const createMovie = async (Title, ReleaseDate,Image, Categories, Film) => {
     try {
         // Creating a new movie with given fields
         const MovieNumber = await CounterServices.getNextSequence('movies');
@@ -107,7 +107,8 @@ const createMovie = async (Title, ReleaseDate,Image, Categories) => {
             Title: Title,
             ReleaseDate: ReleaseDate,
 			Image: Image,
-            Categories: Categories
+            Categories: Categories,
+            Film: Film
         });
         return await movie.save();
     } catch (error) {

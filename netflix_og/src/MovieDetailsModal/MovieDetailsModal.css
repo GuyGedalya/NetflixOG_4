@@ -1,0 +1,89 @@
+/* General modal styling */
+.movie-modal .modal-content {
+    height: 95%; 
+    width: 90%;
+    max-width: 900px; /* Optional: maximum width for large screens */
+    max-height: 100%; /* Optional: maximum height for large screens */
+    border-radius: 10px;
+    padding: 0;
+    overflow: hidden; /* Prevent content overflow */
+    z-index: 1050;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white; /* Ensure a clean background */
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.8); /* Add a shadow for better visibility */
+    display: flex;
+    flex-direction: column; /* Stack video and details vertically */
+    pointer-events: auto;
+  }
+
+  .movie-modal .modal-body {
+    overflow-y: auto; 
+    max-height: 90vh; 
+    padding: 20px; 
+    box-sizing: border-box; 
+}
+
+body {
+  overflow: auto !important; /* ודא שהדף הראשי ניתן לגלילה */
+}
+
+  /* Video section styling */
+  .video-container {
+    flex: 2; /* Takes up most of the modal height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black; /* Black background for the video */
+    position: relative
+  }
+  
+  .movie-video {
+    width: 100%; /* Full width of the video container */
+    height: 100%; /* Full height of the video container */
+    object-fit: contain; /* Maintain the aspect ratio */
+    border: none;
+  }
+  
+  /* Movie details styling */
+  .movie-details {
+    flex: 1; /* Takes up the remaining height */
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background for details */
+    color: #333; /* Dark text for readability */
+    overflow-y: auto; /* Enable scrolling if content overflows */
+  }
+  
+  .movie-details p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    color: #000000;
+  }
+  
+  .movie-details strong {
+    color: #ff6b6b; /* Highlighted text for labels */
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1051; 
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-button:hover {
+    color: #e50914; 
+}
+
+
+

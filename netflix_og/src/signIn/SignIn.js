@@ -51,7 +51,7 @@ function SignIn() {
 			<div className="logo-container">
 				<img src="/images/favicon.ico" alt="NOG Logo" className="logo"></img>
 			</div>
-			<div className="container">
+			<div className="text-container">
 				<h1>Sign In</h1>
 				<form className="login-form" onSubmit={handleSubmit}>
 					<input type='text'
