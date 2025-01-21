@@ -1,16 +1,35 @@
 // Header.js
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Header = () => {
+const Header = ({ onSearch }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [searchText, setSearchText] = useState('');
     const searchBarRef = useRef(null);
     const navigate = useNavigate();
 
+    const handleOutsideClick = (event) => {
+        if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
+            setIsOpen(false);
+            setSearchText('');
+        }
+    };
+
+    useEffect(() => {
+        if (isOpen) {
+            document.addEventListener('mousedown', handleOutsideClick);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, [isOpen]);
+
     const handleSearch = () => {
-        console.log(`Searching for: ${searchText}`);
-        // Add your search logic here
+        if (searchText.trim() === '') {
+            alert('Titles, People, Genres');
+            return;
+        }
+        onSearch(searchText); // Pass the search text to the parent
     };
 
     return (

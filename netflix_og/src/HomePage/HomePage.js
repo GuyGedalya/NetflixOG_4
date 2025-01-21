@@ -83,17 +83,13 @@ function HomePage() {
         const categoryKeys = Object.keys(data).filter(
             (category) => category !== 'lastSeenMovies'
         );
-        console.log(categoryKeys);
         if (categoryKeys.length > 0) {
             const randomCategory =
                 categoryKeys[Math.floor(Math.random() * categoryKeys.length)];
-            console.log(randomCategory);
             const movies = data[randomCategory];
-            console.log(movies);
 
             if (movies && movies.length > 0) {
                 const randomMovie = movies[Math.floor(Math.random() * movies.length)];
-                console.log(randomMovie)
                 setRandomMovie(randomMovie);
             }
         }
