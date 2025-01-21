@@ -5,21 +5,26 @@ import SignIn from '../signIn/SignIn';
 import MovieDetailsModal from '../MovieDetailsModal/MovieDetailsModal';
 import HomePage from '../HomePage/HomePage'
 import CategoriesPage from '../CategoriesPage/CategoriesPage';
+import SignUp from '../signUp/SignUp';
+
 import './App.css';
 
 function App() {
   return (
+
     <Router>
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePageUnregistered />} />
           <Route path="/signin" element={<SignIn />} />
+           <Route path="/signUp" element={<SignUp/>} />
 		      <Route path="/home" element={<HomePage />} />
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="api/movies/:id" element={<MovieDetailsHandler />} />
         </Routes>
       </div>
     </Router>
+
   );
 }
 
