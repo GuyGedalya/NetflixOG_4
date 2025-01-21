@@ -88,7 +88,7 @@ function HomePage() {
     return (
         <div>
             <header>
-                <a href="#" className="logo">
+                <a href="/home" className="logo">
                     <img src="/images/favicon.ico" alt="Project Logo" className="logo-image" />
                 </a>
                 <nav>

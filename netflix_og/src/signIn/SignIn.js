@@ -1,6 +1,7 @@
 import './SignIn.css';
 import { Link } from 'react-router-dom';
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
 	// State to store form data
@@ -14,6 +15,8 @@ function SignIn() {
 		setFormData((prev) => ({ ...prev, [name]: value }));
 	};
 
+	const navigate = useNavigate();
+	
 	const handleSubmit = async (e) => {
 		e.preventDefault(); // Prevent page reload
 		const reqBody = {
@@ -35,6 +38,7 @@ function SignIn() {
 				const data = await response.json();
 				localStorage.setItem("token", data.userId); // Saving token in localstorage
 				alert("Login successful!");
+				navigate('/home')
 			} else {
 				// Parse the error message from the server response
 				const errorData = await response.json();
