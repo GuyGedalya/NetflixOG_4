@@ -24,7 +24,6 @@ function CategoriesPage() {
         }
 
         try {
-            console.log(`http://localhost:3001/api/movies/search/${encodeURIComponent(searchText)}`);
             const response = await fetch(`http://localhost:3001/api/movies/search/${encodeURIComponent(searchText)}`);
             let data;
             if (!response.ok) {
@@ -33,7 +32,6 @@ function CategoriesPage() {
                 data = await response.json();
             }
             setResults(data);
-            console.log(data);
             setShowSearchModal(true);
         } catch (error) {
             console.error('Failed to fetch search results:', error);
@@ -46,7 +44,7 @@ function CategoriesPage() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'user-id': '678c1fdbb298510871824c64',
+                'user-id': `${localStorage.getItem('token')}`,
             },
         })
             .then((response) => response.json())
