@@ -10,7 +10,7 @@ function HomePageUnregistered(){
 				<img src="/images/favicon.ico" alt="NOG Logo" className="logo"></img>
 				<Link to="/signin" className="sign-in-button">Sign In</Link>
 			</div>
-				<div className="container">
+				<div className="unregister-container">
 				<h1>WELCOME TO NOG<br/>Unlimited movies,<br/>TV shows, and more</h1>
 				<p>Ready to watch?</p>
 				<button onClick={() => navigate('/signup')} className="submit-button">Get Started &gt;</button>

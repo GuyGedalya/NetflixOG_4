@@ -1,27 +1,12 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #141414;
     color: white;
     overflow-x: hidden;
     max-width: 100%;
-    background-repeat: repeat;
-
+    background-color: rgba(0, 0, 0, 0.65); 
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.9);
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    left: 0;
-    height: 80px;
-}
 
 header .logo {
     font-size: 28px;
@@ -72,32 +57,6 @@ header nav a:hover {
     color: white;
 }
 
-.hero-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; 
-    margin: 0; 
-    background-color: black;
-    
-}
-
-.hero-section .video-container {
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
-    overflow: hidden; 
-    z-index: 1;
-}
-
-.hero-section .video-container video {
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover;
-}
-
 .movie-poster {
     height: 200px; 
     width: auto; 
@@ -121,10 +80,9 @@ header nav a:hover {
     max-width: 100%;
 }
 
-.categories {
+.categories1 {
     padding: 10px; 
     margin: 20px auto;
-    margin-top: 800px;
     max-height: calc(100vh - 150ppx);
     max-width: 100%;
 }
