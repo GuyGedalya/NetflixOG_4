@@ -16,7 +16,7 @@ function CategoriesPage() {
   
 
     useEffect(() => {
-        fetch('http://localhost:3001/api/movies', {
+        fetch('http://localhost:3001/api/movies/categories', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

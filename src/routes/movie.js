@@ -8,6 +8,9 @@ router.route('/')
 	.get(middleware.verifyUserId, middleware.getUser, movieController.returnMovies)
 	.post(middleware.verifyUserId, middleware.getUser, movieController.createMovie);
 
+router.route('/categories')
+	.get(movieController.getCategories)
+
 router.route('/:id')
 	.get(movieController.getMovie)
 	.put(middleware.verifyUserId, middleware.getUser, movieController.replaceMovie)

@@ -2,6 +2,7 @@ const Movie = require('../models/movie');
 const User = require('../models/user');
 const Category = require('../models/category')
 const CounterServices = require('../services/counter');
+const CategoryServices = require('../services/category')
 
 const getMovieById = async (id) => {
     try {
@@ -194,5 +195,32 @@ async function searchMovies(query) {
     }
 }
 
+const returnCategories = async () => {
+    try {
+        // Get all categories
+        const categories = await CategoryServices.getCategories();
+        const categoryNames = categories.map(category => category._id);
 
-module.exports = { getMovieById, createMovie, getPromotedCategoryNames, getUnseenMoviesPerCategory, replaceMovie, deleteMovie, movieNumbersToObject, searchMovies };
+        // Initialize result object
+        const result = {};
+
+        for (const category of categoryNames) {
+            // Find movies for the current category
+            const moviesInCategory = await Movie.find({ 'Categories': category }).populate('Categories');
+
+            const categoryName = await Category.findById(category);
+
+            // Add the category name as a key and its movies as the value
+            result[categoryName.name] = moviesInCategory;
+        }
+
+        return result; // Return the result
+    } catch (error) {
+        console.error('Error fetching categories and movies:', error.message);
+        throw error;
+    }
+};
+
+
+
+module.exports = { getMovieById, createMovie, getPromotedCategoryNames, getUnseenMoviesPerCategory, replaceMovie, deleteMovie, movieNumbersToObject, searchMovies, returnCategories };
