@@ -36,7 +36,7 @@ function SignIn() {
 
 			if (response.ok) {
 				const data = await response.json();
-				localStorage.setItem("token", data.userId); // Saving token in localstorage
+				sessionStorage.setItem("token", data.token); // Saving token in localstorage
 				alert("Login successful!");
 				navigate('/home')
 			} else {

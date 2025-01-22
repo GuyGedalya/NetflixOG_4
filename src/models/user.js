@@ -31,8 +31,12 @@ const User = new Schema({
     },
     ProfileImage: { 
         type: String,
-        required: false, 
+        required: false 
     },
+	Admin: {
+		type: Boolean, 
+		default: false
+	},
 	Movies: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Movie'

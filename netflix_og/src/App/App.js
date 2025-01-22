@@ -8,6 +8,7 @@ import CategoriesPage from '../CategoriesPage/CategoriesPage';
 import SignUp from '../signUp/SignUp';
 
 import './App.css';
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   return (
@@ -16,11 +17,11 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePageUnregistered />} />
-          <Route path="/signin" element={<SignIn />} />
+          <Route path="/logIn" element={<SignIn />} />
            <Route path="/signUp" element={<SignUp/>} />
-		      <Route path="/home" element={<HomePage />} />
-          <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="api/movies/:id" element={<MovieDetailsHandler />} />
+		      <Route path="/home" element={<ProtectedRoute> <HomePage /> </ProtectedRoute>} />
+          <Route path="/categories" element={<ProtectedRoute> <CategoriesPage /> </ProtectedRoute>} />
+          <Route path="api/movies/:id" element={<ProtectedRoute><MovieDetailsHandler /> </ProtectedRoute>} />
         </Routes>
       </div>
     </Router>

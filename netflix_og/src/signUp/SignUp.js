@@ -42,7 +42,7 @@ function SignUp() {
 			});
 			if (response.ok) {
 				alert("Sign up successful! You can now log in to your account.");
-				navigate('/signIn')
+				navigate('/logIn');
 			} else {
 				// Parse the error message from the server response
 				const errorData = await response.json();

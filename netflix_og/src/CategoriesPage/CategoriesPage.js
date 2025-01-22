@@ -20,15 +20,14 @@ function CategoriesPage() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'user-id': `${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`
             },
         })
             .then((response) => response.json())
             .then((data) => {
                 setCategories(data);
             })
-            .catch((error) => console.error('Error fetching movies:', error));
-    }, []);
+            .catch((error) => alert('Error fetching movies: ' + error.message));    }, []);
 
     const handleMovieClick = (movieId) => {
         setSelectedMovieId(movieId);

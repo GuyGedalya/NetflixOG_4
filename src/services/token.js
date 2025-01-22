@@ -10,7 +10,7 @@ const getToken = async (UserName, Password) => {
 		if(!user || user.Password !== Password) {
 			return null;
 		}
-		return user._id;
+		return user;
 	} catch (error) {
 		console.error(error);
 		return null;
