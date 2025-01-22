@@ -86,6 +86,7 @@ function SignUp() {
 						pattern="^05\d{8}$"
 						title="Phone number must start with 05 and be 10 digits."
 						value={formData.Phone} onChange={handleChange} />
+					<label>Profile Image</label>
 					<input type="file"
 						name="ProfileImage"
 						accept="image/*"

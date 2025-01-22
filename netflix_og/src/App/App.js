@@ -6,6 +6,7 @@ import MovieDetailsModal from '../MovieDetailsModal/MovieDetailsModal';
 import HomePage from '../HomePage/HomePage'
 import CategoriesPage from '../CategoriesPage/CategoriesPage';
 import SignUp from '../signUp/SignUp';
+import Manage from '../Manager/Manage';
 
 import './App.css';
 import ProtectedRoute from './ProtectedRoute';
@@ -19,7 +20,8 @@ function App() {
           <Route path="/" element={<HomePageUnregistered />} />
           <Route path="/logIn" element={<SignIn />} />
            <Route path="/signUp" element={<SignUp/>} />
-		      <Route path="/home" element={<ProtectedRoute> <HomePage /> </ProtectedRoute>} />
+		   <Route path="/manage" element={<Manage/>}/>
+			<Route path="/home" element={<ProtectedRoute> <HomePage /> </ProtectedRoute>} />
           <Route path="/categories" element={<ProtectedRoute> <CategoriesPage /> </ProtectedRoute>} />
           <Route path="api/movies/:id" element={<ProtectedRoute><MovieDetailsHandler /> </ProtectedRoute>} />
         </Routes>

@@ -1,0 +1,16 @@
+
+button{
+	all: unset;
+	
+}
+ul{
+	list-style-type: none;
+	padding: 20px;
+}
+li{
+	padding: 10px;
+}	
+.leftMenu{
+	float: left;
+}
+  
