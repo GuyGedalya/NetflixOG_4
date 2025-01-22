@@ -3,7 +3,7 @@ import './CategoriesPage.css';
 import MovieDetailsModal from '../MovieDetailsModal/MovieDetailsModal';
 import SearchResultsModal from '../SearchResultsModal/SearchResultsModal';
 
-import Header from '../Header/header';
+import Header from '../Components/upperMenuHeader';
 
 
 

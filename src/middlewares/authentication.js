@@ -40,7 +40,7 @@ const checkAdmin = (req, res, next) => {
 };
 
 const signToken = (user) => {
-	const payload = { id: user._id, admin: user.Admin };
+	const payload = { id: user._id };
 	const token = jwt.sign(payload, secretKey);
 	return token;
 };

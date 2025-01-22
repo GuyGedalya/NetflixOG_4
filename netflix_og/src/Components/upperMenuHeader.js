@@ -1,15 +1,32 @@
-import { useEffect, useState, useRef } from "react";
+import {React, useEffect, useState, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 
 function Header({ setResults, setShowSearchModal }) {
 	const [searchText, setSearchText] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
+	const [isAdmin, setIsAdmin] = useState(false);
 
 	const navigate = useNavigate();
 	const searchBarRef = useRef(null);
 
-
-	// A function to deal with searching
+	const checkAdmin = async () => {
+		const user = JSON.parse(sessionStorage.getItem("user"));
+		try {
+			const response = await fetch(`http://localhost:3001/api/users/${user._id}`, {
+				method: 'GET'
+			});
+			if (response.ok) {
+				
+				const data = await response.json();
+				return data.Admin;
+			} else {
+				alert('Failed to fetch user data');
+				return false;
+			}
+		} catch (error) {
+			console.error('Failed to fetch search results:', error);
+		}
+	}
 	const handleSearch = async () => {
 		if (searchText.trim() === '') {
 			alert('Titles, People, Genres');
@@ -48,6 +65,11 @@ function Header({ setResults, setShowSearchModal }) {
 			document.removeEventListener('mousedown', handleOutsideClick);
 		};
 	}, [isOpen]);
+
+	useEffect(() => {
+        checkAdmin().then((result) => setIsAdmin(result));
+    }, []);
+
 	return (
 		<header>
 			<a href="/home" className="logo">
@@ -56,7 +78,7 @@ function Header({ setResults, setShowSearchModal }) {
 			<nav>
 				<button onClick={() => (window.location.href = '/home')} className='header button'>Home</button>
 				<button onClick={() => navigate('/categories')} className='header button'>Categories</button>
-				<button>Manage</button>
+				{isAdmin && <button>Manage</button>}
 				{!isOpen ? (<button onClick={() => setIsOpen(true)} className='header button'>Search</button>) :
 					(<div className="search-bar" ref={searchBarRef}>
 						<input

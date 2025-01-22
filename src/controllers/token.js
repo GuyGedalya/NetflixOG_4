@@ -10,7 +10,7 @@ const getToken = async (req, res) => {
 			return res.status(404).json({ error: 'User or Password not found!' });
 		}
 		const token = signServies.signToken(user);
-		return res.status(200).json({ token: token });
+		return res.status(200).json({ token: token, user: user });
 	} catch (error) {
 		return res.status(500).json({ error: 'Internal Server Error' });
 	}
