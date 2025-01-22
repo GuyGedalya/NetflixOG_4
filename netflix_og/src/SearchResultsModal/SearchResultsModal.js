@@ -3,7 +3,6 @@ import './SearchResultsModal.css';
 
 function SearchResultsModal({ show, onClose, results, onMovieClick }) {
     if (!show) return null; 
-    console.log(results)
     return (
         <div className="modal-overlay">
             <div className="modal-content">

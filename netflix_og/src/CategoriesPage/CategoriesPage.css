@@ -149,4 +149,12 @@ header nav a:hover {
     width: 30px; 
 }
 
-
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    text-align: left;
+    padding: 10px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}

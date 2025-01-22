@@ -8,8 +8,8 @@ const MovieDetailsModal = ({ show, onHide, movieId }) => {
 
   useEffect(() => {
     if (movieId) {
-      setMovie(null); // אפס את הסרטון הקודם
-      setError(null); // אפס שגיאות
+      setMovie(null); 
+      setError(null); 
 
       fetch(`http://localhost:3001/api/movies/${movieId}`)
         .then((response) => {

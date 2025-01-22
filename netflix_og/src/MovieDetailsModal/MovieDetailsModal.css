@@ -27,7 +27,7 @@
 }
 
 body {
-  overflow: auto !important; /* ודא שהדף הראשי ניתן לגלילה */
+  overflow: auto !important; 
 }
 
   /* Video section styling */

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './CategoriesPage.css';
 import MovieDetailsModal from '../MovieDetailsModal/MovieDetailsModal';
 import SearchResultsModal from '../SearchResultsModal/SearchResultsModal';
-import { useNavigate } from 'react-router-dom';
+
+import Header from '../Header/header';
 
 
 
@@ -10,43 +11,16 @@ function CategoriesPage() {
     const [categories, setCategories] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [selectedMovieId, setSelectedMovieId] = useState(null);
-    const [isOpen, setIsOpen] = useState(false);
-    const [searchText, setSearchText] = useState('');
     const [results, setResults] = useState([]);
     const [showSearchModal, setShowSearchModal] = useState(false);
-    const navigate = useNavigate();
-
-
-    const handleSearch = async () => {
-        if (searchText.trim() === '') {
-            alert('Titles, People, Genres');
-            return;
-        }
-
-        try {
-            console.log(`http://localhost:3001/api/movies/search/${encodeURIComponent(searchText)}`);
-            const response = await fetch(`http://localhost:3001/api/movies/search/${encodeURIComponent(searchText)}`);
-            let data;
-            if (!response.ok) {
-                data = null;
-            } else {
-                data = await response.json();
-            }
-            setResults(data);
-            console.log(data);
-            setShowSearchModal(true);
-        } catch (error) {
-            console.error('Failed to fetch search results:', error);
-            setResults([]);
-        }
-    };
+  
 
     useEffect(() => {
         fetch('http://localhost:3001/api/movies', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'user-id': '678c1fdbb298510871824c64',
+                'user-id': `${localStorage.getItem('token')}`,
             },
         })
             .then((response) => response.json())
@@ -63,42 +37,7 @@ function CategoriesPage() {
 
     return (
         <div>
-            <header>
-                <a href="#" className="logo">
-                    <img src="/images/favicon.ico" alt="Project Logo" className="logo-image" />
-                </a>
-                <nav>
-                    <button onClick={() => navigate('/home')} className='header button'>Home</button>
-                    <button onClick={() => (window.location.href = '/categories')} className='header button'>Categories</button>
-
-                    {!isOpen ? (<button onClick={() => setIsOpen(true)} className='header button'>Search</button>) :
-                        (<div className="search-bar">
-                            <input
-                                type="text"
-                                className="search-input"
-                                placeholder="Titles, People, Genres"
-                                value={searchText}
-                                onChange={(e) => setSearchText(e.target.value)}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter') {
-                                        handleSearch();
-                                    }
-                                }}
-                                autoFocus
-                            />
-                            <button
-                                onClick={() => {
-                                    setIsOpen(false);
-                                    setSearchText('');
-                                }}
-                                className="close-button"
-                            >
-                                ✖
-                            </button>
-                        </div>
-                        )}
-                </nav>
-            </header>
+            <Header setResults = {setResults} setShowSearchModal = {setShowSearchModal}/>
             <section className="categories1">
                 {Object.keys(categories).map((categoryName) => (
                     <div key={categoryName} className="category">

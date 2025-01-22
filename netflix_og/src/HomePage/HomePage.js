@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './HomePage.css';
 import MovieDetailsModal from '../MovieDetailsModal/MovieDetailsModal';
 import SearchResultsModal from '../SearchResultsModal/SearchResultsModal';
-import { useNavigate } from 'react-router-dom';
 
+import Header from '../Header/header';
 
 
 function HomePage() {
@@ -11,45 +11,15 @@ function HomePage() {
     const [showModal, setShowModal] = useState(false);
     const [selectedMovieId, setSelectedMovieId] = useState(null);
     const [randomMovie, setRandomMovie] = useState(null);
-    const [isOpen, setIsOpen] = useState(false);
-    const [searchText, setSearchText] = useState('');
     const [results, setResults] = useState([]);
     const [showSearchModal, setShowSearchModal] = useState(false);
-    const navigate = useNavigate();
-
-
-
-    const handleSearch = async () => {
-        if (searchText.trim() === '') {
-            alert('Titles, People, Genres');
-            return;
-        }
-
-        try {
-            console.log(`http://localhost:3001/api/movies/search/${encodeURIComponent(searchText)}`)
-            const response = await fetch(`http://localhost:3001/api/movies/search/${encodeURIComponent(searchText)}`);
-            let data;
-            if (!response.ok) {
-                data = null;
-            } else {
-                data = await response.json();
-            }
-            setResults(data);
-            console.log(data);
-            setShowSearchModal(true);
-        } catch (error) {
-            console.error('Failed to fetch search results:', error);
-            setResults([]);
-        }
-    };
-
 
     useEffect(() => {
         fetch('http://localhost:3001/api/movies', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'user-id': '678c1fdbb298510871824c64',
+                'user-id': `${localStorage.getItem("token")}`,
             },
         })
             .then((response) => response.json())
@@ -69,17 +39,13 @@ function HomePage() {
         const categoryKeys = Object.keys(data).filter(
             (category) => category !== 'lastSeenMovies'
         );
-        console.log(categoryKeys);
         if (categoryKeys.length > 0) {
             const randomCategory =
                 categoryKeys[Math.floor(Math.random() * categoryKeys.length)];
-            console.log(randomCategory);
             const movies = data[randomCategory];
-            console.log(movies);
 
             if (movies && movies.length > 0) {
                 const randomMovie = movies[Math.floor(Math.random() * movies.length)];
-                console.log(randomMovie)
                 setRandomMovie(randomMovie);
             }
         }
@@ -87,42 +53,7 @@ function HomePage() {
 
     return (
         <div>
-            <header>
-                <a href="#" className="logo">
-                    <img src="/images/favicon.ico" alt="Project Logo" className="logo-image" />
-                </a>
-                <nav>
-                    <button onClick={() => (window.location.href = '/home')} className='header button'>Home</button>
-                    <button onClick={() => navigate('/categories')} className='header button'>Categories</button>
-                    {!isOpen ? (<button onClick={() => setIsOpen(true)} className='header button'>Search</button>) :
-                        (<div className="search-bar">
-                            <input
-                                type="text"
-                                className="search-input"
-                                placeholder="Titles, People, Genres"
-                                value={searchText}
-                                onChange={(e) => setSearchText(e.target.value)}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter') {
-                                        handleSearch();
-                                    }
-                                }}
-                                autoFocus
-                            />
-                            <button
-                                onClick={() => {
-                                    setIsOpen(false);
-                                    setSearchText('');
-                                }}
-                                className="close-button"
-                            >
-                                ✖
-                            </button>
-                        </div>
-                        )}
-                </nav>
-            </header>
-
+            <Header setResults = {setResults} setShowSearchModal = {setShowSearchModal}/>
             <div className="hero-section">
                 <div className="video-container">
                     {randomMovie ? (

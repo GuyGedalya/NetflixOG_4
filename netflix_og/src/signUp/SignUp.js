@@ -1,3 +1,4 @@
+import './SignUp.css';
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
@@ -58,7 +59,7 @@ function SignUp() {
 			<div className="logo-container">
 				<img src="/images/favicon.ico" alt="NOG Logo" className="logo"></img>
 			</div>
-			<div className="container">
+			<div className="text-container">
 				<h1>Sign Up</h1>
 				<form className="login-form" onSubmit={handleSubmit}>
 					<input type="text"
@@ -95,8 +96,5 @@ function SignUp() {
 		</>
 	);
 }
-
-
-
 
 export default SignUp;
