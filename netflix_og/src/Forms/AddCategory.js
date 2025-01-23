@@ -20,8 +20,6 @@ function AddCategory() {
 			name: formData.name,
 			promoted: formData.promoted
 		}
-		console.log(formData.promoted);
-		console.log(formData.name);
 		try {
 			// Send a POST request to the server
 			const response = await fetch("http://localhost:3001/api/categories", {
