@@ -27,7 +27,7 @@ const createMovie = async (req, res) => {
 			return res.status(400).json({ error: 'Missing required fields.' });
 		}
 		const categories = await categoryService.getCategoriesIdsByNames(JSON.parse(req.body.Categories));
-		if (!categories) {
+		if (categories == []) {
 			res.status(400).json({ error: "Please provide existing categories." });
 		}
 		// Creating movie
