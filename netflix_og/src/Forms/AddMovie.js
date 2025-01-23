@@ -6,8 +6,8 @@ function AddMovie() {
 		Title: "",
 		ReleaseDate: "",
 		Categories: [],
-		Film: null,
-		MovieImage: null,
+		Film: '',
+		MovieImage: '',
 
 	});
 	const [inputValue, setInputValue] = useState(""); // For the input field

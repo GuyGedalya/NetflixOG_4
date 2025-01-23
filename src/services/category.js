@@ -79,7 +79,6 @@ const getCategoriesIdsByNames = async (categoryNames) => {
         const categories = [];
         // Creating categories if they don't exist
         for (const name of categoryNames) {
-			console.log(name);
             let category = await Category.findOne({ name });
             if (!category) {
                 throw new Error(`Category "${name}" does not exist.`);

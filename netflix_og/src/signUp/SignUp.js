@@ -9,7 +9,7 @@ function SignUp() {
 		Email: "",
 		Password: "",
 		Phone: "",
-		ProfileImage: null,
+		ProfileImage: '',
 	});
 	// Handle form input changes
 	const handleChange = (e) => {

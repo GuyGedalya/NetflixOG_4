@@ -2,7 +2,7 @@ const movieService = require('../services/movie');
 const categoryService = require('../services/category');
 const connectionService = require('../services/connection');
 const userService = require('../services/user');
-
+const fs = require('fs/promises');
 
 const getMovie = async (req, res) => {
 	try {
@@ -65,23 +65,26 @@ async function returnMovies(req, res) {
 
 // Replace movieID details
 const replaceMovie = async (req, res) => {
-	if (!req.body.Title || !req.body.ReleaseDate || !req.body.Categories || !req.body.Image || !req.body.Film) {
-		return res.status(400).json({ message: 'Missing required fields: Title, ReleaseDate, or Categories.' });
-	}
 	try {
+		const MovieImagePath = req.files && req.files.MovieImage ? req.files.MovieImage[0].path : null;
+		const MovieVideoPath = req.files && req.files.Film ? req.files.Film[0].path : null;
+		if (!req.body.Title || !req.body.ReleaseDate || !req.body.Categories || MovieImagePath == null || MovieVideoPath == null) {
+			return res.status(400).json({ message: 'Missing required fields: Title, ReleaseDate, or Categories.' });
+		}
 		// Getting the movie
 		const movie = await movieService.getMovieById(req.params.id);
 		if (!movie) {
 			return res.status(404).json({ error: 'Movie not found!' });
 		}
+		// Deleting the old movie files
+		await deleteMoviefiles(movie);
 		// Getting a list of category IDs
-		const categories = await categoryService.getCategoriesIdsByNames(req.body.Categories);
+		const categories = await categoryService.getCategoriesIdsByNames(JSON.parse(req.body.Categories));
 		if (!categories) {
 			res.status(400).json({ error: "Please use existing categories." });
 		}
-		const MovieImagePath = req.files && req.files.MovieImage ? req.files.MovieImage[0].path : null;
 		// Changing movie details
-		const updatedMovie = await movieService.replaceMovie(movie, req.body.Title, req.body.ReleaseDate, MovieImagePath, categories.map(cat => cat._id), req.body.Film);
+		const updatedMovie = await movieService.replaceMovie(movie, req.body.Title, req.body.ReleaseDate, MovieImagePath, categories.map(cat => cat._id), MovieVideoPath);
 		if (!updatedMovie) {
 			res.status(400).json({ error: "Failed to update movie. Please check the field formats." });
 		}
@@ -94,6 +97,19 @@ const replaceMovie = async (req, res) => {
 		res.status(500).json({ error: 'An error occurred while fetching the movie.' });
 	}
 };
+
+
+
+const deleteMoviefiles = async (movie) => {
+  if (await fs.stat(movie.Image).catch(() => false)) {
+    await fs.unlink(movie.Image).catch((err) => console.error(err));
+  }
+
+  if (await fs.stat(movie.Film).catch(() => false)) {
+    await fs.unlink(movie.Film).catch((err) => console.error(err));
+  }
+};
+
 
 const addMovieToUser = async (req, res) => {
 	const user = req.user;
@@ -142,6 +158,7 @@ const deleteMovie = async (req, res) => {
 		if (!movie) {
 			return res.status(404).json({ error: 'Movie not found!' });
 		}
+		await deleteMoviefiles(movie);
 		movie = await movieService.deleteMovie(movieid);
 		if (!movie) {
 			return res.status(500).json({ error: 'An error accrued while deleting the movie!' });
