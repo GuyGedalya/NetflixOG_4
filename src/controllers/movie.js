@@ -19,17 +19,20 @@ const getMovie = async (req, res) => {
 };
 
 const createMovie = async (req, res) => {
-	// Checking that all the fields arrived
-	if (!req.body.Title || !req.body.ReleaseDate || !req.body.Categories || !req.body.Image || !req.body.Film) {
-		return res.status(400).json({ error: 'Missing required fields.' });
-	}
 	try {
-		const categories = await categoryService.getCategoriesIdsByNames(req.body.Categories);
+		const MovieImagePath = req.files && req.files.MovieImage ? req.files.MovieImage[0].path : null;
+		const MovieVideoPath = req.files && req.files.Film ? req.files.Film[0].path : null;
+		// Checking that all the fields arrived
+		if (!req.body.Title || !req.body.ReleaseDate || !req.body.Categories || MovieImagePath == null || MovieVideoPath == null) {
+			return res.status(400).json({ error: 'Missing required fields.' });
+		}
+		const categories = await categoryService.getCategoriesIdsByNames(JSON.parse(req.body.Categories));
 		if (!categories) {
 			res.status(400).json({ error: "Please provide existing categories." });
 		}
 		// Creating movie
-		const movie = await movieService.createMovie(req.body.Title, req.body.ReleaseDate, req.body.Image, categories.map(cat => cat._id), req.body.Film);
+		const movie = await movieService.createMovie(req.body.Title, req.body.ReleaseDate, MovieImagePath, categories.map(cat => cat._id), MovieVideoPath);
+
 		if (movie) {
 			// Set the Location header to point to the new resource
 			res.setHeader('Location', `/api/movies/${movie._id}`);
@@ -63,7 +66,7 @@ async function returnMovies(req, res) {
 
 // Replace movieID details
 const replaceMovie = async (req, res) => {
-	if (!req.body.Title || !req.body.ReleaseDate || !req.body.Categories) {
+	if (!req.body.Title || !req.body.ReleaseDate || !req.body.Categories || !req.body.Image || !req.body.Film) {
 		return res.status(400).json({ message: 'Missing required fields: Title, ReleaseDate, or Categories.' });
 	}
 	try {
@@ -77,8 +80,10 @@ const replaceMovie = async (req, res) => {
 		if (!categories) {
 			res.status(400).json({ error: "Please use existing categories." });
 		}
+		const MovieImagePath = req.files && req.files.MovieImage ? req.files.MovieImage[0].path : null;
 		// Changing movie details
-		const updatedMovie = await movieService.replaceMovie(movie, req.body.Title, req.body.ReleaseDate, categories.map(cat => cat._id));
+		const updatedMovie = await movieService.replaceMovie(movie, req.body.Title, req.body.ReleaseDate, MovieImagePath, categories.map(cat => cat._id), req.body.Film);
+
 		if (!updatedMovie) {
 			res.status(400).json({ error: "Failed to update movie. Please check the field formats." });
 		}
@@ -235,4 +240,5 @@ async function getCategories(req, res) {
 	}
 }
 
-module.exports = { getMovie, createMovie, replaceMovie, returnMovies, addMovieToUser, deleteMovie, recommendMovies, searchMovies, getCategories };
+module.exports = { getMovie, createMovie, replaceMovie, returnMovies, addMovieToUser, deleteMovie, recommendMovies, searchMovies };
+

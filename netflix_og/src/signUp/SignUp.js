@@ -42,7 +42,7 @@ function SignUp() {
 			});
 			if (response.ok) {
 				alert("Sign up successful! You can now log in to your account.");
-				navigate('/signIn')
+				navigate('/logIn');
 			} else {
 				// Parse the error message from the server response
 				const errorData = await response.json();
@@ -86,6 +86,7 @@ function SignUp() {
 						pattern="^05\d{8}$"
 						title="Phone number must start with 05 and be 10 digits."
 						value={formData.Phone} onChange={handleChange} />
+					<label>Profile Image</label>
 					<input type="file"
 						name="ProfileImage"
 						accept="image/*"

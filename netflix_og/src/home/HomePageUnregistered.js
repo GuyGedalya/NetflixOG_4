@@ -8,7 +8,7 @@ function HomePageUnregistered(){
 		<>
 			<div className="top-bar">
 				<img src="/images/favicon.ico" alt="NOG Logo" className="logo"></img>
-				<Link to="/signIn" className="sign-in-button">Sign In</Link>
+				<Link to="logIn" className="sign-in-button">Sign In</Link>
 			</div>
 				<div className="unregister-container">
 				<h1>WELCOME TO NOG<br/>Unlimited movies,<br/>TV shows, and more</h1>

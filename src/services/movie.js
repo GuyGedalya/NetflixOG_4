@@ -119,13 +119,15 @@ const createMovie = async (Title, ReleaseDate,Image, Categories, Film) => {
 };
 
 // Replacing the movie details
-const replaceMovie = async (movie, Title, ReleaseDate, Categories) => {
+const replaceMovie = async (movie, Title, ReleaseDate,Image, Categories, Film) => {
     if (!Categories || Categories.length === 0) {
         throw new Error('Categories cannot be empty.');
     }
     movie.Title = Title;
     movie.ReleaseDate = ReleaseDate;
+	movie.Image = Image;
     movie.Categories = Categories;
+	movie.Film = Film;
     return await movie.save();
 }
 
