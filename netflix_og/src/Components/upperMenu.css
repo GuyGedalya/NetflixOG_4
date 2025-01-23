@@ -1,0 +1,13 @@
+.headerLight {
+	background-color: aliceblue;	
+}
+
+.buttonLight {
+	color: black;
+}
+.buttonDark {
+	color: white;
+}
+.headerDark {
+	background-color: black;
+}

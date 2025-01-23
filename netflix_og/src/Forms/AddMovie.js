@@ -6,8 +6,8 @@ function AddMovie() {
 		Title: "",
 		ReleaseDate: "",
 		Categories: [],
-		Film: null,
-		MovieImage: null,
+		Film: '',
+		MovieImage: '',
 
 	});
 	const [inputValue, setInputValue] = useState(""); // For the input field
@@ -47,6 +47,10 @@ function AddMovie() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault(); // Prevent page reload
+		if (formData.Categories.length === 0) {
+			alert("Please add at least one category before submitting.");
+			return;
+		}
 		// Prepare form data to send to the server
 		const reqBody = new FormData();
 		reqBody.append('Title', formData.Title);
@@ -131,6 +135,7 @@ function AddMovie() {
 				<input type="file"
 					name="MovieImage"
 					accept="image/*"
+					required
 					onChange={handleChange}
 				/>
 
