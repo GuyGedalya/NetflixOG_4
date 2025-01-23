@@ -15,10 +15,6 @@ function DeleteCategory() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault(); // Prevent page reload
-		const reqBody = {
-			name: formData.name,
-			promoted: formData.promoted
-		}
 		try {
 			// Send a POST request to the server
 			const response = await fetch(`http://localhost:3001/api/categories/${formData.id}`, {
