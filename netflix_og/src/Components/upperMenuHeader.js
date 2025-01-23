@@ -78,7 +78,7 @@ function Header({ setResults, setShowSearchModal }) {
 			<nav>
 				<button onClick={() => (window.location.href = '/home')} className='header button'>Home</button>
 				<button onClick={() => navigate('/categories')} className='header button'>Categories</button>
-				{isAdmin && <button>Manage</button>}
+				{isAdmin && <button onClick={() => navigate('/Manage')}>Manage</button>}
 				{!isOpen ? (<button onClick={() => setIsOpen(true)} className='header button'>Search</button>) :
 					(<div className="search-bar" ref={searchBarRef}>
 						<input

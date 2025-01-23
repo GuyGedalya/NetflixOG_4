@@ -15,6 +15,11 @@ function AddMovie() {
 					required
 				/>
 				<label>
+				<input type="text"
+					name="Film"
+					placeholder="Movie URL"
+					required
+				/>
 				Movie Image
 				<input type="file"
 					name="MovieImage"

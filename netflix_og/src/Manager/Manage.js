@@ -9,12 +9,12 @@ function Manage() {
 	};
 	return (
 		<>
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-3">
+			<div className="container-fluid">
+				<div className="row">
+					<div className="col-3">
 						<LeftManagerMenu onMenuClick={handleMenuClick} />
 					</div>
-					<div class="col-9 text-container">
+					<div className="col-9 text-container">
 						{currentComponent}
 					</div>
 				</div>

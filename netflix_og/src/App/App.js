@@ -9,40 +9,40 @@ import SignUp from '../signUp/SignUp';
 import Manage from '../Manager/Manage';
 
 import './App.css';
-import ProtectedRoute from './ProtectedRoute';
+import {ProtectedRoute, ManagerProtectedRoute} from './ProtectedRoute';
 
 function App() {
-  return (
+	return (
 
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<HomePageUnregistered />} />
-          <Route path="/logIn" element={<SignIn />} />
-           <Route path="/signUp" element={<SignUp/>} />
-		   <Route path="/manage" element={<Manage/>}/>
-			<Route path="/home" element={<ProtectedRoute> <HomePage /> </ProtectedRoute>} />
-          <Route path="/categories" element={<ProtectedRoute> <CategoriesPage /> </ProtectedRoute>} />
-          <Route path="api/movies/:id" element={<ProtectedRoute><MovieDetailsHandler /> </ProtectedRoute>} />
-        </Routes>
-      </div>
-    </Router>
+		<Router>
+			<div className="App">
+				<Routes>
+					<Route path="/" element={<HomePageUnregistered />} />
+					<Route path="/logIn" element={<SignIn />} />
+					<Route path="/signUp" element={<SignUp />} />
+					<Route path="/manage" element={<ManagerProtectedRoute><Manage /></ManagerProtectedRoute>} />
+					<Route path="/home" element={<ProtectedRoute> <HomePage /> </ProtectedRoute>} />
+					<Route path="/categories" element={<ProtectedRoute> <CategoriesPage /> </ProtectedRoute>} />
+					<Route path="api/movies/:id" element={<ProtectedRoute><MovieDetailsHandler /> </ProtectedRoute>} />
+				</Routes>
+			</div>
+		</Router>
 
-  );
+	);
 }
 
 
 const MovieDetailsHandler = () => {
-  const { id } = useParams(); 
-  const navigate = useNavigate(); 
+	const { id } = useParams();
+	const navigate = useNavigate();
 
-  return (
-    <MovieDetailsModal
-      show={true} 
-      onHide={() => navigate(-1)} 
-      movieId={id} 
-    />
-  );
+	return (
+		<MovieDetailsModal
+			show={true}
+			onHide={() => navigate(-1)}
+			movieId={id}
+		/>
+	);
 };
 
 export default App;

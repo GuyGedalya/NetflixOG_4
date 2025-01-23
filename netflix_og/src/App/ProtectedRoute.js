@@ -9,4 +9,12 @@ const ProtectedRoute = ({ children }) => {
     return children; 
 };
 
-export default ProtectedRoute;
+const ManagerProtectedRoute = ({ children }) => {
+	const user = JSON.parse(sessionStorage.getItem("user"));
+	if (!user.Admin) { // If there is no token, redirect to login
+		return <Navigate to="/logIn" />;
+	}
+	return children;
+};
+
+export {ProtectedRoute, ManagerProtectedRoute};
