@@ -4,68 +4,67 @@ function AddMovie() {
 	// State to store form data
 	const [formData, setFormData] = useState({
 		Title: "",
-		RealeaseDate: "",
+		ReleaseDate: "",
 		Categories: [],
-		Film: "",
+		Film: null,
 		MovieImage: null,
-		
+
 	});
-	const [inputValue, setInputValue] = useState(""); // ערך זמני לשדה הקלט
+	const [inputValue, setInputValue] = useState(""); // For the input field
 
 	// Handle form input changes
 	const handleChange = (e) => {
 		const { name, value, files } = e.target;
-		if (name === "ProfileImage") {
-			setFormData((prev) => ({ ...prev, ProfileImage: files[0] }));
+		if (name === "MovieImage") {
+			setFormData((prev) => ({ ...prev, MovieImage: files[0] }));
+		} else if (name === "Film") {
+			setFormData((prev) => ({ ...prev, Film: files[0] }));
 		} else {
 			setFormData((prev) => ({ ...prev, [name]: value }));
 		}
 	};
 
-	// הוספת ערך למערך בלחיצת Enter
+	// Adding Category to the list when pressing Enter
 	const handleKeyDown = (e) => {
 		if (e.key === "Enter" && inputValue.trim() !== "") {
-		  e.preventDefault(); // מונע את פעולת ברירת המחדל של Enter
-		  setFormData((prev) => ({
-			...prev,
-			Categories: [...prev.Categories, inputValue.trim()], // הוספת הערך למערך
-		  }));
-		  setInputValue(""); // איפוס שדה הקלט
+			e.preventDefault(); // Override the default Enter key behavior
+			setFormData((prev) => ({
+				...prev,
+				Categories: [...prev.Categories, inputValue.trim()], // Adding the new value to the array
+			}));
+			setInputValue(""); // Clear the input field
 		}
-	  };
-	
-	  // הסרת ערך מהמערך
-	  const removeOption = (index) => {
-		setFormData((prev) => ({
-		  ...prev,
-		  Categories: prev.Categories.filter((_, i) => i !== index), // סינון הערך לפי אינדקס
-		}));
-	  };
+	};
 
-	  
+	// Removing a Category from the list
+	const removeOption = (index) => {
+		setFormData((prev) => ({
+			...prev,
+			Categories: prev.Categories.filter((_, i) => i !== index), // Remove the value at the specified index
+		}));
+	};
+
+
 	const handleSubmit = async (e) => {
 		e.preventDefault(); // Prevent page reload
-		const reqBody = {
-			Title: formData.Title,
-			RealeaseDate: formData.RealeaseDate,
-			Film: formData.Film,
-			Categories: formData.Categories,
-			MovieImage: formData.MovieImage
-		}
-		console.log(reqBody);
+		// Prepare form data to send to the server
+		const reqBody = new FormData();
+		reqBody.append('Title', formData.Title);
+		reqBody.append('ReleaseDate', formData.ReleaseDate);
+		reqBody.append('Film', formData.Film);
+		reqBody.append('Categories', JSON.stringify(formData.Categories));
+		reqBody.append('MovieImage', formData.MovieImage);;
 		try {
 			// Send a POST request to the server
 			const response = await fetch("http://localhost:3001/api/movies", {
 				method: "POST",
 				headers: {
-					"Content-Type": "application/json", // Specify JSON format
 					Authorization: `Bearer ${sessionStorage.getItem("token")}`
 				},
-				body: JSON.stringify(reqBody)
+				body: reqBody
 			});
-
 			if (response.ok) {
-				alert("Category Added!");
+				alert("Movie Added!");
 			} else {
 				// Parse the error message from the server response
 				const errorData = await response.json();
@@ -88,46 +87,53 @@ function AddMovie() {
 					value={formData.Title}
 					onChange={handleChange}
 				/>
+				<label> Add Release Date:
+				</label>
 				<input type="date"
-					name="RealeaseDate"
-					placeholder="Realease Date: YYYY-MM-DD"
+					name="ReleaseDate"
+					placeholder="Release Date: YYYY-MM-DD"
 					required
-					value={formData.RealeaseDate}
+					value={formData.ReleaseDate}
 					onChange={handleChange}
 				/>
 				<label>
 					Add Categories:
-					<input
-						type="text"
-						value={inputValue}
-						onChange={(e) => setInputValue(e.target.value)} // עדכון הערך הזמני
-						onKeyDown={handleKeyDown} // האזנה ל-Enter
-						placeholder="Type and press Enter"
-					/>
+
 				</label>
+				<input
+					type="text"
+					value={inputValue}
+					onChange={(e) => setInputValue(e.target.value)} // Update the input value
+					onKeyDown={handleKeyDown} // Listen for the Enter key
+					placeholder="Type and press Enter"
+				/>
+
 				<ul>
 					{formData.Categories.map((Category, index) => (
 						<li key={index}>
 							{Category}{" "}
-							<button  style={{ marginLeft: "40px" }} onClick={() => removeOption(index)}>Remove</button>
+							<button style={{ marginLeft: "40px" }} onClick={() => removeOption(index)}>Remove</button>
 						</li>
 					))}
 				</ul>
-				<input type="text"
+				<label>
+					Add video
+				</label>
+				<input type="file"
 					name="Film"
-					placeholder="Movie URL"
+					accept="video/*"
 					required
-					value={formData.Film}
 					onChange={handleChange}
 				/>
 				<label>
 					Add Movie Image
-					<input type="file"
-						name="MovieImage"
-						accept="image/*"
-						onChange={handleChange}
-					/>
 				</label>
+				<input type="file"
+					name="MovieImage"
+					accept="image/*"
+					onChange={handleChange}
+				/>
+
 				<button type="submit" >Add</button>
 			</form>
 		</div>

@@ -10,7 +10,8 @@ services:
       - "3001:3001"
     volumes:
       - ./src/uploads/users:/usr/src/app/uploads/users
-      - ./src/uploads/movies:/usr/src/app/uploads/movies
+      - ./src/uploads/movies/images:/usr/src/app/uploads/movies/images
+      - ./src/uploads/movies/videos:/usr/src/app/uploads/movies/videos
     depends_on:
       - mongodb
       - cpp-server

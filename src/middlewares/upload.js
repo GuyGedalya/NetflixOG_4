@@ -4,7 +4,9 @@ const storage = multer.diskStorage({
         if (file.fieldname === 'ProfileImage') {
             cb(null, 'uploads/users/');
         } else if (file.fieldname === 'MovieImage') {
-            cb(null, 'uploads/movies/');
+            cb(null, 'uploads/movies/images/');
+		} else if (file.fieldname === 'Film') {
+			cb(null, 'uploads/movies/videos/');
         } else {
             cb(new Error('Invalid field name'), null);
         }
@@ -20,7 +22,8 @@ const upload = multer({
     fileFilter: (req, file, cb) => {
         const allowedTypes = {
             ProfileImage: ['image/jpeg', 'image/png'],
-            MovieImage: ['image/jpeg', 'image/png']
+            MovieImage: ['image/jpeg', 'image/png'],
+			Film: ['video/mp4']
         };
         const types = allowedTypes[file.fieldname];
         if (types && types.includes(file.mimetype)) {

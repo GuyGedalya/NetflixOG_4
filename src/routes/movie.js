@@ -7,11 +7,11 @@ const middleware = require('../middlewares/authentication');
 // Some functions need authentication
 router.route('/')
 	.get(middleware.authenticateToken, middleware.getUser, movieController.returnMovies)
-	.post(middleware.authenticateToken, middleware.getUser,middleware.checkAdmin,upload.fields([{ name: 'MovieImage', maxCount: 1 }]), movieController.createMovie);
+	.post(middleware.authenticateToken, middleware.getUser,middleware.checkAdmin,upload.fields([{ name: 'MovieImage', maxCount: 1 }, {name: 'Film', maxCount: 1 }]), movieController.createMovie);
 
 router.route('/:id')
 	.get(movieController.getMovie)
-	.put(middleware.authenticateToken, middleware.getUser,middleware.checkAdmin,upload.fields([{ name: 'MovieImage', maxCount: 1 }]), movieController.replaceMovie)
+	.put(middleware.authenticateToken, middleware.getUser,middleware.checkAdmin,upload.fields([{ name: 'MovieImage', maxCount: 1 }, {name: 'Film', maxCount: 1 }]), movieController.replaceMovie)
 	.delete(middleware.authenticateToken, middleware.getUser,middleware.checkAdmin, movieController.deleteMovie);
 
 router.route('/:id/recommend')
