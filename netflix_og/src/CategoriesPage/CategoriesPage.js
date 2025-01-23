@@ -13,7 +13,7 @@ function CategoriesPage() {
     const [selectedMovieId, setSelectedMovieId] = useState(null);
     const [results, setResults] = useState([]);
     const [showSearchModal, setShowSearchModal] = useState(false);
-  
+
 
     useEffect(() => {
         fetch('http://localhost:3001/api/movies/categories', {
@@ -27,7 +27,8 @@ function CategoriesPage() {
             .then((data) => {
                 setCategories(data);
             })
-            .catch((error) => alert('Error fetching movies: ' + error.message));    }, []);
+            .catch((error) => alert('Error fetching movies: ' + error.message));
+    }, []);
 
     const handleMovieClick = (movieId) => {
         setSelectedMovieId(movieId);
@@ -36,8 +37,8 @@ function CategoriesPage() {
 
     return (
         <div>
-            <Header setResults = {setResults} setShowSearchModal = {setShowSearchModal}/>
-            <section className="categories1">
+            <Header setResults={setResults} setShowSearchModal={setShowSearchModal} />
+            <section className="categories2">
                 {Object.keys(categories).map((categoryName) => (
                     <div key={categoryName} className="category">
                         <h2>{categoryName} Movies</h2>
@@ -45,7 +46,7 @@ function CategoriesPage() {
                             {categories[categoryName].map((movie) => (
                                 <img
                                     key={movie._id}
-                                    src={movie.Image || '/images/favicon.ico'}
+                                    src={`http://localhost:3001/${movie.Image}`}
                                     alt={movie.Title}
                                     className="movie-poster"
                                     onClick={() => handleMovieClick(movie._id)}

@@ -55,7 +55,7 @@ function HomePage() {
         <div>
             <Header setResults = {setResults} setShowSearchModal = {setShowSearchModal}/>
             <div className="hero-section">
-                <div className="video-container">
+                <div className="video-container1">
                     {randomMovie ? (
                         <video autoPlay muted loop>
                             <source src={randomMovie.Film} type="video/mp4" />
@@ -75,7 +75,7 @@ function HomePage() {
                             {categories[categoryName].map((movie) => (
                                 <img
                                     key={movie._id}
-                                    src={movie.Image || '/images/favicon.ico'}
+                                    src={`http://localhost:3001/${movie.Image}`}
                                     alt={movie.Title}
                                     className="movie-poster"
                                     onClick={() => handleMovieClick(movie._id)}

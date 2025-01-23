@@ -257,5 +257,5 @@ async function getCategories(req, res) {
 	}
 }
 
-module.exports = { getMovie, createMovie, replaceMovie, returnMovies, addMovieToUser, deleteMovie, recommendMovies, searchMovies };
+module.exports = { getMovie, createMovie, replaceMovie, returnMovies, addMovieToUser, deleteMovie, recommendMovies, searchMovies, getCategories };
 
