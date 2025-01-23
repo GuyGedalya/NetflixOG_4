@@ -32,6 +32,7 @@ const createMovie = async (req, res) => {
 		}
 		// Creating movie
 		const movie = await movieService.createMovie(req.body.Title, req.body.ReleaseDate, MovieImagePath, categories.map(cat => cat._id), MovieVideoPath);
+
 		if (movie) {
 			// Set the Location header to point to the new resource
 			res.setHeader('Location', `/api/movies/${movie._id}`);
@@ -82,6 +83,7 @@ const replaceMovie = async (req, res) => {
 		const MovieImagePath = req.files && req.files.MovieImage ? req.files.MovieImage[0].path : null;
 		// Changing movie details
 		const updatedMovie = await movieService.replaceMovie(movie, req.body.Title, req.body.ReleaseDate, MovieImagePath, categories.map(cat => cat._id), req.body.Film);
+
 		if (!updatedMovie) {
 			res.status(400).json({ error: "Failed to update movie. Please check the field formats." });
 		}
@@ -225,5 +227,18 @@ async function searchMovies(req, res) {
 	}
 }
 
+async function getCategories(req, res) {
+	try {
+		const categories = await movieService.returnCategories();
+		//if (categories.length > 0) {
+			res.json(categories)
+		//} else {
+		//	res.status(404).json({ error: 'No categories found' });
+		//}
+	} catch (error) {
+		res.status(500).json({ error: 'Error searching for movies', error });
+	}
+}
 
 module.exports = { getMovie, createMovie, replaceMovie, returnMovies, addMovieToUser, deleteMovie, recommendMovies, searchMovies };
+
