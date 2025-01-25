@@ -13,6 +13,8 @@ import com.example.nog_android.ObjectClasses.User;
 import com.example.nog_android.connectionClasses.ApiClient;
 import com.example.nog_android.connectionClasses.ApiService;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -83,8 +85,12 @@ public class SignupActivity extends AppCompatActivity {
 
     private void submitUserToServer(String userNameValue, String emailValue, String passwordValue, String phoneValue) {
         ApiService apiService = ApiClient.getApiService();
-        User userToAdd = new User(userNameValue,emailValue, passwordValue, phoneValue, null);
-        Call<Void> call = apiService.addUser(userToAdd);
+        RequestBody userNameBody = RequestBody.create(MediaType.parse("text/plain"), userNameValue);
+        RequestBody emailBody = RequestBody.create(MediaType.parse("text/plain"), emailValue);
+        RequestBody passwordBody = RequestBody.create(MediaType.parse("text/plain"), passwordValue);
+        RequestBody phoneBody = RequestBody.create(MediaType.parse("text/plain"), phoneValue);
+
+        Call<Void> call = apiService.addUser(userNameBody,emailBody,passwordBody,phoneBody,null);
 
         // Sending request to the server
         call.enqueue(new Callback<>() {
