@@ -52,7 +52,7 @@
             android:id="@+id/uploadProfileImage"
             style="@style/uploadButton"
             android:layout_width="wrap_content"
-            android:drawableLeft="@drawable/ic_camera"
+            android:drawableLeft="@drawable/ic_camara"
             android:text="@string/upload_profile_image"
             tools:ignore="RtlHardcoded" />
 
