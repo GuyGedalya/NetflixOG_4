@@ -1,25 +1,34 @@
 package com.example.nog_android;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.nog_android.ObjectClasses.User;
 import com.example.nog_android.connectionClasses.ApiClient;
 import com.example.nog_android.connectionClasses.ApiService;
 
+import java.io.File;
+
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SignupActivity extends AppCompatActivity {
+    private ActivityResultLauncher<Intent> imagePickerLauncher;
+    private Uri selectedImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +42,26 @@ public class SignupActivity extends AppCompatActivity {
         EditText phoneEditText = findViewById(R.id.phone);
         Button submitButton = findViewById(R.id.submit);
         Button toLogInBtn = findViewById(R.id.toLogInBtn);
+        Button uploadImg = findViewById(R.id.uploadProfileImage);
+
+        // Initialize image picker launcher
+        imagePickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        selectedImageUri = result.getData().getData();
+                    }
+                }
+        );
 
         toLogInBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, LogInActivity.class);
             startActivity(intent);
+        });
+        uploadImg.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            imagePickerLauncher.launch(intent);
         });
 
         submitButton.setOnClickListener(v -> validateAndSubmit(userNameEditText, emailEditText, passwordEditText, phoneEditText));
@@ -90,7 +115,17 @@ public class SignupActivity extends AppCompatActivity {
         RequestBody passwordBody = RequestBody.create(MediaType.parse("text/plain"), passwordValue);
         RequestBody phoneBody = RequestBody.create(MediaType.parse("text/plain"), phoneValue);
 
-        Call<Void> call = apiService.addUser(userNameBody,emailBody,passwordBody,phoneBody,null);
+        MultipartBody.Part imagePart = null;
+        if (selectedImageUri != null) {
+            String filePath = getPathFromUri(selectedImageUri);
+            if (filePath != null){
+                File file = new File(filePath);
+                RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
+                imagePart = MultipartBody.Part.createFormData("ProfileImage", file.getName(), fileBody);
+            }
+        }
+
+        Call<Void> call = apiService.addUser(userNameBody, emailBody, passwordBody, phoneBody, imagePart);
 
         // Sending request to the server
         call.enqueue(new Callback<>() {
@@ -102,7 +137,7 @@ public class SignupActivity extends AppCompatActivity {
                     Intent intent = new Intent(SignupActivity.this, LogInActivity.class);
                     startActivity(intent);
                     finish();
-                }else {
+                } else {
                     Toast.makeText(SignupActivity.this, "Failed to sign up: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -112,5 +147,18 @@ public class SignupActivity extends AppCompatActivity {
                 Toast.makeText(SignupActivity.this, "Error: Please check your connection and try again.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private String getPathFromUri(Uri uri) {
+        String filePath = null;
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if (cursor != null) {
+            int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            filePath = cursor.getString(columnIndex);
+            cursor.close();
+        }
+        return filePath;
     }
 }
