@@ -39,19 +39,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         // קביעת שם הסרט
         holder.movieTitle.setText(movie.getTitle());
 
-        // טעינת תמונת הסרט באמצעות Glide
+        // יצירת URL מלא לתמונה
+        String fullImageUrl = ApiClient.getFullMovieUrl(movie.getImagePath());
+
+        // טעינת התמונה באמצעות Glide
         Glide.with(holder.itemView.getContext())
-                .load(movie.getImagePath())
-                .placeholder(R.drawable.logo)
+                .load(fullImageUrl)
+                .placeholder(R.drawable.logo) // תמונת ברירת מחדל לטעינה
                 .into(holder.movieImage);
 
-        // הוספת מאזין לחיצה על תמונת הסרט
+        // מאזין לחיצה על תמונה
         holder.movieImage.setOnClickListener(v -> {
-            // פתיחת חלון פרטי הסרט
+            // פתיחת פרטי הסרט ב-DialogFragment
             MovieDetailsDialogFragment dialogFragment = MovieDetailsDialogFragment.newInstance(movie);
             dialogFragment.show(((AppCompatActivity) holder.itemView.getContext()).getSupportFragmentManager(), "MovieDetailsDialog");
         });
     }
+
 
 
     @Override

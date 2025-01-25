@@ -3,6 +3,7 @@ package com.example.nog_android;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -10,6 +11,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Streaming;
 
 public interface ApiService {
     @POST("users")
@@ -31,4 +33,11 @@ public interface ApiService {
 
     @GET("movies/{id}/recommend")
     Call<List<Movie>> getRecommendations(@Path("id") String movieId, @Header("Authorization") String token);
+
+    @GET("{Path}")
+    @Streaming
+    Call<ResponseBody> downloadFile(@Header("Authorization") String token, @Path("Path") String pathToFile);
+
+    @POST("movies/{id}/recommend")
+    Call<Void> addAsWatched(@Path("id") String movieId, @Header("Authorization") String token, String userId);
 }

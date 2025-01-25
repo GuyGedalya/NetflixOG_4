@@ -60,7 +60,7 @@ public class MovieDetailsDialogFragment extends DialogFragment {
         // Play button click listener
         playButton.setOnClickListener(v -> {
             // Play the movie
-            VideoPlayerActivity.start(requireContext(), ApiClient.getURL() + movie.getFilmPath());
+            VideoPlayerActivity.start(requireContext(), ApiClient.getFullMovieUrl(movie.getFilmPath()));
             dismiss();
         });
 

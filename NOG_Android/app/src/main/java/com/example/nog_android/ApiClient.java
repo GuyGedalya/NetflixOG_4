@@ -14,7 +14,9 @@ public class ApiClient {
         }
         return apiService;
     }
-    public static String getURL(){
-        return BASE_URL_MOVIE;
+    public static String getFullMovieUrl(String relativePath) {
+        return BASE_URL_MOVIE + relativePath;
     }
+
+
 }
