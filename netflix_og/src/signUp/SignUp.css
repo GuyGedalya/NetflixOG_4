@@ -82,4 +82,5 @@ h1 {
     max-width: 300px; 
     margin: 0 auto; 
     text-align: center; 
+    transform: translate(0%, 70%);
 }
