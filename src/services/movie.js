@@ -140,7 +140,7 @@ const deleteMovie = async (movieId) => {
 }
 
 const getMovieByNumber = async (MovieNumber) => {
-    const movie = await Movie.findOne({ MovieNumber: MovieNumber });
+    const movie = await Movie.findOne({ MovieNumber: MovieNumber }).populate('Categories');
     return movie;
 };
 
