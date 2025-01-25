@@ -4,6 +4,7 @@ plugins {
 
 android {
     namespace = "com.example.nog_android"
+    namespace = "com.example.nog"
     compileSdk = 35
 
     defaultConfig {
@@ -18,7 +19,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            minifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -44,4 +45,8 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation(libs.converter.gson)
     implementation(libs.gson)
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
+    implementation("androidx.room:room-runtime:2.5.0")
+    annotationProcessor("androidx.room:room-compiler:2.5.0")
 }

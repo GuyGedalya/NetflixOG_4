@@ -1,21 +1,8 @@
-package com.example.nog_android;
+package com.example.nog;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
-@Entity
 public class Category {
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @PrimaryKey(autoGenerate = true)
-    private int id;
-
-    public int getId() {
-        return id;
-    }
 
     @SerializedName("name")
     private String name;

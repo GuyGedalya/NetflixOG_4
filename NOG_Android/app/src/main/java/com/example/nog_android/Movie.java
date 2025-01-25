@@ -3,18 +3,28 @@ package com.example.nog_android;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Movie {
+public class Movie implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     @SerializedName("Title")
     private String title;
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @SerializedName("ReleaseDate")
     private Date releaseDate;
+
+    public int getId() {
+        return id;
+    }
 
     @SerializedName("Image")
     private String imagePath;

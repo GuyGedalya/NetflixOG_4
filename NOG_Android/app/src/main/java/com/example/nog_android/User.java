@@ -12,6 +12,34 @@ public class User {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setProfileImagePath(String profileImagePath) {
+        this.profileImagePath = profileImagePath;
+    }
+
     @SerializedName("UserName")
     private String userName;
 
@@ -21,8 +49,20 @@ public class User {
     @SerializedName("Password")
     private String password;
 
+    public String getProfileImagePath() {
+        return profileImagePath;
+    }
+
     @SerializedName("Phone")
     private String phone;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
 
     @SerializedName("ProfileImage")
     private String profileImagePath;
