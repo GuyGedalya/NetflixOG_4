@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">NOG_Android</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="submit">Submit</string>
+    <string name="enter_user_name">Enter UserName</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_phone_number">Enter Phone Number</string>
+    <string name="upload_profile_image">Upload Profile Image</string>
+    <string name="log_in">Log In</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign Up!</string>
+    <string name="already_have_an_account_log_in">Already have an account? Log in!</string>
 </resources>
