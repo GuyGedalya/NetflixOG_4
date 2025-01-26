@@ -31,7 +31,6 @@ public class CategoryPageActivity extends AppCompatActivity {
     private CategoryMovieAdapter adapter;
     private MovieViewModel movieViewModel;
 
-    protected VideoView videoView;
     protected RecyclerView recyclerView;
 
     protected int getLayoutResource() {
