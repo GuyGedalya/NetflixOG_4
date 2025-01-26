@@ -1,4 +1,4 @@
-package com.example.nog_android;
+package com.example.nog_android.ObjectClasses;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

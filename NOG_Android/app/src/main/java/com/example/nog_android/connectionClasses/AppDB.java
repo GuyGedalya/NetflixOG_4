@@ -1,7 +1,12 @@
-package com.example.nog_android;
+package com.example.nog_android.connectionClasses;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
+
+import com.example.nog_android.ObjectClasses.Category;
+import com.example.nog_android.ObjectClasses.Movie;
+import com.example.nog_android.ObjectClasses.User;
+
 
 @Database(entities = {User.class, Movie.class, Category.class}, version = 1)
 public abstract class AppDB extends RoomDatabase{

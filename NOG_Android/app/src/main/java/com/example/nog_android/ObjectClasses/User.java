@@ -1,4 +1,4 @@
-package com.example.nog_android;
+package com.example.nog_android.ObjectClasses;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -12,6 +12,8 @@ public class User {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    @SerializedName("_id")
+    private String mongoId;
     @SerializedName("UserName")
     private String userName;
 
@@ -49,6 +51,7 @@ public class User {
         return email;
     }
 
+    public String getMongoId() {return mongoId;}
     public Boolean getAdmin() {
         return isAdmin;
     }
