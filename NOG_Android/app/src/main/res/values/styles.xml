@@ -9,7 +9,7 @@
         <item name="android:minHeight">48dp</item>
         <item name="android:background">@color/white</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:textColorHint">@color/black</item>
+        <item name="android:textColorHint">@color/gray</item>
     </style>
     <style name="formHeading">
         <item name="android:layout_height">wrap_content</item>
@@ -30,5 +30,15 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:backgroundTint">@color/cream</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="managerFormHeading">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_width">340dp</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:inputType">text</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/black</item>
     </style>
 </resources>
