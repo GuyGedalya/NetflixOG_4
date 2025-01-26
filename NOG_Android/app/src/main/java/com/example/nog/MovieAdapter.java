@@ -36,33 +36,29 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         Movie movie = movies.get(position);
 
-        // קביעת שם הסרט
+        // Set the movie title
         holder.movieTitle.setText(movie.getTitle());
 
-        // יצירת URL מלא לתמונה
+        // Generate the full URL for the movie image
         String fullImageUrl = ApiClient.getFullMovieUrl(movie.getImagePath());
 
-        // טעינת התמונה באמצעות Glide
+        // Load the movie image using Glide
         Glide.with(holder.itemView.getContext())
                 .load(fullImageUrl)
                 .placeholder(R.drawable.logo)
                 .into(holder.movieImage);
 
-        // מאזין לחיצה על תמונה
+        // Handle image click to open movie details in a dialog
         holder.movieImage.setOnClickListener(v -> {
-            // פתיחת פרטי הסרט ב-DialogFragment
             MovieDetailsDialogFragment dialogFragment = MovieDetailsDialogFragment.newInstance(movie);
             dialogFragment.show(((AppCompatActivity) holder.itemView.getContext()).getSupportFragmentManager(), "MovieDetailsDialog");
         });
     }
 
-
-
     @Override
     public int getItemCount() {
         return movies.size();
     }
-
 
     public void setMovies(List<Movie> movies) {
         this.movies.clear();

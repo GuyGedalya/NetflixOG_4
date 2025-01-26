@@ -1,7 +1,6 @@
 package com.example.nog;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.VideoView;
 
@@ -10,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
-
 
 import com.example.nog.Repositories.MovieRepository;
 import com.example.nog.ViewModels.MovieViewModel;
@@ -35,6 +33,7 @@ public class CategoryPageActivity extends AppCompatActivity {
 
     protected VideoView videoView;
     protected RecyclerView recyclerView;
+
     protected int getLayoutResource() {
         return R.layout.activity_category;
     }
@@ -44,13 +43,15 @@ public class CategoryPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResource());
 
-        // יצירת ה-Repository
+        // Initialize Room database and repository
         AppDB database = Room.databaseBuilder(getApplicationContext(), AppDB.class, "my_database").build();
-
         MovieRepository repository = new MovieRepository(database.movieDao());
+
+        // Initialize ViewModel
         MovieViewModelFactory factory = new MovieViewModelFactory(repository);
         movieViewModel = new ViewModelProvider(this, factory).get(MovieViewModel.class);
 
+        // Set up RecyclerView and adapter
         recyclerView = findViewById(R.id.recycler_view);
         adapter = new CategoryMovieAdapter(this);
         recyclerView.setAdapter(adapter);
@@ -59,70 +60,58 @@ public class CategoryPageActivity extends AppCompatActivity {
 
         observeViewModel();
         loadData();
-
     }
 
     protected void loadData() {
-        // פרטי משתמש קיים
+        // Login credentials for testing
         String testUserName = "guy";
         String testPassword = "g12345678";
 
-        // קריאה ל-API לקבלת הטוקן
+        // API call to log in and retrieve token
         ApiClient.getApiService().logIn(new LoginRequest(testUserName, testPassword)).enqueue(new Callback<TokenResponse>() {
             @Override
             public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // שמירת הטוקן בסינגלטון
+                    // Save token using singleton TokenManager
                     TokenManager.getInstance().setToken(response.body().getToken());
-                    Log.d("HomePageActivity", "Token created successfully: " + response.body().getToken());
 
-                    // המשך תהליך טעינת הקטגוריות
+                    // Fetch categories and update UI
                     movieViewModel.getAllCategories().observe(CategoryPageActivity.this, categories -> {
                         if (categories != null) {
                             updateUI(categories);
-                        } else {
-                            Log.e("HomePageActivity", "Failed to fetch categories.");
                         }
                     });
-                } else {
-                    Log.e("HomePageActivity", "Failed to create token. Response code: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<TokenResponse> call, Throwable t) {
-                Log.e("HomePageActivity", "Error creating token: " + t.getMessage());
+                // Handle token creation failure
             }
         });
     }
 
-
     private void observeViewModel() {
+        // Observe category data changes
         movieViewModel.getAllCategories().observe(this, categories -> {
             if (categories != null) {
-                Log.d("HomePageActivity", "Categories fetched successfully");
                 updateUI(categories);
-            } else {
-                Log.e("HomePageActivity", "Failed to fetch categories");
             }
         });
     }
 
     private void updateUI(Map<String, List<Movie>> categories) {
+        // Update RecyclerView with category data
         if (categories == null || categories.isEmpty()) {
-            Log.e("HomePageActivity", "Cannot update UI: categories are null or empty.");
             return;
         }
         if (adapter != null)
             adapter.setCategories(categories);
     }
 
-
     @Override
     protected void onResume() {
-        Log.d("HomePageActivity", "onResume");
         super.onResume();
         observeViewModel();
     }
-
 }

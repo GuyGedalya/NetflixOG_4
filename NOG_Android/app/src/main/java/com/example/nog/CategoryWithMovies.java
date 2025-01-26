@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class CategoryWithMovies {
 
-    @SerializedName("categories") // המיפוי לשמות הקטגוריות בשרת
+    @SerializedName("categories")
     private Map<String, List<Movie>> categories;
 
     public Map<String, List<Movie>> getCategories() {
