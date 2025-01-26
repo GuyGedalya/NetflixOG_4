@@ -1,0 +1,54 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignupActivity"
+    android:background="@drawable/background">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            style="@style/formHeading"
+            android:layout_width="wrap_content"
+            android:text="@string/log_in" />
+
+        <EditText
+            android:id="@+id/userName"
+            style="@style/signUpForm"
+            android:autofillHints="username"
+            android:hint="@string/enter_user_name" />
+
+        <EditText
+            android:id="@+id/password"
+            style="@style/signUpForm"
+            android:autofillHints="emailAddress"
+            android:hint="@string/enter_password"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/submitBtn"
+            style="@style/formButton"
+            android:layout_width="wrap_content"
+            android:text="@string/submit" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/toSignUpBtn"
+        style="@style/formButton"
+        android:layout_width="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:text="@string/don_t_have_an_account_sign_up"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
