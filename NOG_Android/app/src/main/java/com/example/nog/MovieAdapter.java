@@ -45,7 +45,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         // טעינת התמונה באמצעות Glide
         Glide.with(holder.itemView.getContext())
                 .load(fullImageUrl)
-                .placeholder(R.drawable.logo) // תמונת ברירת מחדל לטעינה
+                .placeholder(R.drawable.logo)
                 .into(holder.movieImage);
 
         // מאזין לחיצה על תמונה
@@ -64,6 +64,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
 
+    public void setMovies(List<Movie> movies) {
+        this.movies.clear();
+        this.movies.addAll(movies);
+        notifyDataSetChanged();
+    }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder {
         ImageView movieImage;

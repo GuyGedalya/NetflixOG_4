@@ -36,7 +36,7 @@ public class CategoryPageActivity extends AppCompatActivity {
     protected VideoView videoView;
     protected RecyclerView recyclerView;
     protected int getLayoutResource() {
-        return R.layout.activity_base;
+        return R.layout.activity_category;
     }
 
     @Override
@@ -50,9 +50,6 @@ public class CategoryPageActivity extends AppCompatActivity {
         MovieRepository repository = new MovieRepository(database.movieDao());
         MovieViewModelFactory factory = new MovieViewModelFactory(repository);
         movieViewModel = new ViewModelProvider(this, factory).get(MovieViewModel.class);
-
-        videoView = findViewById(R.id.video_view);
-        videoView.setVisibility(View.GONE);
 
         recyclerView = findViewById(R.id.recycler_view);
         adapter = new CategoryMovieAdapter(this);

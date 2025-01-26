@@ -1,16 +1,21 @@
 package com.example.nog;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 import android.widget.VideoView;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
-
 
 import com.example.nog.Repositories.MovieRepository;
 import com.example.nog.ViewModels.MovieViewModel;
@@ -21,9 +26,8 @@ import com.example.nog_android.LoginRequest;
 import com.example.nog_android.Movie;
 import com.example.nog_android.Token.TokenManager;
 import com.example.nog_android.TokenResponse;
+import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,25 +41,58 @@ public class HomePageActivity extends AppCompatActivity {
 
     protected VideoView videoView;
     protected RecyclerView recyclerView;
-    protected int getLayoutResource() {
-        return R.layout.activity_base;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutResource());
+        setContentView(R.layout.activity_base);
 
-        // יצירת ה-Repository
+        // Toolbar setup
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        // Drawer setup
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close
+        );
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_home) {
+                startActivity(new Intent(this, HomePageActivity.class));
+            } else if (id == R.id.nav_categories) {
+                startActivity(new Intent(this, CategoryPageActivity.class));
+            } else if (id == R.id.nav_manager) {
+            } else if (id == R.id.nav_search) {
+            }
+            drawerLayout.closeDrawers();
+            return true;
+        });
+
+
+
+        // Database and ViewModel setup
         AppDB database = Room.databaseBuilder(getApplicationContext(), AppDB.class, "my_database").build();
-
         MovieRepository repository = new MovieRepository(database.movieDao());
         MovieViewModelFactory factory = new MovieViewModelFactory(repository);
         movieViewModel = new ViewModelProvider(this, factory).get(MovieViewModel.class);
 
+        // VideoView setup
         videoView = findViewById(R.id.video_view);
         videoView.setVisibility(View.GONE);
 
+        // RecyclerView setup
         recyclerView = findViewById(R.id.recycler_view);
         adapter = new CategoryMovieAdapter(this);
         recyclerView.setAdapter(adapter);
@@ -64,24 +101,19 @@ public class HomePageActivity extends AppCompatActivity {
 
         observeViewModel();
         loadData();
-
     }
 
     protected void loadData() {
-        // פרטי משתמש קיים
         String testUserName = "guy";
         String testPassword = "g12345678";
 
-        // קריאה ל-API לקבלת הטוקן
         ApiClient.getApiService().logIn(new LoginRequest(testUserName, testPassword)).enqueue(new Callback<TokenResponse>() {
             @Override
             public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // שמירת הטוקן בסינגלטון
                     TokenManager.getInstance().setToken(response.body().getToken());
                     Log.d("HomePageActivity", "Token created successfully: " + response.body().getToken());
 
-                    // המשך תהליך טעינת הקטגוריות
                     movieViewModel.getCategories().observe(HomePageActivity.this, categories -> {
                         if (categories != null) {
                             updateUI(categories);
@@ -100,7 +132,6 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void observeViewModel() {
         Log.d("HomePageActivity", "observeViewModel");
@@ -123,7 +154,13 @@ public class HomePageActivity extends AppCompatActivity {
             adapter.setCategories(categories);
         Movie randomMovie = getRandomMovie(categories);
         if (randomMovie != null) {
-            videoView.setVideoPath(randomMovie.getFilmPath());
+            ProgressBar loadingSpinner = findViewById(R.id.loading_spinner);
+            videoView.setVideoPath(ApiClient.getFullMovieUrl(randomMovie.getFilmPath()));
+            videoView.setOnErrorListener((mp, what, extra) -> {
+                loadingSpinner.setVisibility(View.GONE);
+                return true;
+            });
+
             playVideo();
         }
     }
