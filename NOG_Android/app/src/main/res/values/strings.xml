@@ -46,4 +46,6 @@
     <string name="home">Home</string>
     <string name="manager">Manager</string>
     <string name="search">Search</string>
+    <string name="no_movies_to_display">No movies to display</string>
+    <string name="log_out">Log Out</string>
 </resources>

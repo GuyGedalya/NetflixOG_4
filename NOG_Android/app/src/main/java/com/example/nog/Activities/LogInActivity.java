@@ -65,7 +65,8 @@ public class LogInActivity extends AppCompatActivity {
                     if(tokenManager != null) {
                         TokenManager.getInstance().setToken(tokenManager.getToken());
                         TokenManager.getInstance().setUser(tokenManager.getUser());
-                        Intent intent = new Intent(LogInActivity.this, ManagerActivity.class);
+                        // Sending to the Home Page for registered users:
+                        Intent intent = new Intent(LogInActivity.this, HomePageActivity.class);
                         startActivity(intent);
                         finish();
                     } else{

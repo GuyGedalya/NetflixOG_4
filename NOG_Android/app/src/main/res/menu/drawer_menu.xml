@@ -9,6 +9,7 @@
         android:id="@+id/nav_manager"
         android:title="@string/manager" />
     <item
-        android:id="@+id/nav_search"
-        android:title="@string/search" />
+        android:id="@+id/nav_logout"
+        android:title="@string/log_out"/>
+
 </menu>

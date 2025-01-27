@@ -4,8 +4,10 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 @Entity
-public class Category {
+public class Category implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
@@ -21,7 +23,7 @@ public class Category {
     private String name;
 
     @SerializedName("promoted")
-    private boolean promoted;
+    final private boolean promoted;
 
     public Category(String name, boolean promoted) {
         this.name = name;

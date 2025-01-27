@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name="com.example.nog.HomePageActivity"
+            android:name=".Activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,18 +26,20 @@
         </activity>
         <activity android:name="com.example.nog.VideoPlayerActivity.VideoPlayerActivity" />
         <activity
-            android:name="com.example.nog.CategoryPageActivity" />
+            android:name=".Activities.CategoryPageActivity" />
         <activity
-            android:name=".ManagerActivity"
+            android:name=".Activities.ManagerActivity"
             android:exported="true"/>
         <activity
-            android:name=".LogInActivity"
+            android:name=".Activities.HomePageActivity"
             android:exported="true" />
         <activity
-            android:name=".SignupActivity"
+            android:name=".Activities.SignupActivity"
             android:exported="true" />
-        <activity android:name=".MainActivity"
+        <activity android:name=".Activities.LogInActivity"
             android:exported="false"/>
+        <activity android:name=".Activities.SearchResultsActivity" />
+
 
     </application>
 
