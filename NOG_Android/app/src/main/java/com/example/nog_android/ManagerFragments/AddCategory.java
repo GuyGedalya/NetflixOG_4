@@ -1,6 +1,7 @@
 package com.example.nog_android.ManagerFragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ public class AddCategory extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        Log.d("AddCategoryFragment", "AddCategory Fragment loaded");
         return inflater.inflate(R.layout.add_category_form, container, false);
     }
 

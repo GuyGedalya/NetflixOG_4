@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!-- ViewPager2 שמציג את ה-Fragments עם הטפסים -->
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
@@ -25,6 +25,7 @@
         app:tabIndicatorColor="@color/black"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@android:color/black"
-        app:tabTextColor="@android:color/darker_gray" />
+        app:tabTextColor="@android:color/darker_gray"
+        android:contentDescription="@string/tab_layout_for_manager_forms_contains_multiple_tabs_to_navigate_between_options"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

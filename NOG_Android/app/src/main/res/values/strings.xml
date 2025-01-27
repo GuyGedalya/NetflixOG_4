@@ -28,4 +28,5 @@
     <string name="delete">Delete</string>
     <string name="upload_film">Upload Film</string>
     <string name="enter_category">Enter category</string>
+    <string name="tab_layout_for_manager_forms_contains_multiple_tabs_to_navigate_between_options">Tab layout for manager forms, contains multiple tabs to navigate between options.</string>
 </resources>
