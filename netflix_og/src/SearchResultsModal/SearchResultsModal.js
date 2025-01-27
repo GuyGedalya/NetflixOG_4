@@ -17,7 +17,7 @@ function SearchResultsModal({ show, onClose, results, onMovieClick }) {
                         {results.map((movie) => (
                             <img
                                 key={movie._id}
-                                src={movie.Image || '/images/favicon.ico.png'} 
+                                src={`http://localhost:3001/${movie.Image}` || '/images/favicon.ico.png'} 
                                 alt={movie.Title}
                                 className="search-result-poster"
                                 onClick={() => onMovieClick(movie._id)} 

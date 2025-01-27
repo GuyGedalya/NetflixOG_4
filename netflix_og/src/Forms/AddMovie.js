@@ -81,7 +81,7 @@ function AddMovie() {
 	};
 
 	return (
-		<div className="text-container">
+		<div className="text-container10">
 			<h1>Add Movie</h1>
 			<form className="login-form" onSubmit={handleSubmit} >
 				<input type="text"

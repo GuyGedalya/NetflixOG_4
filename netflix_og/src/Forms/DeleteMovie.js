@@ -40,7 +40,7 @@ function DeleteMovie() {
 		}
 	};
 	return (
-		<div className="text-container">
+		<div className="text-container10">
 			<h1>Delete Movie</h1>
 			<form className="login-form" onSubmit={handleSubmit} >
 				<input type="text"
