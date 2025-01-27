@@ -35,72 +35,55 @@ public class MovieRepository {
     }
 
     public LiveData<Map<String, List<Movie>>> getPromotedMovies() {
-        fetchPromotedMovies();
+
+            fetchPromotedMovies();
+
         return moviesLiveData;
     }
 
     public LiveData<Map<String, List<Movie>>> getAllMovies() {
-        fetchAllMovies();
+
+            fetchAllMovies();
+
         return allMoviesLiveData;
     }
 
     public void fetchAllMovies() {
         String token = TokenManager.getInstance().getToken();
-        apiService.getAllMovies("Bearer " + token).enqueue(new Callback<Map<String, List<Movie>>>() {
-            @Override
-            public void onResponse(Call<Map<String, List<Movie>>> call, Response<Map<String, List<Movie>>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    executorService.execute(() -> {
-                        List<Movie> movies = flattenMovies(response.body());
-                        movieDao.insert(movies.toArray(new Movie[0]));
-                        moviesLiveData.postValue(response.body());
-                    });
-                } else {
-                    fetchAllFromDatabase();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Map<String, List<Movie>>> call, Throwable t) {
-                fetchFromDatabase();
-            }
-        });
-    }
-
-    private void fetchAllFromDatabase() {
-        executorService.execute(() -> {
-            List<Movie> localMovies = movieDao.index();
-            allMoviesLiveData.postValue(groupMovies(localMovies));
-        });
+        fetchMovies(apiService.getAllMovies("Bearer " + token), allMoviesLiveData);
     }
 
     public void fetchPromotedMovies() {
         String token = TokenManager.getInstance().getToken();
-        apiService.getPromotedMovies("Bearer " + token).enqueue(new Callback<Map<String, List<Movie>>>() {
+        fetchMovies(apiService.getPromotedMovies("Bearer " + token), moviesLiveData);
+    }
+
+    private void fetchMovies(Call<Map<String, List<Movie>>> apiCall, MutableLiveData<Map<String, List<Movie>>> liveData) {
+        apiCall.enqueue(new Callback<Map<String, List<Movie>>>() {
             @Override
             public void onResponse(Call<Map<String, List<Movie>>> call, Response<Map<String, List<Movie>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     executorService.execute(() -> {
                         List<Movie> movies = flattenMovies(response.body());
                         movieDao.insert(movies.toArray(new Movie[0]));
-                        moviesLiveData.postValue(response.body());
+                        liveData.postValue(response.body());
                     });
                 } else {
-                    fetchFromDatabase();
+                    fetchFromDatabase(liveData);
                 }
             }
 
             @Override
             public void onFailure(Call<Map<String, List<Movie>>> call, Throwable t) {
-                fetchFromDatabase();
+                fetchFromDatabase(liveData);
             }
         });
     }
 
-    private void fetchFromDatabase() {
+    private void fetchFromDatabase(MutableLiveData<Map<String, List<Movie>>> liveData) {
         executorService.execute(() -> {
             List<Movie> localMovies = movieDao.index();
-            moviesLiveData.postValue(groupMovies(localMovies));
+            liveData.postValue(groupMovies(localMovies));
         });
     }
 
@@ -117,4 +100,3 @@ public class MovieRepository {
                 .collect(Collectors.groupingBy(movie -> movie.getCategories().get(0).getName()));
     }
 }
-

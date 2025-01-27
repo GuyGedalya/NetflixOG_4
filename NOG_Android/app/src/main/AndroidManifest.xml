@@ -9,6 +9,7 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/nog"
+        android:label=""
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NOG_Android"
@@ -29,7 +30,7 @@
         <activity
             android:name=".Activities.SignupActivity"
             android:exported="true"/>
-
+        <activity android:name=".Activities.CategoryPageActivity" />
         <activity android:name=".VideoPlayerActivity.VideoPlayerActivity" />
     </application>
 

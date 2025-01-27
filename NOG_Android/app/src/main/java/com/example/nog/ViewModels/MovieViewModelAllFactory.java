@@ -16,8 +16,8 @@ public class MovieViewModelAllFactory implements ViewModelProvider.Factory {
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(MovieViewModel.class)) {
-            return (T) new MovieViewModel(repository);
+        if (modelClass.isAssignableFrom(MovieViewModelAll.class)) {
+            return (T) new MovieViewModelAll(repository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }
