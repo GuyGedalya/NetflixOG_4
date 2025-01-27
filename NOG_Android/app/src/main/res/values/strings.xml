@@ -12,4 +12,19 @@
     <string name="already_have_an_account_log_in">Already have an account? Log in!</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="release_date">Release Date: %1$s</string>
+    <string name="no_movies_found">Not Found Any Related Movies</string>
+    <string name="app_logo">App Logo</string>
+    <string name="logo">Logo</string>
+    <string name="sign_in">Sign In</string>
+    <string name="WELCOME">WELCOME TO NOG\nUnlimited movies,\nTV shows, and more</string>
+    <string name="get_started">Get Started</string>
+    <string name="play_movie">Play Movie</string>
+    <string name="movie_image_description">Movie poster</string>
+    <string name="project_logo">Project Logo</string>
+    <string name="welcome_to_nog">Welcome to NOG</string>
+    <string name="categories">Categories</string>
+    <string name="home">Home</string>
+    <string name="manager">Manager</string>
+    <string name="search">Search</string>
 </resources>

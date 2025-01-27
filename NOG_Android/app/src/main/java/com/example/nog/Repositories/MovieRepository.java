@@ -1,21 +1,19 @@
 package com.example.nog.Repositories;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
 import com.example.nog.connectionClasses.ApiClient;
 import com.example.nog.connectionClasses.ApiService;
 import com.example.nog.ObjectClasses.Movie;
 import com.example.nog.connectionClasses.MovieDao;
 import com.example.nog.ObjectClasses.TokenManager;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,9 +40,7 @@ public class MovieRepository {
     }
 
     public LiveData<Map<String, List<Movie>>> getAllMovies() {
-
-            fetchAllMovies();
-
+        fetchAllMovies();
         return allMoviesLiveData;
     }
 
@@ -59,9 +55,9 @@ public class MovieRepository {
     }
 
     private void fetchMovies(Call<Map<String, List<Movie>>> apiCall, MutableLiveData<Map<String, List<Movie>>> liveData) {
-        apiCall.enqueue(new Callback<Map<String, List<Movie>>>() {
+        apiCall.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<Map<String, List<Movie>>> call, Response<Map<String, List<Movie>>> response) {
+            public void onResponse(@NonNull Call<Map<String, List<Movie>>> call, @NonNull Response<Map<String, List<Movie>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     executorService.execute(() -> {
                         List<Movie> movies = flattenMovies(response.body());
@@ -74,7 +70,7 @@ public class MovieRepository {
             }
 
             @Override
-            public void onFailure(Call<Map<String, List<Movie>>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Map<String, List<Movie>>> call, @NonNull Throwable t) {
                 fetchFromDatabase(liveData);
             }
         });

@@ -24,7 +24,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/logo"
-            android:contentDescription="App Logo"
+            android:contentDescription="@string/app_logo"
             android:scaleType="fitCenter"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -8,13 +8,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.nog.Adapters.MovieAdapter;
 import com.example.nog.R;
@@ -23,27 +22,17 @@ import com.example.nog.ObjectClasses.Movie;
 import com.example.nog.connectionClasses.ApiClient;
 import com.example.nog.connectionClasses.ApiService;
 import com.example.nog.ObjectClasses.TokenManager;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MovieDetailsDialogFragment extends DialogFragment {
     private static final String ARG_MOVIE = "movie";
-
-    // Holds the movie data passed to the fragment
     private Movie movie;
-
-    // RecyclerView for displaying recommended movies
     private RecyclerView recommendedMoviesRecyclerView;
-
-    // Adapter for managing the list of recommended movies
     private MovieAdapter moviesAdapter;
-
-    // Static method to create a new instance of the fragment with a specific movie
     public static MovieDetailsDialogFragment newInstance(Movie movie) {
         MovieDetailsDialogFragment fragment = new MovieDetailsDialogFragment();
         Bundle args = new Bundle();
@@ -88,7 +77,8 @@ public class MovieDetailsDialogFragment extends DialogFragment {
 
         // Set the movie title and release date in the respective TextViews
         titleTextView.setText(movie.getTitle());
-        releaseDateTextView.setText("Release Date: " + movie.getReleaseDate());
+        String releaseDateText = getString(R.string.release_date, movie.getReleaseDate());
+        releaseDateTextView.setText(releaseDateText);
 
         // Set a click listener for the play button
         playButton.setOnClickListener(v -> {
@@ -100,22 +90,20 @@ public class MovieDetailsDialogFragment extends DialogFragment {
 
         // Fetch recommended movies for the selected movie
         fetchRecommendedMovies();
-
         return view;
     }
     private void addMovieToWatchlist(Movie movie) {
-        // Get the token and user ID from the TokenManager
+        // Get the token and from the TokenManager
         String token = TokenManager.getInstance().getToken();
-        String userId = TokenManager.getInstance().getUser().getMongoId(); // Ensure User has an ID field
 
         // Get the API service instance
         ApiService apiService = ApiClient.getApiService();
 
         // Make the network call to add the movie to the watchlist
         Call<Void> call = apiService.addAsWatched(movie.getMongoId(), "Bearer " + token);
-        call.enqueue(new Callback<Void>() {
+        call.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.isSuccessful()) {
                     // Log success
                     Log.d("MovieDetails", "Movie added to watchlist successfully.");
@@ -124,9 +112,8 @@ public class MovieDetailsDialogFragment extends DialogFragment {
                     Log.e("MovieDetails", "Failed to add movie to watchlist. Response code: " + response.code());
                 }
             }
-
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 // Handle network failure
                 Log.e("MovieDetails", "Error adding movie to watchlist: " + t.getMessage());
             }
@@ -142,9 +129,9 @@ public class MovieDetailsDialogFragment extends DialogFragment {
 
         // Make a network call to fetch movie recommendations
         Call<List<Movie>> call = apiService.getRecommendations(String.valueOf(movie.getId()), "Bearer " + token);
-        call.enqueue(new Callback<List<Movie>>() {
+        call.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
+            public void onResponse(@NonNull Call<List<Movie>> call, @NonNull Response<List<Movie>> response) {
                 // If the response is successful and contains a body
                 if (response.isSuccessful() && response.body() != null) {
                     List<Movie> recommendedMovies = response.body();
@@ -162,7 +149,7 @@ public class MovieDetailsDialogFragment extends DialogFragment {
             }
 
             @Override
-            public void onFailure(Call<List<Movie>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Movie>> call, @NonNull Throwable t) {
                 // Handle network call failures
                 showNoMoviesFoundMessage();
             }
@@ -172,9 +159,9 @@ public class MovieDetailsDialogFragment extends DialogFragment {
     private void showNoMoviesFoundMessage() {
         // Create a TextView to display a "No movies found" message
         TextView noMoviesTextView = new TextView(requireContext());
-        noMoviesTextView.setText("Not Found Any Related Movies");
+        noMoviesTextView.setText(getString(R.string.no_movies_found));
         noMoviesTextView.setTextSize(16);
-        noMoviesTextView.setTextColor(getResources().getColor(R.color.black));
+        noMoviesTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
         noMoviesTextView.setGravity(View.TEXT_ALIGNMENT_CENTER);
 
         // Hide the RecyclerView

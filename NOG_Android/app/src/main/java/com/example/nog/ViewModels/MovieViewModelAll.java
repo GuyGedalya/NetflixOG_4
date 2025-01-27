@@ -2,10 +2,8 @@ package com.example.nog.ViewModels;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.example.nog.ObjectClasses.Movie;
 import com.example.nog.Repositories.MovieRepository;
-
 import java.util.List;
 import java.util.Map;
 
