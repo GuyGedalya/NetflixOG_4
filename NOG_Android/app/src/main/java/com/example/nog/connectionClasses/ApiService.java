@@ -56,6 +56,16 @@ public interface ApiService {
     @DELETE("categories/{id}")
     Call<Void> deleteCategory(@Path("id") String categoryId, @Header("Authorization") String token);
 
+    @Multipart
+    @POST("movies")
+    Call<Void> addMovie(
+            @Header("Authorization") String token,
+            @Part("Title") RequestBody title,
+            @Part("ReleaseDate") RequestBody releaseDate,
+            @Part("Categories") RequestBody categories,
+            @Part MultipartBody.Part MovieImage,
+            @Part MultipartBody.Part Film
+    );
 
     @GET("movies/{id}")
     Call<Movie> getMovieById(@Path("id") String movieId, @Header("Authorization") String token);

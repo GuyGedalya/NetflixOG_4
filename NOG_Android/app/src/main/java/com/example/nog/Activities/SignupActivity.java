@@ -1,25 +1,20 @@
 package com.example.nog.Activities;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.example.nog.ManagerFragments.FileManager;
 import com.example.nog.R;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.nog.connectionClasses.ApiClient;
 import com.example.nog.connectionClasses.ApiService;
-
 import java.io.File;
-
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -121,7 +116,9 @@ public class SignupActivity extends AppCompatActivity {
         // Constructing multipart message
         MultipartBody.Part imagePart = null;
         if (selectedImageUri != null) {
-            String filePath = getPathFromUri(selectedImageUri);
+            FileManager fileManager = new FileManager(this);
+
+            String filePath = fileManager.getPathFromUri(selectedImageUri);
             if (filePath != null){
                 File file = new File(filePath);
                 RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
@@ -151,18 +148,5 @@ public class SignupActivity extends AppCompatActivity {
                 Toast.makeText(SignupActivity.this, "Error: Please check your connection and try again.", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-    // Getting patch from Uri
-    private String getPathFromUri(Uri uri) {
-        String filePath = null;
-        String[] projection = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-        if (cursor != null) {
-            int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            filePath = cursor.getString(columnIndex);
-            cursor.close();
-        }
-        return filePath;
     }
 }
