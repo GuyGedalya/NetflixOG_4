@@ -3,4 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="cream">#C1ABA6</color>
+    <color name="gray">#757575</color>
+    <color name="textOnEmpty">#000000</color>
 </resources>

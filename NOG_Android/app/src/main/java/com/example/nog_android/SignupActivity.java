@@ -35,7 +35,7 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-
+        // Getting view elements
         EditText userNameEditText = findViewById(R.id.userName);
         EditText emailEditText = findViewById(R.id.email);
         EditText passwordEditText = findViewById(R.id.password);
@@ -53,11 +53,12 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 }
         );
-
+        // Setting login button listener, moving activity
         toLogInBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, LogInActivity.class);
             startActivity(intent);
         });
+        // Setting upload button listener
         uploadImg.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
@@ -74,6 +75,7 @@ public class SignupActivity extends AppCompatActivity {
         String passwordValue = password.getText().toString().trim();
         String phoneValue = phone.getText().toString().trim();
 
+        // Validating fields
         if (userNameValue.isEmpty()) {
             userName.setError("Username is required");
             return;
@@ -98,7 +100,7 @@ public class SignupActivity extends AppCompatActivity {
             phone.setError("Phone number must be exactly 10 digits and start with 05 (e.g., 0541234567)");
             return;
         }
-
+        // sending to server
         submitUserToServer(userNameValue, emailValue, passwordValue, phoneValue);
     }
 
@@ -115,6 +117,7 @@ public class SignupActivity extends AppCompatActivity {
         RequestBody passwordBody = RequestBody.create(MediaType.parse("text/plain"), passwordValue);
         RequestBody phoneBody = RequestBody.create(MediaType.parse("text/plain"), phoneValue);
 
+        // Constructing multipart message
         MultipartBody.Part imagePart = null;
         if (selectedImageUri != null) {
             String filePath = getPathFromUri(selectedImageUri);
@@ -132,7 +135,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.isSuccessful()) {
-                    // Success massage
+                    // If successful move to log in
                     Toast.makeText(SignupActivity.this, "Sign Up Successful! You can now log in!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SignupActivity.this, LogInActivity.class);
                     startActivity(intent);
@@ -148,7 +151,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
     }
-
+    // Getting patch from Uri
     private String getPathFromUri(Uri uri) {
         String filePath = null;
         String[] projection = {MediaStore.Images.Media.DATA};

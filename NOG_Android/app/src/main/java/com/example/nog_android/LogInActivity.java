@@ -14,6 +14,9 @@ import com.example.nog_android.connectionClasses.ApiClient;
 import com.example.nog_android.connectionClasses.ApiService;
 import com.example.nog_android.connectionClasses.LoginRequest;
 
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,11 +28,13 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
+        // getting view elements
         EditText userNameEditText = findViewById(R.id.userName);
         EditText passwordEditText = findViewById(R.id.password);
         Button submitBtn = findViewById(R.id.submitBtn);
         Button toSignUp = findViewById(R.id.toSignUpBtn);
 
+        // Setting submit listener
         toSignUp.setOnClickListener(v-> {
             Intent intent = new Intent(this, SignupActivity.class);
             startActivity(intent);
@@ -40,6 +45,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void logIn (EditText userNameEt, EditText passwordEt) {
+        // Getting input from edit texts
         String userNameValue = userNameEt.getText().toString().trim();
         String passwordValue = passwordEt.getText().toString().trim();
 
@@ -54,13 +60,21 @@ public class LogInActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Toast.makeText(LogInActivity.this, "LogIn Successful!" , Toast.LENGTH_SHORT).show();
                     TokenManager tokenManager = response.body();
+                    // if we got a token
                     if(tokenManager != null) {
                         TokenManager.getInstance().setToken(tokenManager.getToken());
                         TokenManager.getInstance().setUser(tokenManager.getUser());
-                        Toast.makeText(LogInActivity.this, "LogIn Successful! Token saved.", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(LogInActivity.this, TokenManager.getInstance().getToken(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LogInActivity.this, ManagerActivity.class);
+                        startActivity(intent);
+                        finish();
                     } else{
-                        Toast.makeText(LogInActivity.this, "Failed to log in", Toast.LENGTH_SHORT).show();
+                        // If response unsuccessful, popping up error message
+                        try (ResponseBody errorBody = response.errorBody()) {
+                            String errorMessage = errorBody != null ? errorBody.string() : "Unknown error";
+                            Toast.makeText(LogInActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                        } catch (IOException e) {
+                            Toast.makeText(LogInActivity.this, "Error reading error message", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }

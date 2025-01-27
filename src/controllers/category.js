@@ -55,16 +55,6 @@ const getCategory = async (req, res) => {
 };
 const updateCategory = async (req, res) => {
     try {
-        // Check that only 'name' and 'promoted' are present in the body
-        const allowedFields = ['name', 'promoted'];
-        const requestFields = Object.keys(req.body);
-
-        // If there are extra fields in the request body, return a 400 error
-        const isValid = requestFields.every(field => allowedFields.includes(field));
-        if (!isValid) {
-            return res.status(400).json({ error: 'Only name and promoted are allowed fields' });
-        }
-
         // Get the argument from req:
         const { name, promoted } = req.body;
         // Updating:
