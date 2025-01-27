@@ -2,11 +2,10 @@ package com.example.nog.Activities;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.nog.Adapters.CategoryMovieAdapter;
 import com.example.nog.R;
 import com.example.nog.Repositories.MovieRepository;
@@ -17,15 +16,13 @@ import com.example.nog.connectionClasses.AppDB;
 import com.example.nog.connectionClasses.LoginRequest;
 import com.example.nog.ObjectClasses.Movie;
 import com.example.nog.ObjectClasses.TokenManager;
-
 import java.util.List;
 import java.util.Map;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CategoryPageActivity extends AppCompatActivity {
+public class CategoryPageActivity extends BaseActivity {
     private CategoryMovieAdapter adapter;
     private MovieViewModelAll movieViewModelAll;
 
@@ -38,7 +35,6 @@ public class CategoryPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutResource());
 
         // Initialize Room database and repository
         AppDB database = MyDataBase.getInstance(this);
@@ -59,14 +55,14 @@ public class CategoryPageActivity extends AppCompatActivity {
     }
 
     protected void loadData() {
-        // Login credentials for testing
+        // Login credentials for testing - needed to be deleted:
         String testUserName = "guy";
         String testPassword = "g12345678";
 
         // API call to log in and retrieve token
-        ApiClient.getApiService().logIn(new LoginRequest(testUserName, testPassword)).enqueue(new Callback<TokenManager>() {
+        ApiClient.getApiService().logIn(new LoginRequest(testUserName, testPassword)).enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<TokenManager> call, Response<TokenManager> response) {
+            public void onResponse(@NonNull Call<TokenManager> call, @NonNull Response<TokenManager> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     // Save token using singleton TokenManager
                     TokenManager.getInstance().setToken(response.body().getToken());
@@ -79,9 +75,8 @@ public class CategoryPageActivity extends AppCompatActivity {
                     });
                 }
             }
-
             @Override
-            public void onFailure(Call<TokenManager> call, Throwable t) {
+            public void onFailure(@NonNull Call<TokenManager> call, @NonNull Throwable t) {
                 // Handle token creation failure
             }
         });

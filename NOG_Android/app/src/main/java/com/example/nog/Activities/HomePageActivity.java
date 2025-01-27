@@ -32,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomePageActivity extends AppCompatActivity {
+public class HomePageActivity extends BaseActivity {
     private CategoryMovieAdapter adapter;
     private MovieViewModel movieViewModel;
 
@@ -40,43 +40,14 @@ public class HomePageActivity extends AppCompatActivity {
     protected RecyclerView recyclerView;
 
     private Movie randomMovie;
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_home;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-
-        // Toolbar setup
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        // Drawer setup
-        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this,
-                drawerLayout,
-                toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close
-        );
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView.setNavigationItemSelectedListener(item -> {
-            int id = item.getItemId();
-
-            if (id == R.id.nav_home) {
-                startActivity(new Intent(this, HomePageActivity.class));
-            } else if (id == R.id.nav_categories) {
-                startActivity(new Intent(this, CategoryPageActivity.class));
-            } else if (id == R.id.nav_manager) {
-            } else if (id == R.id.nav_search) {
-            }
-            drawerLayout.closeDrawers();
-            return true;
-        });
-
 
         // Database and ViewModel setup
         AppDB database = MyDataBase.getInstance(this);
