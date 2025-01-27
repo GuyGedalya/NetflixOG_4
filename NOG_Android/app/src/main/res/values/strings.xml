@@ -18,4 +18,14 @@
     <string name="add_movie">Add Movie</string>
     <string name="enter_category_name">Enter Category Name</string>
     <string name="promoted">Promoted?</string>
+    <string name="enter_category_id">Enter Category Id</string>
+    <string name="add">Add</string>
+    <string name="update">Update</string>
+    <string name="enter_movie_title">Enter Movie Title</string>
+    <string name="enter_release_date">Enter Release Date</string>
+    <string name="upload_movie_image">Upload Movie Image</string>
+    <string name="enter_movie_id">Enter Movie Id</string>
+    <string name="delete">Delete</string>
+    <string name="upload_film">Upload Film</string>
+    <string name="enter_category">Enter category</string>
 </resources>

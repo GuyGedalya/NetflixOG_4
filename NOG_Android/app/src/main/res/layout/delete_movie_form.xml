@@ -15,25 +15,18 @@
         <TextView
             style="@style/managerFormHeading"
             android:layout_width="wrap_content"
-            android:text="@string/add_category" />
-
+            android:text="@string/delete_movie" />
         <EditText
-            android:id="@+id/categoryName"
+            android:id="@+id/movieId"
             style="@style/signUpForm"
             android:autofillHints="text"
-            android:hint="@string/enter_category_name" />
-
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/promoted"
-            android:textColorHint="@color/black" />
+            android:hint="@string/enter_movie_id" />
 
         <Button
             android:id="@+id/submit"
             style="@style/formButton"
             android:layout_width="wrap_content"
-            android:text="@string/add" />
+            android:text="@string/delete" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
