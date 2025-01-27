@@ -23,7 +23,7 @@ public class ManagerActivity extends AppCompatActivity {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(0, true);
+
         Log.d("ManagerActivity", "ViewPager current position: " + viewPager.getCurrentItem());
 
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
@@ -58,6 +58,8 @@ public class ManagerActivity extends AppCompatActivity {
                     break;
             }
         }).attach();
+
+        Log.d("ManagerActivity", "ViewPager current position: " + viewPager.getCurrentItem());
 
     }
 }
