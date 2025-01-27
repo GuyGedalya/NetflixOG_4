@@ -1,5 +1,34 @@
 <resources>
     <string name="app_name">NOG_Android</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="submit">Submit</string>
+    <string name="enter_user_name">Enter UserName</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_phone_number">Enter Phone Number</string>
+    <string name="upload_profile_image">Upload Profile Image</string>
+    <string name="log_in">Log In</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign Up!</string>
+    <string name="already_have_an_account_log_in">Already have an account? Log in!</string>
+    <string name="add_category">Add Category</string>
+    <string name="edit_category">Edit Category</string>
+    <string name="delete_category">Delete Category</string>
+    <string name="delete_movie">Delete Movie</string>
+    <string name="update_movie">Update Movie</string>
+    <string name="add_movie">Add Movie</string>
+    <string name="enter_category_name">Enter Category Name</string>
+    <string name="promoted">Promoted?</string>
+    <string name="enter_category_id">Enter Category Id</string>
+    <string name="add">Add</string>
+    <string name="update">Update</string>
+    <string name="enter_movie_title">Enter Movie Title</string>
+    <string name="enter_release_date">Enter Release Date</string>
+    <string name="upload_movie_image">Upload Movie Image</string>
+    <string name="enter_movie_id">Enter Movie Id</string>
+    <string name="delete">Delete</string>
+    <string name="upload_film">Upload Film</string>
+    <string name="enter_category">Enter category</string>
+    <string name="tab_layout_for_manager_forms_contains_multiple_tabs_to_navigate_between_options">Tab layout for manager forms, contains multiple tabs to navigate between options.</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

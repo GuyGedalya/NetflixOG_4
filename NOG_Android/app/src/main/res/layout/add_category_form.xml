@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            style="@style/managerFormHeading"
+            android:layout_width="wrap_content"
+            android:text="@string/add_category" />
+
+        <EditText
+            android:id="@+id/categoryName"
+            style="@style/signUpForm"
+            android:autofillHints="text"
+            android:hint="@string/enter_category_name" />
+
+        <CheckBox
+            android:layout_width="match_parent"
+            android:id="@+id/promotion"
+            android:layout_height="wrap_content"
+            android:hint="@string/promoted"
+            android:textColorHint="@color/black"
+            tools:ignore="VisualLintButtonSize" />
+
+        <Button
+            android:id="@+id/submit"
+            style="@style/formButton"
+            android:layout_width="wrap_content"
+            android:text="@string/add" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

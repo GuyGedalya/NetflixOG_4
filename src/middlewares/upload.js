@@ -21,8 +21,8 @@ const upload = multer({
     limits: { fileSize: 50 * 1024 * 1024 }, // File size limit: 50MB
     fileFilter: (req, file, cb) => {
         const allowedTypes = {
-            ProfileImage: ['image/jpeg', 'image/png'],
-            MovieImage: ['image/jpeg', 'image/png'],
+            ProfileImage: ['image/png', 'image/jpeg', 'image/jpg'],
+            MovieImage: ['image/png', 'image/jpeg', 'image/jpg'],
 			Film: ['video/mp4']
         };
         const types = allowedTypes[file.fieldname];

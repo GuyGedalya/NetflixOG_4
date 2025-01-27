@@ -7,7 +7,7 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label=""
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NOG_Android"
@@ -25,6 +25,17 @@
         <activity android:name="com.example.nog.VideoPlayerActivity.VideoPlayerActivity" />
         <activity
             android:name="com.example.nog.CategoryPageActivity" />
+        <activity
+            android:name=".ManagerActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".LogInActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SignupActivity"
+            android:exported="true" />
+        <activity android:name=".MainActivity"
+            android:exported="false"/>
 
     </application>
 
