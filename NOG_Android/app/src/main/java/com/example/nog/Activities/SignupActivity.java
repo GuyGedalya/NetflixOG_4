@@ -1,4 +1,4 @@
-package com.example.nog_android;
+package com.example.nog.Activities;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -8,14 +8,15 @@ import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.example.nog.R;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.nog_android.connectionClasses.ApiClient;
-import com.example.nog_android.connectionClasses.ApiService;
+import com.example.nog.connectionClasses.ApiClient;
+import com.example.nog.connectionClasses.ApiService;
 
 import java.io.File;
 

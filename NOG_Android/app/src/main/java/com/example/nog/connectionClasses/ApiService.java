@@ -1,8 +1,8 @@
 package com.example.nog_android.connectionClasses;
 
-import com.example.nog_android.ObjectClasses.Category;
 import com.example.nog_android.ObjectClasses.Movie;
 import com.example.nog_android.ObjectClasses.TokenManager;
+import com.example.nog_android.ObjectClasses.User;
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +19,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Streaming;

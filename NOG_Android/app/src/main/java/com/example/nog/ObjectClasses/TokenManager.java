@@ -1,4 +1,4 @@
-package com.example.nog_android.ObjectClasses;
+package com.example.nog.ObjectClasses;
 
 import com.google.gson.annotations.SerializedName;
 

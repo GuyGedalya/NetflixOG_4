@@ -1,4 +1,4 @@
-package com.example.nog;
+package com.example.nog.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,14 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-
-import com.example.nog_android.Movie;
-
+import com.example.nog.R;
+import com.example.nog.ObjectClasses.Movie;
 import java.util.List;
 import java.util.Map;
 
@@ -38,11 +35,7 @@ public class CategoryMovieAdapter extends RecyclerView.Adapter<CategoryMovieAdap
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         String categoryName = (String) categories.keySet().toArray()[position];
         List<Movie> movies = categories.get(categoryName);
-
-        // קביעת שם הקטגוריה
         holder.categoryName.setText(categoryName);
-
-        // הגדרת RecyclerView פנימי עם Adapter לסרטים
         MovieAdapter movieAdapter = new MovieAdapter(movies);
         holder.moviesList.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         holder.moviesList.setAdapter(movieAdapter);
@@ -56,6 +49,7 @@ public class CategoryMovieAdapter extends RecyclerView.Adapter<CategoryMovieAdap
         return 0;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setCategories(Map<String, List<Movie>> newCategories) {
         categories = newCategories;
         notifyDataSetChanged();
@@ -71,7 +65,7 @@ public class CategoryMovieAdapter extends RecyclerView.Adapter<CategoryMovieAdap
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             categoryName = itemView.findViewById(R.id.category_name);
-            moviesList = itemView.findViewById(R.id.movies_list); // ודא שה-ID הזה תואם ל-RecyclerView ב-layout
+            moviesList = itemView.findViewById(R.id.movies_list);
         }
     }
 

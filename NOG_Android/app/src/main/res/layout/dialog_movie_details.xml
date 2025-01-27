@@ -9,7 +9,8 @@
         android:id="@+id/movie_image"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/movie_image_description"/>
 
     <TextView
         android:id="@+id/movie_title"
@@ -39,5 +40,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Play Movie" />
+        android:text="@string/play_movie" />
 </LinearLayout>

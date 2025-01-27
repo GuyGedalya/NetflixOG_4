@@ -23,10 +23,6 @@ public class User {
     @SerializedName("Password")
     private String password;
 
-    public String getProfileImagePath() {
-        return profileImagePath;
-    }
-
     @SerializedName("Phone")
     private String phone;
 
@@ -52,5 +48,12 @@ public class User {
         return isAdmin;
     }
 
+    public List<String> getMoviesWatched() {
+        return moviesWatched;
+    }
+
+    public void setMoviesWatched(List<String> moviesWatched) {
+        this.moviesWatched = moviesWatched;
+    }
 }
 

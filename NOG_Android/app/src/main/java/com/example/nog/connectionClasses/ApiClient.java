@@ -1,4 +1,4 @@
-package com.example.nog_android.connectionClasses;
+package com.example.nog.connectionClasses;
 
 import retrofit2.Retrofit;
 
