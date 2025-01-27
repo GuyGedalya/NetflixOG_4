@@ -1,8 +1,8 @@
 package com.example.nog_android.connectionClasses;
 
+import com.example.nog_android.ObjectClasses.Category;
 import com.example.nog_android.ObjectClasses.Movie;
 import com.example.nog_android.ObjectClasses.TokenManager;
-import com.example.nog_android.ObjectClasses.User;
 
 import java.util.List;
 import java.util.Map;
@@ -12,10 +12,12 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
@@ -43,6 +45,17 @@ public interface ApiService {
     @Streaming
     Call<ResponseBody> downloadFile(@Header("Authorization") String token, @Path("Path") String pathToFile);
 
+    @POST("categories")
+    @Headers("Content-Type: application/json")
+    Call<Void> addCategory(@Header("Authorization") String token, @Body Category category);
+
+    @PATCH("categories/{id}")
+    @Headers("Content-Type: application/json")
+    Call<Void> updateCategory(@Path("id") String categoryId, @Header("Authorization") String token, @Body Category category);
+
+    @DELETE("categories/{id}")
+    Call<Void> deleteCategory(@Path("id") String categoryId, @Header("Authorization") String token);
+
 
     @GET("movies/{id}")
     Call<Movie> getMovieById(@Path("id") String movieId, @Header("Authorization") String token);
@@ -54,5 +67,5 @@ public interface ApiService {
     Call<List<Movie>> getRecommendations(@Path("id") String movieId, @Header("Authorization") String token);
 
     @POST("movies/{id}/recommend")
-    Call<Void> addAsWatched(@Path("id") String movieId, @Header("Authorization") String token, String userId);
+    Call<Void> addAsWatched(@Path("id") String movieId, @Header("Authorization") String token);
 }

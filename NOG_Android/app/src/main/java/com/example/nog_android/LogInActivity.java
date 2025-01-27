@@ -14,6 +14,9 @@ import com.example.nog_android.connectionClasses.ApiClient;
 import com.example.nog_android.connectionClasses.ApiService;
 import com.example.nog_android.connectionClasses.LoginRequest;
 
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,10 +60,16 @@ public class LogInActivity extends AppCompatActivity {
                     if(tokenManager != null) {
                         TokenManager.getInstance().setToken(tokenManager.getToken());
                         TokenManager.getInstance().setUser(tokenManager.getUser());
-                        Toast.makeText(LogInActivity.this, "LogIn Successful! Token saved.", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(LogInActivity.this, TokenManager.getInstance().getToken(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LogInActivity.this, ManagerActivity.class);
+                        startActivity(intent);
+                        finish();
                     } else{
-                        Toast.makeText(LogInActivity.this, "Failed to log in", Toast.LENGTH_SHORT).show();
+                        try (ResponseBody errorBody = response.errorBody()) {
+                            String errorMessage = errorBody != null ? errorBody.string() : "Unknown error";
+                            Toast.makeText(LogInActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                        } catch (IOException e) {
+                            Toast.makeText(LogInActivity.this, "Error reading error message", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }

@@ -15,6 +15,11 @@ public class Category {
     @SerializedName("promoted")
     private boolean promoted;
 
+    public Category(String name, boolean promoted) {
+        this.name = name;
+        this.promoted = promoted;
+    }
+
     // Getters and Setters
     public String getName() {
         return name;
@@ -28,7 +33,4 @@ public class Category {
         return promoted;
     }
 
-    public void setPromoted(boolean promoted) {
-        this.promoted = promoted;
-    }
 }
