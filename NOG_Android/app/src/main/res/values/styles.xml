@@ -9,7 +9,7 @@
         <item name="android:minHeight">48dp</item>
         <item name="android:background">@color/white</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textColorHint">@color/black</item>
     </style>
     <style name="formHeading">
         <item name="android:layout_height">wrap_content</item>
@@ -41,4 +41,5 @@
         <item name="android:textColor">@color/textOnEmpty</item>
         <item name="android:textColorHint">@color/textOnEmpty</item>
     </style>
+
 </resources>
