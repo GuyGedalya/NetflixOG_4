@@ -71,4 +71,7 @@ public interface ApiService {
 
     @POST("movies/{id}/recommend")
     Call<Void> addAsWatched(@Path("id") String movieId, @Header("Authorization") String token);
+
+    @GET("movies/search/{query}")
+    Call<List<Movie>> query(@Path("query") String query, @Header("Authorization") String token);
 }
