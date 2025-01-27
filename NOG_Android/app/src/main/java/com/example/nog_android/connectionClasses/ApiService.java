@@ -60,6 +60,9 @@ public interface ApiService {
     @GET("movies/{id}")
     Call<Movie> getMovieById(@Path("id") String movieId, @Header("Authorization") String token);
 
+    @DELETE("movies{id}")
+    Call<Void> deleteMovie(@Path("id") String movieId, @Header("Authorization") String token);
+
     @GET("movies/categories")
     Call<Map<String,List<Movie>>> getAllMovies(@Header("Authorization") String token);
 

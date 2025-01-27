@@ -44,7 +44,7 @@ public class DeleteCategory extends Fragment {
     private void checkValidAndSend(EditText categoryIdEt){
         String idC = categoryIdEt.getText().toString().trim();
         if (idC.isEmpty()) {
-            categoryIdEt.setError("Category name is required");
+            categoryIdEt.setError("Category id is required");
             return;
         }
         sendToServer(idC);
