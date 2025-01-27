@@ -1,10 +1,11 @@
-package com.example.nog_android;
+package com.example.nog.Activities;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.nog_android.ManagerFragments.ViewPagerAdapter;
+import com.example.nog.R;
+import com.example.nog.ManagerFragments.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 

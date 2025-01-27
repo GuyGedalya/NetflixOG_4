@@ -1,4 +1,4 @@
-package com.example.nog_android.ObjectClasses;
+package com.example.nog.ObjectClasses;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -9,6 +9,38 @@ import java.util.List;
 
 @Entity
 public class User {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setMongoId(String mongoId) {
+        this.mongoId = mongoId;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
+
+    public void setProfileImagePath(String profileImagePath) {
+        this.profileImagePath = profileImagePath;
+    }
+
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -28,6 +60,30 @@ public class User {
 
     @SerializedName("ProfileImage")
     private String profileImagePath;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getProfileImagePath() {
+        return profileImagePath;
+    }
 
     @SerializedName("Admin")
     private Boolean isAdmin;

@@ -11,8 +11,8 @@ import com.example.nog.ObjectClasses.Movie;
 import com.example.nog.ObjectClasses.User;
 
 
-@Database(entities = {User.class, Movie.class, Category.class}, version = 3)
-@TypeConverters({Converters.class}) // הוספת TypeConverters
+@Database(entities = {User.class, Movie.class, Category.class}, version = 3, exportSchema = false)
+@TypeConverters({Converters.class}) //  TypeConverters
 public abstract class AppDB extends RoomDatabase{
     public abstract MovieDao movieDao();
     public abstract CategoryDao categoryDao();

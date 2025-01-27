@@ -1,4 +1,4 @@
-package com.example.nog_android.ManagerFragments;
+package com.example.nog.ManagerFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,10 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.nog_android.ObjectClasses.TokenManager;
-import com.example.nog_android.R;
-import com.example.nog_android.connectionClasses.ApiClient;
-import com.example.nog_android.connectionClasses.ApiService;
+import com.example.nog.ObjectClasses.TokenManager;
+import com.example.nog.R;
+import com.example.nog.connectionClasses.ApiClient;
+import com.example.nog.connectionClasses.ApiService;
 
 import java.io.IOException;
 
