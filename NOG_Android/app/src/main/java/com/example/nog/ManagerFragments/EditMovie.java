@@ -1,4 +1,4 @@
-package com.example.nog_android.ManagerFragments;
+package com.example.nog.ManagerFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.nog_android.R;
+import com.example.nog.R;
 
 public class EditMovie extends Fragment {
     public EditMovie(){

@@ -1,4 +1,4 @@
-package com.example.nog_android.ManagerFragments;
+package com.example.nog.ManagerFragments;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
