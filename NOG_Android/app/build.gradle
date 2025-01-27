@@ -51,5 +51,7 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:2.5.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.activity:activity:1.10.0")
+    implementation("com.google.android.exoplayer:exoplayer:2.19.0")
+
 
 }

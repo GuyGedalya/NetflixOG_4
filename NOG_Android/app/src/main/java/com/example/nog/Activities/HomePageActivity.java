@@ -1,4 +1,4 @@
-package com.example.nog;
+package com.example.nog.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,17 +14,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
+import com.example.nog.Adapters.CategoryMovieAdapter;
+import com.example.nog.R;
 import com.example.nog.Repositories.MovieRepository;
 import com.example.nog.ViewModels.MovieViewModel;
 import com.example.nog.ViewModels.MovieViewModelFactory;
-import com.example.nog_android.ApiClient;
-import com.example.nog_android.AppDB;
-import com.example.nog_android.LoginRequest;
-import com.example.nog_android.Movie;
-import com.example.nog_android.Token.TokenManager;
-import com.example.nog_android.TokenResponse;
+import com.example.nog.connectionClasses.ApiClient;
+import com.example.nog.connectionClasses.AppDB;
+import com.example.nog.connectionClasses.LoginRequest;
+import com.example.nog.ObjectClasses.Movie;
+import com.example.nog.ObjectClasses.TokenManager;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
@@ -41,6 +41,7 @@ public class HomePageActivity extends AppCompatActivity {
     protected VideoView videoView;
     protected RecyclerView recyclerView;
 
+    private Movie randomMovie;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,24 +50,44 @@ public class HomePageActivity extends AppCompatActivity {
         // Toolbar setup
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new NavigationMenuFragment())
-                    .commit();
-        }
 
+        // Drawer setup
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
 
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close
+        );
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_home) {
+                startActivity(new Intent(this, HomePageActivity.class));
+            } else if (id == R.id.nav_categories) {
+                startActivity(new Intent(this, CategoryPageActivity.class));
+            } else if (id == R.id.nav_manager) {
+            } else if (id == R.id.nav_search) {
+            }
+            drawerLayout.closeDrawers();
+            return true;
+        });
 
 
         // Database and ViewModel setup
-        AppDB database = Room.databaseBuilder(getApplicationContext(), AppDB.class, "my_database").build();
+        AppDB database = MyDataBase.getInstance(this);
         MovieRepository repository = new MovieRepository(database.movieDao());
         MovieViewModelFactory factory = new MovieViewModelFactory(repository);
         movieViewModel = new ViewModelProvider(this, factory).get(MovieViewModel.class);
 
         // VideoView setup
-        videoView = findViewById(R.id.video_view);
-        videoView.setVisibility(View.GONE);
+        videoView = findViewById(R.id.video_view1);
 
         // RecyclerView setup
         recyclerView = findViewById(R.id.recycler_view);
@@ -75,7 +96,7 @@ public class HomePageActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.setCategories(null);
 
-        observeViewModel();
+
         loadData();
     }
 
@@ -83,13 +104,12 @@ public class HomePageActivity extends AppCompatActivity {
         String testUserName = "guy";
         String testPassword = "g12345678";
 
-        ApiClient.getApiService().logIn(new LoginRequest(testUserName, testPassword)).enqueue(new Callback<TokenResponse>() {
+        ApiClient.getApiService().logIn(new LoginRequest(testUserName, testPassword)).enqueue(new Callback<TokenManager>() {
             @Override
-            public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
+            public void onResponse(Call<TokenManager> call, Response<TokenManager> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     TokenManager.getInstance().setToken(response.body().getToken());
-                    Log.d("HomePageActivity", "Token created successfully: " + response.body().getToken());
-
+                    TokenManager.getInstance().setUser(response.body().getUser());
                     movieViewModel.getCategories().observe(HomePageActivity.this, categories -> {
                         if (categories != null) {
                             updateUI(categories);
@@ -103,41 +123,28 @@ public class HomePageActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<TokenResponse> call, Throwable t) {
+            public void onFailure(Call<TokenManager> call, Throwable t) {
                 Log.e("HomePageActivity", "Error creating token: " + t.getMessage());
             }
         });
     }
 
-    private void observeViewModel() {
-        Log.d("HomePageActivity", "observeViewModel");
-        movieViewModel.getCategories().observe(this, categories -> {
-            if (categories != null) {
-                Log.d("HomePageActivity", "Categories fetched successfully");
-                updateUI(categories);
-            } else {
-                Log.e("HomePageActivity", "Failed to fetch categories");
-            }
-        });
+    private void refreshViewModel() {
+        movieViewModel.refreshCategories();
     }
 
     private void updateUI(Map<String, List<Movie>> categories) {
-        if (categories == null || categories.isEmpty()) {
-            Log.e("HomePageActivity", "Cannot update UI: categories are null or empty.");
-            return;
-        }
-        if (adapter != null)
-            adapter.setCategories(categories);
-        Movie randomMovie = getRandomMovie(categories);
-        if (randomMovie != null) {
-            ProgressBar loadingSpinner = findViewById(R.id.loading_spinner);
-            videoView.setVideoPath(ApiClient.getFullMovieUrl(randomMovie.getFilmPath()));
-            videoView.setOnErrorListener((mp, what, extra) -> {
-                loadingSpinner.setVisibility(View.GONE);
-                return true;
-            });
+        adapter.setCategories(categories);
+        this.randomMovie = getRandomMovie(categories);
+        displayRandomMovie(randomMovie);
+    }
 
+    private void displayRandomMovie(Movie movie) {
+        if (movie != null) {
+            videoView.setVideoPath(ApiClient.getFullMovieUrl(movie.getFilmPath()));
             playVideo();
+        } else {
+            Log.e("HomePageActivity", "No movies available to display.");
         }
     }
 
@@ -152,13 +159,12 @@ public class HomePageActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        Log.d("HomePageActivity", "onResume");
         super.onResume();
-        observeViewModel();
+        refreshViewModel();
+        displayRandomMovie(this.randomMovie);
     }
 
     protected void playVideo() {
-        videoView.setVisibility(View.VISIBLE);
         videoView.start();
     }
 }

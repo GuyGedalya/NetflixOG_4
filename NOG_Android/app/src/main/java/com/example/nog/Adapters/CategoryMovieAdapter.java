@@ -1,4 +1,4 @@
-package com.example.nog;
+package com.example.nog.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.nog_android.Movie;
+import com.example.nog.R;
+import com.example.nog.ObjectClasses.Movie;
 
 import java.util.List;
 import java.util.Map;
@@ -39,10 +40,8 @@ public class CategoryMovieAdapter extends RecyclerView.Adapter<CategoryMovieAdap
         String categoryName = (String) categories.keySet().toArray()[position];
         List<Movie> movies = categories.get(categoryName);
 
-        // קביעת שם הקטגוריה
         holder.categoryName.setText(categoryName);
 
-        // הגדרת RecyclerView פנימי עם Adapter לסרטים
         MovieAdapter movieAdapter = new MovieAdapter(movies);
         holder.moviesList.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         holder.moviesList.setAdapter(movieAdapter);

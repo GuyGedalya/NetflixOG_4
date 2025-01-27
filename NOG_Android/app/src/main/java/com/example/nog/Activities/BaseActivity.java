@@ -1,4 +1,4 @@
-package com.example.nog;
+package com.example.nog.Activities;
 
 
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.VideoView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.nog.R;
 
 
 public abstract class BaseActivity extends AppCompatActivity {

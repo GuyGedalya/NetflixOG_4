@@ -1,4 +1,4 @@
-package com.example.nog;
+package com.example.nog.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.nog.MovieDetailsDialogFragment.MovieDetailsDialogFragment;
-import com.example.nog_android.ApiClient;
-import com.example.nog_android.Movie;
+import com.example.nog.R;
+import com.example.nog.connectionClasses.ApiClient;
+import com.example.nog.ObjectClasses.Movie;
 
 import java.util.List;
 

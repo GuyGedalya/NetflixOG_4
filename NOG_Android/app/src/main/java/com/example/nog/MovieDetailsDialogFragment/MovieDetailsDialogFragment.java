@@ -1,6 +1,7 @@
 package com.example.nog.MovieDetailsDialogFragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.nog.MovieAdapter;
+import com.example.nog.Adapters.MovieAdapter;
 import com.example.nog.R;
 import com.example.nog.VideoPlayerActivity.VideoPlayerActivity;
-import com.example.nog_android.Movie;
-import com.example.nog_android.ApiClient;
-import com.example.nog_android.ApiService;
-import com.example.nog_android.Token.TokenManager;
+import com.example.nog.ObjectClasses.Movie;
+import com.example.nog.connectionClasses.ApiClient;
+import com.example.nog.connectionClasses.ApiService;
+import com.example.nog.ObjectClasses.TokenManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +94,7 @@ public class MovieDetailsDialogFragment extends DialogFragment {
         playButton.setOnClickListener(v -> {
             // Start the video player activity with the movie URL and close the dialog
             VideoPlayerActivity.start(requireContext(), ApiClient.getFullMovieUrl(movie.getFilmPath()));
+            addMovieToWatchlist(movie);
             dismiss();
         });
 
@@ -100,6 +102,35 @@ public class MovieDetailsDialogFragment extends DialogFragment {
         fetchRecommendedMovies();
 
         return view;
+    }
+    private void addMovieToWatchlist(Movie movie) {
+        // Get the token and user ID from the TokenManager
+        String token = TokenManager.getInstance().getToken();
+        String userId = TokenManager.getInstance().getUser().getMongoId(); // Ensure User has an ID field
+
+        // Get the API service instance
+        ApiService apiService = ApiClient.getApiService();
+
+        // Make the network call to add the movie to the watchlist
+        Call<Void> call = apiService.addAsWatched(movie.getMongoId(), "Bearer " + token);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    // Log success
+                    Log.d("MovieDetails", "Movie added to watchlist successfully.");
+                } else {
+                    // Handle API failure
+                    Log.e("MovieDetails", "Failed to add movie to watchlist. Response code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                // Handle network failure
+                Log.e("MovieDetails", "Error adding movie to watchlist: " + t.getMessage());
+            }
+        });
     }
 
     private void fetchRecommendedMovies() {

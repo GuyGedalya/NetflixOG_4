@@ -1,8 +1,7 @@
-package com.example.nog_android.connectionClasses;
+package com.example.nog.connectionClasses;
 
-import com.example.nog_android.ObjectClasses.Movie;
-import com.example.nog_android.ObjectClasses.TokenManager;
-import com.example.nog_android.ObjectClasses.User;
+import com.example.nog.ObjectClasses.Movie;
+import com.example.nog.ObjectClasses.TokenManager;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +16,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Streaming;
@@ -54,5 +54,5 @@ public interface ApiService {
     Call<List<Movie>> getRecommendations(@Path("id") String movieId, @Header("Authorization") String token);
 
     @POST("movies/{id}/recommend")
-    Call<Void> addAsWatched(@Path("id") String movieId, @Header("Authorization") String token, String userId);
+    Call<Void> addAsWatched(@Path("id") String movieId, @Header("Authorization") String token);
 }

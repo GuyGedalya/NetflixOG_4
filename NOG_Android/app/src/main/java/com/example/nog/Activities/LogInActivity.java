@@ -1,4 +1,4 @@
-package com.example.nog_android;
+package com.example.nog.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.nog_android.ObjectClasses.TokenManager;
-import com.example.nog_android.connectionClasses.ApiClient;
-import com.example.nog_android.connectionClasses.ApiService;
-import com.example.nog_android.connectionClasses.LoginRequest;
+import com.example.nog.R;
+import com.example.nog.ObjectClasses.TokenManager;
+import com.example.nog.connectionClasses.ApiClient;
+import com.example.nog.connectionClasses.ApiService;
+import com.example.nog.connectionClasses.LoginRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;

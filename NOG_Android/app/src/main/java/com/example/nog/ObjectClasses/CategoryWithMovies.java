@@ -1,6 +1,5 @@
-package com.example.nog;
+package com.example.nog.ObjectClasses;
 
-import com.example.nog_android.Movie;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Map;

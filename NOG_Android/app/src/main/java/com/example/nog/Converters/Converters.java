@@ -2,7 +2,7 @@ package com.example.nog.Converters;
 
 import androidx.room.TypeConverter;
 
-import com.example.nog_android.Category;
+import com.example.nog.ObjectClasses.Category;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

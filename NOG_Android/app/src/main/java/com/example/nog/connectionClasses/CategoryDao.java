@@ -1,11 +1,11 @@
-package com.example.nog_android.connectionClasses;
+package com.example.nog.connectionClasses;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-import com.example.nog_android.ObjectClasses.Category;
+import com.example.nog.ObjectClasses.Category;
 import java.util.List;
 
 @Dao
