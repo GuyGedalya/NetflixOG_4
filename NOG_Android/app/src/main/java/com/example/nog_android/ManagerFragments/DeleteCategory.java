@@ -31,6 +31,7 @@ public class DeleteCategory extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        // Inflating view
         View rootView =  inflater.inflate(R.layout.delete_category_form, container, false);
 
         EditText categoryIdEt = rootView.findViewById(R.id.categoryId);
@@ -43,6 +44,7 @@ public class DeleteCategory extends Fragment {
 
     private void checkValidAndSend(EditText categoryIdEt){
         String idC = categoryIdEt.getText().toString().trim();
+        // User must enter category id
         if (idC.isEmpty()) {
             categoryIdEt.setError("Category id is required");
             return;
@@ -53,10 +55,12 @@ public class DeleteCategory extends Fragment {
     private void sendToServer(String categoryId){
         ApiService apiService = ApiClient.getApiService();
         TokenManager tokenManager= TokenManager.getInstance();
+        // Constructing token
         String token = "Bearer " + tokenManager.getToken();
 
         Call<Void> call = apiService.deleteCategory(categoryId,token);
 
+        // Sending call to server
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<Void> call,@NonNull Response<Void> response) {
@@ -64,6 +68,7 @@ public class DeleteCategory extends Fragment {
                     Toast.makeText(requireContext(), "Deleted!",Toast.LENGTH_SHORT).show();
                 }else{
                     try (ResponseBody errorBody = response.errorBody()) {
+                        // If we can get error message form the server, we'll pop up this message
                         String errorMessage = errorBody != null ? errorBody.string() : "Unknown error";
                         Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {

@@ -8,19 +8,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.example.nog_android.ObjectClasses.Category;
 import com.example.nog_android.ObjectClasses.TokenManager;
 import com.example.nog_android.R;
 import com.example.nog_android.connectionClasses.ApiClient;
 import com.example.nog_android.connectionClasses.ApiService;
-
 import java.io.IOException;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,11 +32,13 @@ public class EditCategory extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View rootView =   inflater.inflate(R.layout.edit_category_form, container, false);
 
+        // Getting view elements
         EditText categoryIdEt = rootView.findViewById(R.id.categoryId);
         EditText categoryNameEt = rootView.findViewById(R.id.categoryName);
         CheckBox promotedCb = rootView.findViewById(R.id.promotion);
         Button submitBtn = rootView.findViewById(R.id.submit);
 
+        // setting submit button
         submitBtn.setOnClickListener(v -> checkValidAndSend(categoryIdEt, categoryNameEt,promotedCb));
 
         return rootView;
@@ -48,6 +46,7 @@ public class EditCategory extends Fragment {
     private void checkValidAndSend(EditText idEt,EditText nameEt, CheckBox promoted) {
         String nameC = nameEt.getText().toString().trim();
         String idC = idEt.getText().toString().trim();
+        // Validating field
         if(idC.isEmpty()) {
             idEt.setError("Category Id is required");
         }
@@ -62,9 +61,11 @@ public class EditCategory extends Fragment {
     private void sendToServer(String categoryId,Category category){
         ApiService apiService = ApiClient.getApiService();
         TokenManager tokenManager= TokenManager.getInstance();
+        // Constructing token
         String token = "Bearer " + tokenManager.getToken();
         Call<Void> call = apiService.updateCategory(categoryId,token, category);
 
+        // Calling the server to update category
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<Void> call,@NonNull Response<Void> response) {

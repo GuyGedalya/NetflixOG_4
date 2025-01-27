@@ -1,7 +1,5 @@
 package com.example.nog_android.ManagerFragments;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -16,10 +14,8 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position){
-        Log.d("ViewPagerAdapter", "Loading fragment at position: " + position);
+        // Switching between tabs
         switch (position) {
-            case 0:
-                return new AddCategory();
             case 1:
                 return new EditCategory();
             case 2:

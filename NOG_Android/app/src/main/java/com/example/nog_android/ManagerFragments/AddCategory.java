@@ -35,12 +35,15 @@ public class AddCategory extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        // Inflating the Add category view
         View rootView =  inflater.inflate(R.layout.add_category_form, container, false);
 
+        // Get elements
         EditText categoryNameEt = rootView.findViewById(R.id.categoryName);
         CheckBox promotedCb = rootView.findViewById(R.id.promotion);
         Button submitBtn = rootView.findViewById(R.id.submit);
 
+        // Setting submit listener
         submitBtn.setOnClickListener(v -> checkValidAndSend(categoryNameEt,promotedCb));
 
         return rootView;
@@ -48,6 +51,7 @@ public class AddCategory extends Fragment {
 
     private void checkValidAndSend(EditText nameEt, CheckBox promoted) {
         String nameC = nameEt.getText().toString().trim();
+        // validation
         if (nameC.isEmpty()) {
             nameEt.setError("Category name is required");
             return;
@@ -56,10 +60,13 @@ public class AddCategory extends Fragment {
         sendToServer(category);
     }
 
+    // Sending category for the server to add
     private void sendToServer(Category category){
         ApiService apiService = ApiClient.getApiService();
         TokenManager tokenManager= TokenManager.getInstance();
+        // Constructing token
         String token = "Bearer " + tokenManager.getToken();
+        // Constructing call
         Call<Void> call = apiService.addCategory(token, category);
 
         call.enqueue(new Callback<>() {
@@ -68,6 +75,7 @@ public class AddCategory extends Fragment {
                 if(response.isSuccessful()){
                     Toast.makeText(requireContext(), "Added!",Toast.LENGTH_SHORT).show();
                 }else{
+                    // If response is un successful, pop up server's error
                     try (ResponseBody errorBody = response.errorBody()) {
                         String errorMessage = errorBody != null ? errorBody.string() : "Unknown error";
                         Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();

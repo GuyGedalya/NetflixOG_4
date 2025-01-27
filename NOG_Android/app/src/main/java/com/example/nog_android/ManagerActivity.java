@@ -1,8 +1,6 @@
 package com.example.nog_android;
 
 import android.os.Bundle;
-import android.util.Log;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -18,16 +16,16 @@ public class ManagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager);
 
+        // We have a tab view
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         ViewPager2 viewPager = findViewById(R.id.viewPager);
 
+        // Setting adapter
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(adapter);
 
-        Log.d("ManagerActivity", "ViewPager current position: " + viewPager.getCurrentItem());
-
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-            Log.d("TabLayoutMediator", "Tab clicked at position: " + position);
+            // Tab description
             switch (position) {
                 case 0:
                     tab.setText("Add Category");
@@ -58,8 +56,6 @@ public class ManagerActivity extends AppCompatActivity {
                     break;
             }
         }).attach();
-
-        Log.d("ManagerActivity", "ViewPager current position: " + viewPager.getCurrentItem());
 
     }
 }
