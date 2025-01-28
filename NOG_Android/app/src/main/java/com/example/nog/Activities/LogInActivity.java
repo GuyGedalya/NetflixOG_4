@@ -15,6 +15,9 @@ import com.example.nog.connectionClasses.ApiClient;
 import com.example.nog.connectionClasses.ApiService;
 import com.example.nog.connectionClasses.LoginRequest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
@@ -54,31 +57,43 @@ public class LogInActivity extends AppCompatActivity {
         LoginRequest loginRequest = new LoginRequest(userNameValue, passwordValue);
         Call<TokenManager> call = apiService.logIn(loginRequest);
 
-        // Calling the server
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<TokenManager> call, @NonNull Response<TokenManager> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(LogInActivity.this, "LogIn Successful!" , Toast.LENGTH_SHORT).show();
+                if (response.isSuccessful() && response.body() != null) {
+                    // LogIn successful
                     TokenManager tokenManager = response.body();
-                    // if we got a token
-                    if(tokenManager != null) {
-                        TokenManager.getInstance().setToken(tokenManager.getToken());
-                        TokenManager.getInstance().setUser(tokenManager.getUser());
-                        Intent intent = new Intent(LogInActivity.this, ManagerActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else{
-                        // If response unsuccessful, popping up error message
-                        try (ResponseBody errorBody = response.errorBody()) {
-                            String errorMessage = errorBody != null ? errorBody.string() : "Unknown error";
+                    TokenManager.getInstance().setToken(tokenManager.getToken());
+                    TokenManager.getInstance().setUser(tokenManager.getUser());
+                    Toast.makeText(LogInActivity.this, "LogIn Successful!", Toast.LENGTH_SHORT).show();
+
+                    // Navigate to ManagerActivity
+                    Intent intent = new Intent(LogInActivity.this, ManagerActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    // LogIn failed: show server error message
+                    try (ResponseBody errorBody = response.errorBody()) {
+                        String errorMessage;
+                        if (errorBody != null) {
+                            String rawError = errorBody.string();
+
+                            try{
+                                JSONObject jsonObject = new JSONObject(rawError);
+                                errorMessage = jsonObject.optString("error", rawError);
+                            } catch (JSONException e) {
+                                errorMessage = rawError;
+                            }
                             Toast.makeText(LogInActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
-                        } catch (IOException e) {
-                            Toast.makeText(LogInActivity.this, "Error reading error message", Toast.LENGTH_SHORT).show();
+                        } else{
+                            Toast.makeText(LogInActivity.this, "Empty error response from server", Toast.LENGTH_SHORT).show();
                         }
+                    } catch (IOException e) {
+                        Toast.makeText(LogInActivity.this, "Error reading error message", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<TokenManager> call, @NonNull Throwable t) {
                 Toast.makeText(LogInActivity.this, "Error: Please check your connection and try again.", Toast.LENGTH_SHORT).show();
