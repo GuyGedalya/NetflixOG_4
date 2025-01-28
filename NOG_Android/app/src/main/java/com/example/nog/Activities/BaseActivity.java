@@ -92,6 +92,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         navigationView = findViewById(R.id.navigation_view);
 
+        // Call the isManager function to check user role
+        TokenManager.getInstance().isAdmin(isAdmin -> {
+            // Show the "Manager" menu item if the user is a manager
+            // Hide the "Manager" menu item if the user is not a manager
+            navigationView.getMenu().findItem(R.id.nav_manager).setVisible(isAdmin);
+        });
+
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_home) {
