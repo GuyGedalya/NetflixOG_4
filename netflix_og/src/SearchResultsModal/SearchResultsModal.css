@@ -54,6 +54,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: transform 0.3s;
+    max-width: 300px;
 }
 
 .search-result-poster:hover {
