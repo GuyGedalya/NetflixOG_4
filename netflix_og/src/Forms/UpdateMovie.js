@@ -122,7 +122,7 @@ function UpdateMovie() {
 					{formData.Categories.map((Category, index) => (
 						<li key={index}>
 							{Category}{" "}
-							<button style={{ marginLeft: "40px" }} onClick={() => removeOption(index)}>Remove</button>
+							<button type= "button" style={{ marginLeft: "40px" }} onClick={() => removeOption(index)}>Remove</button>
 						</li>
 					))}
 				</ul>
