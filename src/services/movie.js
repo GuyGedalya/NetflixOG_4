@@ -182,7 +182,7 @@ async function searchMovies(query) {
                 // Search for the relevant categories that match the query in the category ID:
                 { Categories: { $in: categoryIds } }
             ]
-        });
+        }).populate('Categories');
 
 
         if (movies.length > 0) {

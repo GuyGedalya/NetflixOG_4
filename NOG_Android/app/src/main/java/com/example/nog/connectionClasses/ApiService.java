@@ -19,6 +19,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Streaming;
@@ -56,6 +57,28 @@ public interface ApiService {
     @DELETE("categories/{id}")
     Call<Void> deleteCategory(@Path("id") String categoryId, @Header("Authorization") String token);
 
+    @Multipart
+    @POST("movies")
+    Call<Void> addMovie(
+            @Header("Authorization") String token,
+            @Part("Title") RequestBody title,
+            @Part("ReleaseDate") RequestBody releaseDate,
+            @Part("Categories") RequestBody categories,
+            @Part MultipartBody.Part MovieImage,
+            @Part MultipartBody.Part Film
+    );
+
+    @Multipart
+    @PUT("movies/{id}")
+    Call<Void> updateMovie(
+            @Header("Authorization") String token,
+            @Path("id") String movieId,
+            @Part("Title") RequestBody title,
+            @Part("ReleaseDate") RequestBody releaseDate,
+            @Part("Categories") RequestBody categories,
+            @Part MultipartBody.Part MovieImage,
+            @Part MultipartBody.Part Film
+    );
 
     @GET("movies/{id}")
     Call<Movie> getMovieById(@Path("id") String movieId, @Header("Authorization") String token);
