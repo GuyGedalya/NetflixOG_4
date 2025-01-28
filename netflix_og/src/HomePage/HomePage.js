@@ -58,7 +58,7 @@ function HomePage() {
                 <div className="video-container1">
                     {randomMovie ? (
                         <video autoPlay muted loop>
-                            <source src={randomMovie.Film} type="video/mp4" />
+                             <source src={`http://localhost:3001/${randomMovie.Film}`} type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
                     ) : (

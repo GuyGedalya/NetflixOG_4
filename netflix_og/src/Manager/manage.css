@@ -1,0 +1,45 @@
+/* manage.css */
+
+/* כללי עבור הקונטיינר */
+.container-fluid {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* מבנה השורות */
+.row1 {
+    display: flex; /* שימוש ב-Flexbox כדי ליצור פריסה אופקית */
+    flex-wrap: nowrap; /* מונע ירידה של אלמנטים לשורה חדשה */
+    height: 100vh; /* גובה מלא של המסך */
+}
+
+/* עבור התפריט בצד השמאלי */
+.col-3 {
+    flex: 0 0 25%; /* תופס 25% מהרוחב */
+    max-width: 25%; /* מגביל את הרוחב ל-25% */
+    padding: 20px; /* ריווח פנימי */
+    box-sizing: border-box; /* כדי ש-padding לא ישפיע על ה-width */
+    overflow-y: auto; /* גלילה אם התוכן גדול יותר מהגובה */
+}
+
+/* עבור הקונטיינר הימני */
+.col-9 {
+    flex: 0 0 75%; /* תופס 75% מהרוחב */
+    max-width: 75%; /* מגביל את הרוחב ל-75% */
+    max-height: 100%;
+    padding: 20px; /* ריווח פנימי */
+    overflow-y: auto; /* גלילה אם התוכן גדול יותר מהגובה */
+    box-sizing: border-box;
+    margin-left: 700px;
+}
+.text-container10 {
+    font-size: 16px; /* גודל טקסט רגיל */
+    line-height: 1.5; /* גובה שורה נוח לקריאה */
+    max-height:100% ;
+    max-width: 40%;
+}
+
+
+
+

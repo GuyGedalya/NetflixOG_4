@@ -45,7 +45,7 @@ function AddCategory() {
 	};
 
 	return (
-		<div className="text-container">
+		<div className="text-container10">
 			<h1>Add Category</h1>
 			<form className="login-form" onSubmit={handleSubmit}>
 				<input type="text"

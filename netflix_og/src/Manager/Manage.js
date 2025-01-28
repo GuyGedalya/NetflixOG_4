@@ -10,11 +10,11 @@ function Manage() {
 	return (
 		<>
 			<div className="container-fluid">
-				<div className="row">
+				<div className="row1">
 					<div className="col-3">
 						<LeftManagerMenu onMenuClick={handleMenuClick} />
 					</div>
-					<div className="col-9 text-container">
+					<div className="col-9 text-container10">
 						{currentComponent}
 					</div>
 				</div>

@@ -41,15 +41,15 @@
 }
 
 .search-results-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+    gap: 20px; 
     justify-content: center;
     margin-top: 20px;
 }
 
 .search-result-poster {
-    width: 120px;
+    width: 100%; 
     height: auto;
     border-radius: 5px;
     cursor: pointer;
@@ -60,6 +60,7 @@
     transform: scale(1.1);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
 }
+
 
 .no-results-message {
     margin-top: 20px; 
