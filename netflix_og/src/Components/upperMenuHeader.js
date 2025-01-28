@@ -155,9 +155,9 @@ function Header({ setResults, setShowSearchModal }) {
 				<button onClick={handleLogout} className='header button'>Log Out</button>
 
 				{userName && (
-                		<div className="user-info">
-                			<img src={userImage || "/images/default-avatar.png"} alt="User Avatar" className="user-avatar" />
-                			<span>Hello, {userName}</span>
+                		<div className={`user-info ${mode === "Light Mode" ? "light-mode" : ""}`}>
+                			<img src={userImage ? `http://localhost:3001/${userImage}` : "/images/defaultAvatar.png"} alt="User Avatar" className="user-avatar" />
+                			<span>Hello, {userName}!</span>
                 		</div>
                 )}
 			</nav>

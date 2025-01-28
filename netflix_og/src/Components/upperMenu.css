@@ -11,3 +11,23 @@
 .headerDark {
 	background-color: black;
 }
+.user-info {
+	display: flex;
+	align-items: center;
+	color: white;
+}
+
+
+.user-info.light-mode {
+	color: black; /* צבע עבור Light Mode */
+  }
+.user-avatar {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+
+.user-info span {
+	font-size: 14px;
+}
