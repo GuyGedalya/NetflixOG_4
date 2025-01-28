@@ -12,6 +12,18 @@ function Header({ setResults, setShowSearchModal }) {
 	const navigate = useNavigate();
 	const searchBarRef = useRef(null);
 
+    // To hold username and photo
+    const [userName, setUserName] = useState('');
+       const [userImage, setUserImage] = useState('');
+
+	useEffect(() => {
+    	const user = JSON.parse(sessionStorage.getItem("user"));
+    	if (user) {
+    		setUserName(user.UserName); // Saving user name
+    		setUserImage(user.ProfileImage); // saving path to profile
+    	}
+    }, []);
+
 	// Change the theme of the page
 	useEffect(() => {
 		const header = document.querySelector("header");
@@ -24,7 +36,7 @@ function Header({ setResults, setShowSearchModal }) {
 			button.classList.toggle("buttonLight", mode === "Light Mode");
 		});
 	
-		// Update the switch buttom:
+		// Update the switch bottom:
 		if (switchButtonRef.current) {
 			switchButtonRef.current.classList.toggle("buttonDark", mode === "Dark Mode");
 			switchButtonRef.current.classList.toggle("buttonLight", mode === "Light Mode");
@@ -141,6 +153,13 @@ function Header({ setResults, setShowSearchModal }) {
 					)}
 				<button ref={switchButtonRef} onClick={toggleMode}>Switch to {mode === "Dark Mode" ? "Light" : "Dark"}</button>
 				<button onClick={handleLogout} className='header button'>Log Out</button>
+
+				{userName && (
+                		<div className="user-info">
+                			<img src={userImage || "/images/default-avatar.png"} alt="User Avatar" className="user-avatar" />
+                			<span>Hello, {userName}</span>
+                		</div>
+                )}
 			</nav>
 		</header>
 	);
