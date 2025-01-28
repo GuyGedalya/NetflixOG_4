@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -17,8 +20,10 @@ import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
+import com.bumptech.glide.Glide;
 import com.example.nog.ObjectClasses.Movie;
 import com.example.nog.ObjectClasses.TokenManager;
+import com.example.nog.ObjectClasses.User;
 import com.example.nog.R;
 import com.example.nog.connectionClasses.ApiClient;
 import com.example.nog.connectionClasses.ApiService;
@@ -92,12 +97,28 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         navigationView = findViewById(R.id.navigation_view);
 
+
+
         // Call the isManager function to check user role
         TokenManager.getInstance().isAdmin(isAdmin -> {
             // Show the "Manager" menu item if the user is a manager
-            // Hide the "Manager" menu item if the user is not a manager
             navigationView.getMenu().findItem(R.id.nav_manager).setVisible(isAdmin);
         });
+
+        View naviHeaderView = navigationView.getHeaderView(0);
+        ImageView profileImage = naviHeaderView.findViewById(R.id.profile_image);
+        TextView welcomeText = naviHeaderView.findViewById(R.id.welcome_text);
+
+        // Setting user info
+        TokenManager tokenManager = TokenManager.getInstance();
+        User user = tokenManager.getUser();
+        String welcome = user.getUserName() + ", Welcome to NOG";
+        welcomeText.setText(welcome);
+
+        if(!user.getProfileImagePath().equals("null")){
+            String fullImageUrl = ApiClient.getFullMovieUrl(user.getProfileImagePath());
+            Glide.with(BaseActivity.this).load(fullImageUrl).into(profileImage);
+        }
 
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
