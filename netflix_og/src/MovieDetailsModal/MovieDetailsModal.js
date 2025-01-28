@@ -43,8 +43,9 @@ const MovieDetailsModal = ({ show, onHide, movieId }) => {
           const errorText = await response.text();
           throw new Error(`Failed to fetch movies: ${response.status} - ${errorText}`);
         }
-  
+        console.log(response)
         const data = await response.json();
+        console.log(movieId)
         console.log(data)
         setRelatedMovies(data); // Save movies to state
       } catch (err) {
