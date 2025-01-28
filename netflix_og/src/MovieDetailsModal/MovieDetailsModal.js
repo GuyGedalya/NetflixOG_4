@@ -43,10 +43,7 @@ const MovieDetailsModal = ({ show, onHide, movieId }) => {
           const errorText = await response.text();
           throw new Error(`Failed to fetch movies: ${response.status} - ${errorText}`);
         }
-        console.log(response)
         const data = await response.json();
-        console.log(movieId)
-        console.log(data)
         setRelatedMovies(data); // Save movies to state
       } catch (err) {
         console.error('Error fetching movies:', err);
@@ -59,7 +56,7 @@ const MovieDetailsModal = ({ show, onHide, movieId }) => {
   // Function to handle POST request and show video
   const handleWatchNow = async () => {
     try {
-      // Perform the POST request
+        // Perform the POST request
       const response = await fetch(`http://localhost:3001/api/movies/${movieId}/recommend`, {
         method: "POST",
         headers: {
@@ -68,10 +65,10 @@ const MovieDetailsModal = ({ show, onHide, movieId }) => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to send POST!! request");
+        throw new Error("Failed to send POST request");
       }
       // Show the video after successful POST request
-      setShowVideo(true);
+      setShowVideo(true); 
     } catch (error) {
       alert("Error: " + error.message);
     }
@@ -104,11 +101,15 @@ const MovieDetailsModal = ({ show, onHide, movieId }) => {
                 </video>
               ) : (
                 <>
-                  <img
-                    src={`http://localhost:3001/${movie.Image}`}
-                    alt={movie.Title}
-                    className="movie-image"
-                  />
+                  {movie.Image ? (
+                    <img
+                      src={`http://localhost:3001/${movie.Image}`}
+                      alt={movie.Title}
+                      className="movie-image"
+                    />
+                  ) : (
+                    <p>No image available</p> // If the image is missing, display a message
+                  )}
                   <Button
                     className="watch-now-button"
                     onClick={handleWatchNow} // Call the POST request and show video
@@ -130,7 +131,11 @@ const MovieDetailsModal = ({ show, onHide, movieId }) => {
               </p>
               <p>
                 <strong>Categories:</strong>{' '}
-                {movie.Categories.map((cat) => cat.name).join(', ')}
+                {movie.Categories && movie.Categories.length > 0 ? (
+                  movie.Categories.map((cat) => cat.name).join(', ')
+                ) : (
+                  <span>No categories available</span>
+                )}
               </p>
             </div>
 
@@ -141,16 +146,20 @@ const MovieDetailsModal = ({ show, onHide, movieId }) => {
                 {relatedMovies && relatedMovies.length > 0 ? (
                   relatedMovies.map((relatedMovie) => (
                     <div key={relatedMovie._id} className="related-movie-item">
-                      <img
-                        src={`http://localhost:3001/${relatedMovie.Image}`}
-                        alt={relatedMovie.Title}
-                        className="related-movie-image"
-                      />
+                      {relatedMovie.Image ? (
+                        <img
+                          src={`http://localhost:3001/${relatedMovie.Image}`}
+                          alt={relatedMovie.Title}
+                          className="related-movie-image"
+                        />
+                      ) : (
+                        <p>No image available</p>
+                      )}
                       <p className="related-movie-title">{relatedMovie.Title}</p>
                     </div>
                   ))
                 ) : (
-                  <p>No related movies found.</p> // Message to show if no movies exist
+                  <p>No related movies found.</p>
                 )}
               </div>
             </div>
