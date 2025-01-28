@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:queryHint="Search movies..."
                 android:iconifiedByDefault="false" />
+
         </androidx.appcompat.widget.Toolbar>
 
 
