@@ -29,7 +29,7 @@
             android:id="@+id/promotion"
             android:layout_height="wrap_content"
             android:hint="@string/promoted"
-            android:textColorHint="@color/black"
+            android:textColorHint="@color/textOnEmpty"
             tools:ignore="VisualLintButtonSize" />
 
         <Button

@@ -69,7 +69,7 @@ public class LogInActivity extends AppCompatActivity {
                     Toast.makeText(LogInActivity.this, "LogIn Successful!", Toast.LENGTH_SHORT).show();
 
                     // Navigate to ManagerActivity
-                    Intent intent = new Intent(LogInActivity.this, ManagerActivity.class);
+                    Intent intent = new Intent(LogInActivity.this, HomePageActivity.class);
                     startActivity(intent);
                     finish();
                 } else {

@@ -5,7 +5,6 @@ import static android.app.Activity.RESULT_OK;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -141,7 +140,7 @@ public class EditMovie extends Fragment {
         submitToServer(id, title, date, categories);
     }
 
-    private void submitToServer(String idValue,String titleValue, String date, List<String> categoryList) {
+    private void submitToServer(String idValue, String titleValue, String date, List<String> categoryList) {
         ApiService apiService = ApiClient.getApiService();
         RequestBody title = RequestBody.create(MediaType.parse("text/plain"), titleValue);
         RequestBody releaseDate = RequestBody.create(MediaType.parse("text/plain"), date);
@@ -172,7 +171,7 @@ public class EditMovie extends Fragment {
         TokenManager tokenManager = TokenManager.getInstance();
         // Constructing token
         String token = "Bearer " + tokenManager.getToken();
-        Call<Void> call = apiService.updateMovie(token, idValue , title, releaseDate, categories, imagePart, filmPart);
+        Call<Void> call = apiService.updateMovie(token, idValue, title, releaseDate, categories, imagePart, filmPart);
 
         call.enqueue(new Callback<>() {
             @Override
@@ -180,12 +179,13 @@ public class EditMovie extends Fragment {
                 if (response.isSuccessful()) {
                     Toast.makeText(requireContext(), "Updated!", Toast.LENGTH_SHORT).show();
                 } else {
-
-                    // If response is un successful, pop up server's error
                     try (ResponseBody errorBody = response.errorBody()) {
-                        String errorMessage = errorBody != null ? errorBody.string() : "Unknown error";
-                        // Print full response details for debugging
-                        Toast.makeText(requireContext(), "Film file might be too large", Toast.LENGTH_SHORT).show();
+                        if (errorBody != null) {
+                            // Getting error details
+                            Toast.makeText(requireContext(), "Error: " + errorBody.string(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(requireContext(), "Unknown error", Toast.LENGTH_SHORT).show();
+                        }
                     } catch (IOException e) {
                         Toast.makeText(requireContext(), "Error reading error message", Toast.LENGTH_SHORT).show();
                     }

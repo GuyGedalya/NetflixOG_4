@@ -26,5 +26,5 @@
         android:textSize="14sp"
         android:textStyle="bold"
         android:paddingTop="4dp"
-        android:textColor="@android:color/black" />
+        android:textColor="@color/textOnEmpty" />
 </LinearLayout>

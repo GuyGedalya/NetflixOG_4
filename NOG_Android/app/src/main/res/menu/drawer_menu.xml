@@ -9,6 +9,9 @@
         android:id="@+id/nav_manager"
         android:title="@string/manager" />
     <item
+        android:id="@+id/nav_mode"
+        android:title="@string/change_view_mode"/>
+    <item
         android:id="@+id/nav_logout"
         android:title="@string/log_out"/>
 

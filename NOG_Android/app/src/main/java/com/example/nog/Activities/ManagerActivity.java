@@ -1,7 +1,6 @@
 package com.example.nog.Activities;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.nog.R;
@@ -10,7 +9,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 
-public class ManagerActivity extends AppCompatActivity {
+public class ManagerActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,5 +57,10 @@ public class ManagerActivity extends AppCompatActivity {
             }
         }).attach();
 
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_manager;
     }
 }

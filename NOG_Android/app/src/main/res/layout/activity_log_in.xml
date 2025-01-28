@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.LogInActivity"
+    tools:context="com.example.nog.Activities.LogInActivity"
     android:background="@drawable/background">
 
     <LinearLayout

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
+        android:textColor="@color/textOnEmpty"
         android:gravity="start"
         android:textAlignment="viewStart"/>
 
