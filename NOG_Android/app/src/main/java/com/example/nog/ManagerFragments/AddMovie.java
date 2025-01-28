@@ -66,7 +66,6 @@ public class AddMovie extends Fragment {
 
         addCategoryBtn.setOnClickListener( v-> addToChipGroup(categoryInput, chipGroup));
 
-
         // Initialize picker launcher
         imagePickerLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
