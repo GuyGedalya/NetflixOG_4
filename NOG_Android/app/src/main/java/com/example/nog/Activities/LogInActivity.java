@@ -63,6 +63,7 @@ public class LogInActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     // LogIn successful
                     TokenManager tokenManager = response.body();
+
                     TokenManager.getInstance().setToken(tokenManager.getToken());
                     TokenManager.getInstance().setUser(tokenManager.getUser());
                     Toast.makeText(LogInActivity.this, "LogIn Successful!", Toast.LENGTH_SHORT).show();

@@ -41,5 +41,7 @@ public class TokenManager {
     // Clear the token
     public void clearToken() {
         this.token = null;
+        this.user = null;
     }
+
 }

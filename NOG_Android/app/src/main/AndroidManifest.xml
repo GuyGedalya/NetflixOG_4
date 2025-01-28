@@ -15,30 +15,36 @@
         android:theme="@style/Theme.NOG_Android"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name="com.example.nog.Activities.HomePageActivity"
-            android:exported="true"/>
 
         <activity android:name="com.example.nog.VideoPlayerActivity.VideoPlayerActivity" />
         <activity
-            android:name="com.example.nog.Activities.CategoryPageActivity" />
+            android:name=".Activities.CategoryPageActivity" />
         <activity
-            android:name="com.example.nog.Activities.SignupActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:name=".Activities.ManagerActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".Activities.HomePageActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activities.SignupActivity"
+            android:exported="true" />
+        <activity android:name=".Activities.LogInActivity"
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.example.nog.Activities.LogInActivity"
             android:exported="true" />
         <activity
             android:name=".Activities.ManagerActivity"
             android:exported="true" />
         <activity android:name=".Activities.MainActivity"
-            android:exported="false"/>
+
+            android:exported="false">
+                      <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activities.SearchResultsActivity" />
+
 
     </application>
 
