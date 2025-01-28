@@ -10,6 +10,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -94,7 +95,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_home) {
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, HomePageActivity.class));
             } else if (id == R.id.nav_categories) {
                 startActivity(new Intent(this, CategoryPageActivity.class));
             } else if (id == R.id.nav_manager) {
@@ -109,6 +110,19 @@ public abstract class BaseActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
+            }else if (id == R.id.nav_mode) { // Option for toggling mode
+                int currentMode = AppCompatDelegate.getDefaultNightMode();
+
+                if (currentMode == AppCompatDelegate.MODE_NIGHT_YES) {
+                    // Switch to Light Mode
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                } else {
+                    // Switch to Dark Mode
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }
+
+                // Restart the activity to apply the theme change
+                recreate();
             }
             drawerLayout.closeDrawers();
             return true;

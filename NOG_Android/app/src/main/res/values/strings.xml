@@ -48,4 +48,5 @@
     <string name="search">Search</string>
     <string name="no_movies_to_display">No movies to display</string>
     <string name="log_out">Log Out</string>
+    <string name="change_view_mode">Change View Mode</string>
 </resources>
