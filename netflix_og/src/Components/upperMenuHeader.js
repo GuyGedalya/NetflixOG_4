@@ -9,7 +9,6 @@ function Header({ setResults, setShowSearchModal }) {
 	const [mode, setMode] = useState("Dark Mode");
 	const switchButtonRef = useRef('');
 
-
 	const navigate = useNavigate();
 	const searchBarRef = useRef(null);
 
@@ -18,24 +17,35 @@ function Header({ setResults, setShowSearchModal }) {
 		const header = document.querySelector("header");
 		header.classList.toggle("headerDark", mode === "Dark Mode");
 		header.classList.toggle("headerLight", mode === "Light Mode");
-
+	
 		const buttons = document.querySelectorAll(".button");
 		buttons.forEach(button => {
 			button.classList.toggle("buttonDark", mode === "Dark Mode");
 			button.classList.toggle("buttonLight", mode === "Light Mode");
 		});
+	
+		// Update the switch buttom:
 		if (switchButtonRef.current) {
 			switchButtonRef.current.classList.toggle("buttonDark", mode === "Dark Mode");
 			switchButtonRef.current.classList.toggle("buttonLight", mode === "Light Mode");
 		}
-	}, [mode]);
+	}, [mode, isAdmin, isOpen]);
+	
 
-
+	// Toggle the mode and save it to localStorage
 	const toggleMode = () => {
-		setMode((prevMode) =>
-			prevMode === "Dark Mode" ? "Light Mode" : "Dark Mode"
-		);
+		const newMode = mode === "Dark Mode" ? "Light Mode" : "Dark Mode";
+		setMode(newMode);
+		localStorage.setItem("themeMode", newMode); // Save mode to localStorage
 	};
+
+	// Load mode from localStorage on component mount
+	useEffect(() => {
+		const savedMode = localStorage.getItem("themeMode");
+		if (savedMode) {
+			setMode(savedMode);
+		}
+	}, []);
 
 	const checkAdmin = async () => {
 		const user = JSON.parse(sessionStorage.getItem("user"));
@@ -44,7 +54,6 @@ function Header({ setResults, setShowSearchModal }) {
 				method: 'GET'
 			});
 			if (response.ok) {
-
 				const data = await response.json();
 				return data.Admin;
 			} else {
@@ -55,6 +64,7 @@ function Header({ setResults, setShowSearchModal }) {
 			console.error('Failed to fetch search results:', error);
 		}
 	}
+
 	const handleSearch = async () => {
 		if (searchText.trim() === '') {
 			alert('Titles, People, Genres');
@@ -76,13 +86,6 @@ function Header({ setResults, setShowSearchModal }) {
 			setResults([]);
 		}
 	};
-	// Making the search Bar disappear when clicking outside
-	const handleOutsideClick = (event) => {
-		if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
-			setIsOpen(false);
-			setSearchText('');
-		}
-	};
 
 	const handleLogout = () => {
 		sessionStorage.removeItem('token');
@@ -92,11 +95,9 @@ function Header({ setResults, setShowSearchModal }) {
 
 	useEffect(() => {
 		if (isOpen) {
-			// Listen to outside click event when search box is open
 			document.addEventListener('mousedown', handleOutsideClick);
 		}
 		return () => {
-			// Closing listener when box is closed
 			document.removeEventListener('mousedown', handleOutsideClick);
 		};
 	}, [isOpen]);
@@ -105,6 +106,12 @@ function Header({ setResults, setShowSearchModal }) {
 		checkAdmin().then((result) => setIsAdmin(result));
 	}, []);
 
+	const handleOutsideClick = (event) => {
+		if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
+			setIsOpen(false);
+			setSearchText('');
+		}
+	};
 
 	return (
 		<header >
@@ -114,8 +121,7 @@ function Header({ setResults, setShowSearchModal }) {
 			<nav >
 				<button onClick={() => (window.location.href = '/home')} className='header button'>Home</button>
 				<button onClick={() => navigate('/categories')} className='header button'>Categories</button>
-				{isAdmin && <button onClick={() => navigate('/Manage')}>Manage</button>}
-
+				{isAdmin && <button onClick={() => navigate('/Manage')} className='header button'>Manage</button>}
 				{!isOpen ? (<button onClick={() => setIsOpen(true)} className='header button'>Search</button>) :
 					(<div className="search-bar" ref={searchBarRef}>
 						<input
