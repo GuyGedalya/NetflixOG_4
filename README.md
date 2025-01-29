@@ -17,7 +17,7 @@ You Can find your IP in your Network properties
 
 After that you can enter the NOG_Android folder and run the project with the play button.  
 
-## BUILD AND COMPILE THE SERVER  
+## Describing the project  
 
 
 
