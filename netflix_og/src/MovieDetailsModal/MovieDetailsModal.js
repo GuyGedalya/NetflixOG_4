@@ -30,7 +30,6 @@ const MovieDetailsModal = ({ show, onHide, movieId }) => {
   useEffect(() => {
     const fetchMovies = async () => {
       if (!movieId) return; // Return early if movieId is not defined
-      debugger; // הקוד יעצור כאן
   
       try {
         const response = await fetch(`http://localhost:3001/api/movies/${movieId}/recommend`, {
