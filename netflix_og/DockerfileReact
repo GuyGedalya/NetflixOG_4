@@ -1,0 +1,26 @@
+# Use the official Node.js image
+FROM node:18 AS build
+
+# Create app directory
+WORKDIR /usr/src/reactApp
+
+COPY package.json package-lock.json ./
+
+RUN npm install
+COPY . .
+
+RUN npm run build
+
+
+FROM node:18
+RUN npm install -g serve
+
+
+WORKDIR /usr/src/reactApp
+
+COPY --from=build /usr/src/reactApp/build /usr/src/reactApp/public
+
+EXPOSE 3000
+
+# Command to run the application
+CMD ["serve", "-s", "build", "-l" ,"3000"]

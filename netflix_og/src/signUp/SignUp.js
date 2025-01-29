@@ -34,18 +34,26 @@ function SignUp() {
 		formData1.append('Phone', formData.Phone);
 		formData1.append('ProfileImage', formData.ProfileImage);
 
+		// הדפסת הנתונים לפני שליחה
+		console.log("Form Data being sent: ", formData1);
+
+
 		try {
 			// Send a POST request to the server
+			console.log("Sending request to server...");
 			const response = await fetch("http://localhost:3001/api/users", {
 				method: "POST",
 				body: formData1
 			});
+
+			console.log("Response received:", response);
+
 			if (response.ok) {
 				alert("Sign up successful! You can now log in to your account.");
 				navigate('/logIn');
 			} else {
 				// Parse the error message from the server response
-				const errorData = await response.json();
+				const errorData = await response.json(); console.log("Error response data:", errorData);  // הדפסת נתוני השגיאה
 				alert(`Error: ${errorData.error}`); // Show the error as an alert
 			}
 		} catch (error) {
