@@ -143,12 +143,17 @@ const MovieDetailsModal = ({ show, onHide, movieId }) => {
             {/* Related movies section */}
             <div className="related-movies">
               <h4>Related Movies</h4>
-              <div className="related-movies-list">
+              <div className="related-movies-list"style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '10px',
+                }}>
                 {relatedMovies && relatedMovies.length > 0 ? (
                   relatedMovies.map((relatedMovie) => (
-                    <div key={relatedMovie._id} className="related-movie-item">
+                    <div key={relatedMovie._id} className="related-movie-item"style={{ flex: '0 0 20%', paddingBottom: '10px' }}>
                       {relatedMovie.Image ? (
                         <img
+                        style={{width:'100%'}}
                           src={`http://localhost:3001/${relatedMovie.Image}`}
                           alt={relatedMovie.Title}
                           className="related-movie-image"
