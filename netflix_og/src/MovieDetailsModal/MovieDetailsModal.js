@@ -30,6 +30,7 @@ const MovieDetailsModal = ({ show, onHide, movieId }) => {
   useEffect(() => {
     const fetchMovies = async () => {
       if (!movieId) return; // Return early if movieId is not defined
+      debugger; // הקוד יעצור כאן
   
       try {
         const response = await fetch(`http://localhost:3001/api/movies/${movieId}/recommend`, {
@@ -103,6 +104,7 @@ const MovieDetailsModal = ({ show, onHide, movieId }) => {
                 <>
                   {movie.Image ? (
                     <img
+                    style={{width:'60%'}}
                       src={`http://localhost:3001/${movie.Image}`}
                       alt={movie.Title}
                       className="movie-image"
