@@ -15,7 +15,10 @@ The file is in NOG_Android/app/src/main/java/com/example/nog/connectionClasses/A
 You Can find your IP in your Network properties  
 ![ip2](https://github.com/user-attachments/assets/67d0fd34-1d39-4604-a2c5-86057cab4eea)  
 
-After that you can enter the NOG_Android folder and run the project with the play button.  
+After that you can enter the NOG_Android folder and run the project with the play button. The app should go up in your phone.  
+
+** Notice that if there's a problem with the connection and you already started the server, it might be because you moved windows and accidentally closed the server. Simply input in the command line: docker-compose up
+and it should work just fine.  
 
 ## Describing the project  
 
