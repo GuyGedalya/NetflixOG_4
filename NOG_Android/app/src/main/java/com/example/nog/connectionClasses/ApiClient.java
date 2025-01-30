@@ -3,8 +3,8 @@ package com.example.nog.connectionClasses;
 import retrofit2.Retrofit;
 
 public class ApiClient {
-    private static final String BASE_URL = "http://10.0.0.21:3001/api/";
-    private static final String BASE_URL_MOVIE = "http://10.0.0.21:3001/";
+    private static final String BASE_URL = "http://YourIp:3001/api/";
+    private static final String BASE_URL_MOVIE = "http://YourIp:3001/";
     private static ApiService apiService;
 
     public static ApiService getApiService() {
