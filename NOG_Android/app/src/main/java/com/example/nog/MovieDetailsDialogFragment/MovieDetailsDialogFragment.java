@@ -12,10 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
-import com.example.nog.Adapters.MovieAdapter;
+import com.example.nog.Adapters.RecommendedMoviesAdapter;
 import com.example.nog.R;
 import com.example.nog.VideoPlayerActivity.VideoPlayerActivity;
 import com.example.nog.ObjectClasses.Movie;
@@ -32,7 +32,7 @@ public class MovieDetailsDialogFragment extends DialogFragment {
     private static final String ARG_MOVIE = "movie";
     private Movie movie;
     private RecyclerView recommendedMoviesRecyclerView;
-    private MovieAdapter moviesAdapter;
+    private RecommendedMoviesAdapter moviesAdapter;
     public static MovieDetailsDialogFragment newInstance(Movie movie) {
         MovieDetailsDialogFragment fragment = new MovieDetailsDialogFragment();
         Bundle args = new Bundle();
@@ -64,11 +64,12 @@ public class MovieDetailsDialogFragment extends DialogFragment {
         Button playButton = view.findViewById(R.id.play_button);
         recommendedMoviesRecyclerView = view.findViewById(R.id.recommended_movies_recycler_view);
 
-        // Initialize RecyclerView with a linear layout manager
-        recommendedMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        // Initialize RecyclerView with a Grid 2 columns:
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 2);
+        recommendedMoviesRecyclerView.setLayoutManager(gridLayoutManager);
 
-        // Initialize the MovieAdapter with an empty list
-        moviesAdapter = new MovieAdapter(new ArrayList<>());
+        // Initialize the Adapter with an empty list
+        moviesAdapter = new RecommendedMoviesAdapter(new ArrayList<>());
         recommendedMoviesRecyclerView.setAdapter(moviesAdapter);
 
         // Generate the full URL for the movie image and load it using Glide
@@ -123,18 +124,23 @@ public class MovieDetailsDialogFragment extends DialogFragment {
     private void fetchRecommendedMovies() {
         // Get the API service instance
         ApiService apiService = ApiClient.getApiService();
+        Log.d("fetchRecommendedMovies", "API service initialized");
 
         // Retrieve the user's authentication token
         String token = TokenManager.getInstance().getToken();
+        Log.d("fetchRecommendedMovies", "Token retrieved: " + (token != null ? "Valid token" : "Token is null"));
 
         // Make a network call to fetch movie recommendations
-        Call<List<Movie>> call = apiService.getRecommendations(String.valueOf(movie.getId()), "Bearer " + token);
+        Call<List<Movie>> call = apiService.getRecommendations(movie.getMongoId(), "Bearer " + token);
+
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<List<Movie>> call, @NonNull Response<List<Movie>> response) {
+
                 // If the response is successful and contains a body
                 if (response.isSuccessful() && response.body() != null) {
                     List<Movie> recommendedMovies = response.body();
+
                     if (!recommendedMovies.isEmpty()) {
                         // Update the adapter with the recommended movies
                         moviesAdapter.setMovies(recommendedMovies);

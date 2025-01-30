@@ -43,6 +43,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 .load(fullImageUrl)
                 .placeholder(R.drawable.logo)
                 .into(holder.movieImage);
+
         // Handle image click to open movie details in a dialog
         holder.movieImage.setOnClickListener(v -> {
             MovieDetailsDialogFragment dialogFragment = MovieDetailsDialogFragment.newInstance(movie);
