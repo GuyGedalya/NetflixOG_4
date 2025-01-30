@@ -17,6 +17,9 @@ import com.example.nog.R;
 import com.example.nog.connectionClasses.ApiClient;
 import com.example.nog.connectionClasses.ApiService;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
@@ -64,8 +67,20 @@ public class DeleteMovie extends Fragment {
                     Toast.makeText(requireContext(), "Deleted!",Toast.LENGTH_SHORT).show();
                 }else{
                     try (ResponseBody errorBody = response.errorBody()) {
-                        String errorMessage = errorBody != null ? errorBody.string() : "Unknown error";
-                        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                        String errorMessage;
+                        if (errorBody != null) {
+                            String rawError = errorBody.string();
+                            try{
+                                JSONObject jsonObject = new JSONObject(rawError);
+                                errorMessage = jsonObject.optString("error", rawError);
+                            } catch (JSONException e) {
+                                // If parsing fails, use raw error message
+                                errorMessage = "Error parsing response: " + rawError;
+                            }
+                            Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                        } else{
+                            Toast.makeText(requireContext(), "Empty error response from server", Toast.LENGTH_SHORT).show();
+                        }
                     } catch (IOException e) {
                         Toast.makeText(requireContext(), "Error reading error message", Toast.LENGTH_SHORT).show();
                     }

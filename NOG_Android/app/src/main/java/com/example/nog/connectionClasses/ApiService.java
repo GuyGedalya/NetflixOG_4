@@ -78,7 +78,7 @@ public interface ApiService {
             @Part MultipartBody.Part Film
     );
 
-    @DELETE("movies{id}")
+    @DELETE("movies/{id}")
     Call<Void> deleteMovie(@Path("id") String movieId, @Header("Authorization") String token);
 
     @GET("movies/categories")

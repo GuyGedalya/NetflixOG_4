@@ -115,7 +115,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         String welcome = user.getUserName() + ", Welcome to NOG";
         welcomeText.setText(welcome);
 
-        if(!user.getProfileImagePath().equals("null")){
+        if(user.getProfileImagePath() != null && !user.getProfileImagePath().equals("null")){
             String fullImageUrl = ApiClient.getFullMovieUrl(user.getProfileImagePath());
             Glide.with(BaseActivity.this).load(fullImageUrl).into(profileImage);
         }

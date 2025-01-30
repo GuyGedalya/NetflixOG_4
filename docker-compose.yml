@@ -46,6 +46,18 @@ services:
     networks:
       - app-network
 
+  frontend:
+    build:
+      context: ./netflix_og  
+      dockerfile: DockerfileReact  
+    container_name: react
+    ports:
+      - "3000:3000"  
+    depends_on:
+      - app
+    networks:
+      - app-network
+
 
 networks:
   app-network:
