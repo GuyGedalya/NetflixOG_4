@@ -52,7 +52,7 @@ services:
       dockerfile: DockerfileReact  
     container_name: react
     ports:
-      - "3000:3000"  
+      - "3000:3000"  # React app port
     depends_on:
       - app
     networks:

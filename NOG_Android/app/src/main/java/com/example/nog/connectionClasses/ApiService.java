@@ -3,7 +3,7 @@ package com.example.nog.connectionClasses;
 import com.example.nog.ObjectClasses.Category;
 import com.example.nog.ObjectClasses.Movie;
 import com.example.nog.ObjectClasses.TokenManager;
-import com.example.nog.ObjectClasses.User;
+
 
 import java.util.List;
 import java.util.Map;
@@ -50,7 +50,7 @@ public interface ApiService {
     Call<Void> updateCategory(@Path("id") String categoryId, @Header("Authorization") String token, @Body Category category);
 
     @GET("users/{id}")
-    Call<User> getUser(@Path("id") String id);
+    Call<UserResponse> getUser(@Path("id") String id);
 
     @DELETE("categories/{id}")
     Call<Void> deleteCategory(@Path("id") String categoryId, @Header("Authorization") String token);
