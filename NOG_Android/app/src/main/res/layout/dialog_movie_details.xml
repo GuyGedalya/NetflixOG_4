@@ -26,6 +26,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textSize="14sp" />
+    <Button
+        android:id="@+id/play_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/play_movie" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recommended_movies_recycler_view"
@@ -35,10 +41,5 @@
         tools:listitem="@layout/item_movie" />
 
 
-    <Button
-        android:id="@+id/play_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/play_movie" />
+
 </LinearLayout>

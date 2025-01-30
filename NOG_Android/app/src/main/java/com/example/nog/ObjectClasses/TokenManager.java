@@ -1,11 +1,11 @@
 package com.example.nog.ObjectClasses;
 
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.example.nog.connectionClasses.ApiClient;
 import com.example.nog.connectionClasses.ApiService;
+import com.example.nog.connectionClasses.UserResponse;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.function.Consumer;
@@ -58,21 +58,22 @@ public class TokenManager {
 
     public void isAdmin(Consumer<Boolean> callback){
         ApiService apiService = ApiClient.getApiService();
-        Call<User> call = apiService.getUser(this.user.getMongoId());
+        String userId = this.user.getMongoId();
+        Call<UserResponse> call = apiService.getUser(userId);
 
         call.enqueue(new Callback<>() {
             @Override
-            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+            public void onResponse(@NonNull Call<UserResponse> call, @NonNull Response<UserResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    callback.accept(response.body().getAdmin());
+                    Boolean isAdmin = response.body().getAdmin();
+                    callback.accept(isAdmin);
                 } else {
                     callback.accept(false); // Default value in case of an error
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-                Log.e("API Failure", "Request failed: " + t.getMessage(), t);
+            public void onFailure(@NonNull Call<UserResponse> call, @NonNull Throwable t) {
                 callback.accept(false); // Default value in case of an error
             }
         });
